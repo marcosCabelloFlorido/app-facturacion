@@ -1,0 +1,111 @@
+.monthly-chart {
+  min-width: 0;
+  container-type: inline-size;
+}
+.chart-scroll {
+  overflow-x: auto;
+  padding: var(--space-1);
+  margin: calc(-1 * var(--space-1));
+}
+.monthly-chart .bar-chart {
+  min-width: 450px;
+}
+.monthly-chart .chart-plot {
+  min-width: 0;
+  gap: var(--space-2);
+}
+.monthly-chart .month-bar {
+  min-width: 0;
+}
+.monthly-chart .chart-bar-action {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 1;
+  width: 0;
+  max-width: 44px;
+  min-width: 24px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.monthly-chart .chart-bar-action .bar {
+  width: 100%;
+  min-height: 2px;
+  pointer-events: none;
+}
+.monthly-chart.analysis-enter .bar {
+  transform-origin: center bottom;
+  animation: monthly-chart-grow 720ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes monthly-chart-grow {
+  from {
+    opacity: 0.35;
+    transform: scaleY(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+.monthly-chart .animated-money {
+  display: inline-block;
+  min-width: max-content;
+  font-variant-numeric: tabular-nums;
+}
+.chart-bar-action:hover .bar {
+  opacity: 0.7;
+}
+.chart-detail-body {
+  min-height: 0;
+  overflow-y: auto;
+}
+.chart-documents {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.chart-documents li:nth-child(odd) {
+  background: var(--bg-subtle);
+}
+.chart-document {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  color: var(--text);
+  text-decoration: none;
+}
+.chart-document:hover .chart-document-copy > strong {
+  text-decoration: underline;
+  text-underline-offset: var(--space-1);
+}
+.chart-document-copy {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.chart-document-copy > small {
+  color: var(--text-muted);
+}
+.chart-document-amount {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+@container (max-width: 540px) {
+  .monthly-chart .bar-chart {
+    min-width: 680px;
+  }
+  .monthly-chart .chart-bar-action {
+    min-width: 44px;
+  }
+}
+@media (max-width: 380px) {
+  .chart-document {
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-09-18T07:34:04.772Z",
+  "workspaces": [
+    {
+      "schema": "workspace_13b8b1f06aaf49f4ba08ee1103461f2a",
+      "documents": [],
+      "files": {
+        "count": 0,
+        "bytes": "0",
+        "corrupt": 0
+      }
+    },
+    {
+      "schema": "public",
+      "documents": [
+        {
+          "kind": "credit",
+          "count": 2
+        },
+        {
+          "kind": "invoice",
+          "count": 47
+        },
+        {
+          "kind": "purchase",
+          "count": 36
+        },
+        {
+          "kind": "quote",
+          "count": 37
+        }
+      ],
+      "files": {
+        "count": 40,
+        "bytes": "393416",
+        "corrupt": 0
+      }
+    }
+  ],
+  "invalidIndexes": 0
+}

@@ -1,0 +1,108 @@
+/* CronJob: components/01-app-shell, 03-module-header, 12-greeting-card.
+   1280px module, 34/40px outer padding, standalone 130px header.
+   Titles identify each page; search is a shared header tool. */
+body .app-shell > .main-shell {
+  padding: 34px 40px 0;
+  background: var(--bg);
+}
+.main-shell > main {
+  width: 100%;
+  max-width: var(--module-width);
+  margin-inline: auto;
+}
+.main-shell .page-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  min-height: 130px;
+  padding: 24px 32px;
+  gap: 10px;
+  background: var(--module-background);
+}
+.module-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+}
+/* FUENTE: 03-module-header.md, fila inferior; estado del documento solicitado. */
+.module-status {
+  align-self: flex-end;
+  margin-top: auto;
+}
+.module-title {
+  min-width: 0;
+}
+.module-title p {
+  overflow-wrap: anywhere;
+  max-width: 70ch;
+  margin-top: 6px;
+}
+/* FUENTE: 03-module-header.md y 05-button.md; acceso bajo el título en ventas. */
+.module-subtitle-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  max-width: 100%;
+  margin-top: var(--space-2);
+}
+.module-subtitle-link > svg {
+  flex-shrink: 0;
+}
+@container billing-content (max-width: 760px) {
+  .module-subtitle-link {
+    min-height: var(--control-height);
+  }
+}
+.main-shell .page-heading .eyebrow {
+  display: none;
+}
+.main-shell .page-content {
+  padding: 24px 0 40px;
+  min-height: 0;
+}
+.main-shell .greeting-heading {
+  min-height: 220px;
+  padding: 32px 28px;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 0
+  );
+  background-size: 24px 24px;
+}
+.greeting-heading .module-title-row {
+  flex: 1;
+  align-items: flex-start;
+}
+.greeting-heading .heading-actions {
+  align-self: flex-start;
+}
+body .app-shell.is-embedded > .main-shell {
+  margin-left: 0;
+  padding: 34px 40px 0;
+}
+@media (max-width: 760px) {
+  body .app-shell > .main-shell {
+    padding: 68px 16px 0;
+  }
+  .main-shell .page-heading {
+    min-height: 140px;
+    padding: 20px;
+  }
+  .module-title-row {
+    gap: 12px;
+  }
+  .main-shell .page-content {
+    padding: 20px 0 32px;
+  }
+  .main-shell .greeting-heading {
+    min-height: 180px;
+    padding: 24px 20px;
+  }
+  body .app-shell.is-embedded > .main-shell {
+    padding: 16px;
+  }
+}

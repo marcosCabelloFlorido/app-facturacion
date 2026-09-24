@@ -1,0 +1,109 @@
+/* Welcome content uses the same Inter and neutral palette as the application. */
+.auth-layout .auth-brand {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  gap: 32px;
+}
+.auth-brand > .brand,
+.auth-brand > .auth-intro {
+  position: relative;
+  z-index: 1;
+}
+.auth-brand > .spiral-animation {
+  z-index: 0;
+  opacity: 0.4;
+}
+.auth-brand .auth-intro {
+  margin: 24px 0;
+  max-width: 460px;
+}
+.auth-brand .auth-intro h2 {
+  margin: 16px 0 20px;
+}
+.auth-features {
+  display: grid;
+  gap: 22px;
+  list-style: none;
+  padding: 28px 0 0;
+  margin: 28px 0 0;
+  border-top: 0;
+}
+.auth-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.auth-features li > svg {
+  margin-top: 2px;
+  color: #b3b3b3;
+}
+.auth-features strong {
+  display: block;
+  color: #ededed;
+}
+.auth-official-logo {
+  display: block;
+  width: 210px;
+  max-width: 100%;
+  height: auto;
+}
+.auth-welcome {
+  margin-bottom: 28px;
+  padding-bottom: 26px;
+  border-bottom: 0;
+}
+.auth-clock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px 16px;
+  color: #666;
+  margin-bottom: 22px;
+}
+.auth-clock > time {
+  text-transform: capitalize;
+}
+.auth-clock > span {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.auth-clock span time {
+  color: #262626;
+  font-variant-numeric: tabular-nums;
+}
+.auth-greeting {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #171717;
+}
+.auth-greeting svg {
+  color: #737373;
+}
+.auth-welcome-copy {
+  color: #666;
+  margin-top: 10px;
+}
+.auth-layout .auth-form > p {
+  color: #666;
+  margin-bottom: 24px;
+}
+@media (max-width: 760px) {
+  .auth-layout .auth-brand {
+    padding: 22px 24px;
+    gap: 0;
+  }
+  .auth-layout .auth-main {
+    padding: 26px 24px 40px;
+  }
+  .auth-welcome {
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+  }
+  .auth-clock {
+    margin-bottom: 18px;
+  }
+}

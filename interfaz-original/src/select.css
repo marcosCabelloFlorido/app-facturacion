@@ -1,0 +1,207 @@
+:root {
+  --select-field-radius: 8px;
+  --select-panel-radius: 10px;
+  --select-option-radius: 6px;
+  --select-height: var(--control-height);
+  --select-font-size: var(--control-text);
+  --select-border: #dcdcdc;
+  --select-background: #fff;
+  --select-text: #171717;
+  --select-hover: #f1f1f1;
+  --select-selected: #111;
+  --select-focus: var(--text);
+  --select-shadow: 0 8px 26px #00000014, 0 2px 6px #00000008;
+}
+.app-select {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+.app-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--select-height);
+  padding: 10px 12px;
+  border: 1px solid var(--select-border);
+  border-radius: 0;
+  background: var(--select-background);
+  color: var(--select-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.app-select-trigger:hover {
+  border-color: #aaa;
+}
+.app-select-trigger[data-focus-visible] {
+  outline: 2px solid var(--select-focus);
+  outline-offset: 2px;
+}
+.app-select[data-open] .app-select-trigger {
+  border-color: #777;
+}
+.app-select-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.app-select-chevron {
+  flex-shrink: 0;
+  color: #666;
+}
+.app-select[data-disabled] .app-select-trigger {
+  background: #f7f7f7;
+  color: #737373;
+  border-color: #e4e4e4;
+  cursor: not-allowed;
+}
+.app-select[data-invalid] .app-select-trigger {
+  border-color: var(--text);
+}
+.app-select-native {
+  display: none !important;
+}
+.app-select-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.app-select-popover {
+  display: flex;
+  flex-direction: column;
+  min-width: min(var(--trigger-width), calc(100vw - 24px));
+  width: max-content;
+  max-width: min(440px, calc(100vw - 24px));
+  padding: 5px;
+  border: 1px solid var(--select-border);
+  border-radius: 0;
+  background: var(--select-background);
+  color: var(--select-text);
+  box-shadow: var(--select-shadow);
+  font-family: inherit;
+  overflow: hidden;
+  z-index: 1000;
+  outline: none;
+  pointer-events: auto;
+}
+.app-select-list {
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 2px;
+  outline: none;
+}
+.app-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 38px;
+  margin: 2px 0;
+  padding: 8px 10px;
+  border-radius: 0;
+  color: var(--select-text);
+  cursor: pointer;
+  outline: none;
+  overflow-wrap: anywhere;
+}
+.app-select-option[data-hovered]:not([data-selected]) {
+  background: var(--select-hover);
+}
+.app-select-option[data-selected] {
+  background: var(--select-selected);
+  color: #fff;
+}
+.app-select-option[data-focus-visible],
+.app-select-option[data-focused] {
+  outline: 2px solid var(--select-focus);
+  outline-offset: -2px;
+}
+.app-select-option[data-selected][data-focus-visible],
+.app-select-option[data-selected][data-focused] {
+  outline-color: var(--on-dark);
+}
+.app-select-option[data-disabled] {
+  color: #818181;
+  cursor: not-allowed;
+}
+.app-select-check {
+  flex-shrink: 0;
+}
+.app-select-check.is-hidden {
+  visibility: hidden;
+}
+.app-select-search {
+  position: relative;
+  flex-shrink: 0;
+  margin: 2px 2px 5px;
+}
+.app-select-search > svg {
+  position: absolute;
+  top: 50%;
+  left: 11px;
+  transform: translateY(-50%);
+  color: #666;
+  pointer-events: none;
+}
+.app-select-search input {
+  padding-left: 35px;
+  border-radius: 0;
+  min-height: var(--select-height);
+}
+.app-select-search input:focus-visible {
+  outline: 2px solid var(--select-focus);
+  outline-offset: -2px;
+}
+.app-select-empty {
+  padding: 16px 12px;
+  color: #666;
+}
+.app-select-error {
+  display: block;
+  color: var(--text);
+  margin-top: 6px;
+}
+.app-select-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+.app-select-layer > div {
+  pointer-events: auto;
+}
+.line-editor-title .app-select {
+  flex: 1;
+  width: auto;
+  min-width: 0;
+}
+@media (max-width: 760px), (pointer: coarse) {
+  :root {
+    --select-height: var(--control-height);
+    --select-font-size: var(--control-text);
+  }
+  .app-select-option {
+    min-height: 44px;
+  }
+}
+@media (forced-colors: active) {
+  .app-select-option[data-selected] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+  .app-select-option[data-focused] {
+    outline-color: CanvasText;
+  }
+}

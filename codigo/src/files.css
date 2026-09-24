@@ -1,0 +1,203 @@
+/* FUENTE: 05-button.md — button.tsx:7–31, variante ghost/icon.
+   Adaptación: zona de arrastre plana con selección accesible de archivos. */
+.document-files {
+  max-width: none;
+}
+.document-files > .panel-heading {
+  align-items: center;
+  margin-bottom: var(--space-4);
+}
+.document-files > .panel-heading > .icon-button {
+  margin-block: calc(-1 * var(--space-3));
+}
+.document-file-input[hidden] {
+  display: none;
+}
+.document-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.document-files .document-upload-row {
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--control-height);
+  padding: 0;
+}
+.document-files .document-upload-icon {
+  flex-basis: 18px;
+  height: var(--control-height);
+}
+.document-files .document-upload-icon > svg {
+  width: 18px;
+  height: 18px;
+}
+.document-file-row .document-upload-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--space-2);
+}
+.document-file-row .document-upload-title {
+  display: contents;
+}
+.document-file-row .document-upload-title > a {
+  grid-column: 1;
+  grid-row: 1;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+.document-file-row .document-upload-meta {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 2px 0 0;
+  font-size: var(--text-caption);
+  line-height: var(--leading-body);
+}
+.document-file-remove {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  flex-shrink: 0;
+}
+@container billing-content (max-width: 760px) {
+  .document-files > .panel-heading {
+    flex-wrap: nowrap;
+    gap: var(--space-3);
+  }
+}
+
+.document-files-dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: 220px;
+  margin-bottom: var(--space-6);
+  padding: var(--space-8) var(--space-6);
+  border: 0;
+  background: transparent;
+  text-align: center;
+}
+.document-files-empty .document-files-dropzone {
+  min-height: clamp(240px, 32dvh, 300px);
+}
+.document-files-dropzone[data-drop-target],
+.document-files-dropzone[data-focus-visible],
+.document-files-dropzone:focus-within {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+.document-files-dropzone[data-disabled] {
+  cursor: wait;
+}
+.document-files-dropzone-title {
+  margin: 0;
+}
+.document-files-dropzone > .button {
+  max-width: 100%;
+  white-space: normal;
+}
+@container billing-content (max-width: 760px) {
+  .document-files-dropzone {
+    padding: var(--space-6) var(--space-4);
+  }
+}
+
+.document-upload-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: 0;
+  margin: 0 0 var(--space-6);
+  list-style: none;
+}
+.document-upload-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-4);
+  background: transparent;
+  animation: document-upload-enter 200ms ease-out;
+}
+.document-upload-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 40px;
+  height: 40px;
+  background: transparent;
+  color: var(--text-muted);
+}
+.document-upload-content {
+  flex: 1;
+  min-width: 0;
+}
+.document-upload-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.document-upload-title > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.document-upload-title > svg,
+.document-upload-percent {
+  flex-shrink: 0;
+}
+.document-upload-meta {
+  margin: var(--space-1) 0 var(--space-2);
+  color: var(--text-muted);
+}
+.document-upload-progress {
+  display: block;
+  width: 100%;
+  height: 6px;
+  appearance: none;
+  border: 0;
+  background: var(--bg-muted);
+  color: var(--text);
+}
+.document-upload-progress::-webkit-progress-bar {
+  background: var(--bg-muted);
+}
+.document-upload-progress::-webkit-progress-value {
+  background: var(--text);
+  transition: width 100ms linear;
+}
+.document-upload-progress::-moz-progress-bar {
+  background: var(--text);
+  transition: width 100ms linear;
+}
+@keyframes document-upload-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .document-upload-row {
+    animation: none;
+  }
+  .document-upload-progress::-webkit-progress-value {
+    transition: none;
+  }
+  .document-upload-progress::-moz-progress-bar {
+    transition: none;
+  }
+}

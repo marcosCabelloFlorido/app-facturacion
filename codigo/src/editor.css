@@ -1,0 +1,453 @@
+/* FUENTE: 06-input.md (AbsencesModule.tsx:5049–5070), 05-button.md
+   (TimeTrackingConfig.tsx:1828–1841). Four-screen adaptation: SISTEMA_VISUAL.md. */
+.editor-page .workspace-save-status {
+  min-height: 24px;
+  margin: 0 0 var(--space-4);
+}
+.editor-page .editor-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 720px;
+  margin: 0 auto var(--space-8);
+  gap: var(--space-2);
+  border: 0;
+}
+.editor-page-invoice .editor-steps {
+  margin-inline-start: max(0px, calc((100% - 720px) / 2 - var(--space-6) * 2));
+}
+.editor-page .editor-steps button {
+  min-width: 0;
+  min-height: 56px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  border: 0;
+}
+.editor-page .editor-steps button[aria-current] {
+  background: transparent;
+  color: var(--text);
+}
+.editor-page .editor-steps button > span {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  background: transparent;
+}
+.editor-page .editor-steps button[aria-current] > span {
+  background: transparent;
+  color: inherit;
+}
+.editor-page-intro .editor-layout,
+.editor-page-intro > .workspace-save-status {
+  max-width: 720px;
+  margin-inline: auto;
+}
+.editor-page-intro .editor-layout {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+}
+.editor-page-intro .wizard-panel {
+  min-height: 260px;
+}
+.editor-page-intro .wizard-actions {
+  padding-inline: var(--panel-inset);
+}
+.editor-page .editor-date-fields > .field:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+.editor-page .review-date-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  gap: var(--space-4);
+  align-items: start;
+  padding-block: var(--space-4);
+}
+.editor-page .review-dates {
+  padding: 0;
+  overflow-wrap: anywhere;
+}
+.editor-page .optional-details {
+  border: 0;
+}
+.editor-page .line-editor,
+.editor-page .review-concepts > div:not(.panel-heading) {
+  border: 0;
+}
+/* Invoice concepts: compact actions and spacing on the existing flat form. */
+.editor-page-invoice .line-editor-title {
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  flex-wrap: nowrap;
+}
+.editor-page-invoice .line-editor-title .icon-button {
+  margin-left: auto;
+}
+.product-concept-input {
+  position: relative;
+  margin-bottom: var(--space-4);
+}
+.product-concept-input > .field {
+  margin-bottom: 0;
+}
+.product-concept-control {
+  position: relative;
+}
+.product-concept-control > svg {
+  position: absolute;
+  right: var(--space-3);
+  top: 14px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.product-concept-menu {
+  --product-menu-height: 224px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  top: calc(100% + var(--space-1));
+  inset-inline: 0;
+  min-width: min(320px, calc(100vw - 80px));
+  z-index: 30;
+  max-height: min(var(--product-menu-height), var(--product-menu-available, 30dvh));
+  overflow: hidden;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--select-shadow);
+}
+.product-concept-menu[data-placement='top'] {
+  top: auto;
+  bottom: calc(100% + var(--space-1));
+}
+.product-concept-menu ul {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  margin: 0;
+  padding: var(--space-1);
+}
+.product-concept-menu [role='option'] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--control-height);
+  padding: var(--space-3);
+  cursor: pointer;
+}
+.product-concept-menu [role='option']:hover,
+.product-concept-menu [aria-selected='true'] {
+  background: var(--bg-muted);
+}
+.product-concept-menu [aria-selected='true'] {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+.product-concept-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.product-concept-price {
+  text-align: right;
+  white-space: nowrap;
+}
+.product-concept-menu p {
+  padding: var(--space-3);
+  margin: 0;
+  color: var(--text-muted);
+}
+.product-concept-menu .product-concept-create {
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3);
+  white-space: normal;
+  text-align: left;
+  background: var(--bg);
+}
+.product-concept-menu .product-concept-create:hover {
+  background: var(--bg-muted);
+}
+.editor-page-invoice .line-editor {
+  padding-bottom: 0;
+  margin-bottom: var(--space-8);
+}
+.editor-page-invoice .line-editor:last-child {
+  margin-bottom: var(--space-4);
+}
+.editor-page-invoice .line-numbers {
+  gap: var(--space-4);
+  align-items: end;
+}
+.editor-page-invoice .add-line {
+  width: auto;
+  padding-inline: var(--space-2);
+}
+.editor-page-invoice .optional-controls {
+  padding-block: var(--space-4);
+}
+.optional-controls.retention-control {
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+}
+.retention-control label {
+  min-height: var(--control-height);
+  cursor: pointer;
+}
+.retention-control .retention-rate {
+  gap: var(--space-1);
+  padding-inline: var(--space-2);
+}
+.retention-options {
+  min-width: 140px;
+}
+.editor-page-invoice .totals .grand-total {
+  border: 0;
+  margin-top: var(--space-6);
+  padding-top: 0;
+}
+.editor-page .line-numbers .line-amount-wide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.editor-page .totals > div {
+  flex-wrap: wrap;
+}
+.editor-page .editor-summary {
+  min-width: 0;
+  container: editor-totals / inline-size;
+}
+.editor-page .totals > div > :last-child {
+  margin-left: auto;
+}
+@container billing-content (max-width: 540px) {
+  .editor-page-invoice .line-numbers .line-amount {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: baseline;
+    gap: var(--space-2);
+  }
+  .editor-page-invoice .line-numbers .line-amount small {
+    margin-bottom: 0;
+  }
+  .editor-page .editor-steps {
+    gap: var(--space-1);
+    margin-bottom: var(--space-6);
+  }
+  .editor-page .editor-steps button {
+    flex-direction: column;
+    padding: var(--space-2) 0;
+    gap: var(--space-1);
+  }
+  .editor-page-intro .wizard-panel {
+    min-height: 240px;
+  }
+  .editor-page-intro .wizard-actions {
+    padding-inline: 0;
+  }
+  .editor-page .review-concepts > div:not(.panel-heading) {
+    flex-wrap: wrap;
+  }
+}
+
+/* Invoice canvas: the same paper as DocumentSheet, with the kit's editable fields. */
+.editor-page-invoice .editor-steps {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.6fr);
+}
+.editor-page-sheet .editor-layout {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+}
+.editor-page-sheet .wizard-actions {
+  width: 100%;
+  max-width: 860px;
+  margin-inline: auto;
+}
+.invoice-editor .document-sheet-caption,
+.invoice-editor .document-sheet-dates dt {
+  min-height: var(--control-height-compact);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.invoice-editor .document-sheet-caption .icon-button {
+  width: var(--control-height-compact);
+  height: var(--control-height-compact);
+  min-height: var(--control-height-compact);
+  flex-shrink: 0;
+}
+.invoice-sheet-fields {
+  margin-top: var(--space-8);
+}
+.editor-page .invoice-sheet-fields .line-editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--control-height);
+  gap: var(--space-4) var(--space-2);
+  margin: 0 0 var(--space-8);
+}
+.invoice-sheet-fields .line-editor-title {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: start;
+  margin: 0;
+}
+.invoice-sheet-fields .product-concept-input {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  min-width: 0;
+}
+.invoice-sheet-fields .product-concept-control textarea {
+  display: block;
+  resize: none;
+  overflow: hidden;
+  min-height: var(--control-height);
+  padding-inline-end: calc(var(--space-8) + var(--space-2));
+}
+.invoice-sheet-fields .line-numbers,
+.invoice-sheet-fields .line-editor > .field {
+  grid-column: 1 / -1;
+  margin-bottom: 0;
+}
+.editor-page .invoice-sheet-fields .line-numbers {
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.1fr) minmax(0, 0.7fr) minmax(0, 0.8fr);
+  gap: var(--space-4);
+}
+.invoice-sheet-fields .line-numbers .line-amount,
+.invoice-sheet-fields .line-amount-wide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+.invoice-sheet-fields .optional-controls {
+  padding-bottom: 0;
+}
+
+/* Opciones contextuales: superficie y controles comunes del kit. */
+.actions-popover.line-options-popover {
+  width: 200px;
+  min-width: 0;
+  padding: var(--space-3);
+  box-shadow: 0 var(--space-1) var(--space-3) color-mix(in srgb, var(--text) 8%, transparent);
+}
+.line-options-dialog {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--control-height);
+  gap: var(--space-1) var(--space-2);
+  outline: none;
+}
+.line-options-dialog > .field,
+.line-options-dialog > .field > label {
+  display: contents;
+}
+.line-options-dialog .field-label {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--text-muted);
+}
+.line-options-dialog .field input {
+  grid-area: 2 / 1;
+  min-width: 0;
+}
+.line-options-dialog > .icon-button {
+  grid-area: 2 / 2;
+}
+.line-options-dialog .field-error-message {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+.editor-page-invoice .invoice-editor .totals .grand-total {
+  padding: var(--space-6);
+}
+.invoice-editor .optional-details {
+  margin-top: var(--space-6);
+  margin-bottom: 0;
+}
+@container document-summary (max-width: 700px) {
+  .editor-page .invoice-sheet-fields .line-numbers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container document-summary (max-width: 540px) {
+  .invoice-editor .document-sheet-caption,
+  .invoice-editor .document-sheet-dates dt {
+    min-height: var(--control-height);
+  }
+  .invoice-editor .document-sheet-caption .icon-button {
+    width: var(--control-height);
+    height: var(--control-height);
+    min-height: var(--control-height);
+  }
+  .editor-page-invoice .invoice-editor .totals .grand-total {
+    padding: var(--space-4);
+  }
+  .invoice-sheet-fields .line-amount {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: var(--space-2);
+  }
+}
+
+/* All invoice steps use one sheet. Only the current block contains fields. */
+.invoice-editor .document-sheet-recipient {
+  min-width: 0;
+}
+.invoice-editor .document-sheet-dates {
+  align-items: flex-start;
+}
+.invoice-editor .document-sheet-meta {
+  width: 280px;
+  max-width: 100%;
+}
+.invoice-recipient-editor .contact-picker,
+.invoice-recipient-editor .contact-nif-control,
+.invoice-due-editor .field {
+  margin: 0;
+}
+.invoice-recipient-editor .contact-nif-control {
+  margin-top: var(--space-2);
+}
+.invoice-due-editor,
+.invoice-due-editor input {
+  min-width: 0;
+  max-width: 100%;
+}
+.invoice-due-editor {
+  width: 168px;
+}
+
+.invoice-due-editor .sales-payment-terms {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+.invoice-due-editor .sales-payment-terms .button {
+  min-width: 0;
+  padding-inline: var(--space-1);
+  border: 0;
+}
+
+/* Cliente y Fecha compactos; el documento usa la hoja común, ajustada al contenido. */
+.editor-invoice-compact .editor-layout,
+.editor-invoice-compact > .workspace-save-status {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+}
+.editor-invoice-compact .editor-steps,
+.editor-invoice-document .editor-steps {
+  margin-inline: auto;
+}

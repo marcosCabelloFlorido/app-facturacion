@@ -1,0 +1,420 @@
+/* FUENTE: kit-design-v2/components/02-sidebar.md — CoworkView.tsx:232–310.
+   Menú oscuro 272px, filas 44px, selección con barra. Contraída: columna de iconos de 72px. */
+.app-shell {
+  --sidebar-width: 272px;
+  /* Filas de navegación y controles de cuenta con dimensiones comunes. */
+  --sidebar-row-height: 44px;
+  /* Reparte el aire disponible sin aumentar las filas ni desplazar la cuenta. */
+  --sidebar-spacing: clamp(0px, calc((100dvh - 568px) / 24), var(--space-2));
+  --sidebar-inset: calc(var(--space-1) + 1.5 * var(--sidebar-spacing));
+  --sidebar-motion: 220ms cubic-bezier(0.2, 0, 0, 1);
+}
+.app-shell > .compact-sidebar {
+  width: var(--sidebar-width);
+  padding: var(--sidebar-inset) 16px;
+  background: var(--module-background);
+  color: var(--on-dark);
+  border-right: 1px solid var(--on-dark-border);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--on-dark-muted) var(--module-background);
+  transition:
+    transform var(--sidebar-motion),
+    width var(--sidebar-motion);
+}
+.app-shell > .main-shell {
+  margin-left: var(--sidebar-width);
+  min-width: 0;
+  background: #fff;
+  transition: margin-left var(--sidebar-motion);
+}
+.app-shell.navigation-collapsed {
+  --sidebar-width: 72px;
+}
+.compact-sidebar .sidebar-row {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: var(--sidebar-row-height);
+  padding: 0;
+  margin: 0;
+  flex-shrink: 0;
+}
+.compact-sidebar .sidebar-icon {
+  width: 34px;
+  height: var(--sidebar-row-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+.compact-sidebar .sidebar-label {
+  display: block;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  padding: 5px 7px 5px 0;
+}
+.compact-sidebar .sidebar-heading {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: var(--sidebar-inset);
+}
+.compact-sidebar .brand {
+  flex: 1;
+  min-width: 0;
+}
+.compact-sidebar .brand .sidebar-label {
+  grid-column: 1 / -1;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  padding: 0;
+}
+.compact-sidebar .sidebar-hide {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: var(--sidebar-row-height);
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--on-dark-muted);
+  cursor: pointer;
+}
+.compact-sidebar .sidebar-hide:hover {
+  background: var(--on-dark-hover);
+  color: var(--on-dark);
+}
+.sidebar-reopen {
+  position: fixed;
+  top: 34px;
+  left: 16px;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+.sidebar-reopen:hover {
+  background: var(--bg-muted);
+  color: var(--text);
+}
+.sidebar-reopen:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+.compact-sidebar .sidebar-section-title {
+  margin: 0 0 calc(var(--space-1) + 0.5 * var(--sidebar-spacing));
+  padding: 0 10px;
+  color: var(--on-dark-muted);
+}
+.compact-sidebar .brand-dot {
+  color: var(--on-dark-muted);
+}
+.compact-sidebar .workspace {
+  margin: 0 0 calc(var(--space-2) + 2 * var(--sidebar-spacing));
+  border: 1px solid var(--on-dark-border);
+  border-radius: var(--radius-control);
+  background: transparent;
+  text-align: left;
+}
+.compact-sidebar .workspace:hover {
+  background: var(--on-dark-hover);
+}
+.compact-sidebar .workspace-avatar,
+.compact-sidebar .user-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--on-dark-hover);
+  color: var(--on-dark-nav);
+}
+.compact-sidebar .workspace strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--on-dark-nav);
+}
+.compact-sidebar .new-button {
+  margin-bottom: 14px;
+  background: var(--on-dark-hover);
+  color: var(--on-dark);
+  border: 0;
+  border-radius: var(--radius-control);
+  text-align: left;
+}
+.compact-sidebar .new-button:hover {
+  background: var(--on-dark-border);
+}
+.compact-sidebar .new-button .sidebar-label {
+  margin: 0;
+}
+.compact-sidebar nav {
+  flex-shrink: 0;
+  overflow: visible;
+}
+.compact-sidebar .nav-section {
+  margin: 0;
+}
+.compact-sidebar .nav-section + .nav-section {
+  border-top: 0;
+  margin-top: calc(var(--space-3) + 1.5 * var(--sidebar-spacing));
+  padding-top: 0;
+}
+.compact-sidebar .nav-item {
+  margin: 0;
+  color: var(--on-dark-nav);
+  border-radius: var(--radius-control);
+}
+.compact-sidebar .nav-item + .nav-item {
+  margin-top: var(--sidebar-spacing);
+}
+.compact-sidebar .nav-item:hover {
+  background: var(--on-dark-hover);
+  color: var(--on-dark);
+}
+.compact-sidebar .nav-item.active,
+.compact-sidebar .nav-item.active:hover {
+  background: var(--on-dark-active);
+  color: var(--on-dark);
+}
+.compact-sidebar .sidebar-bottom {
+  margin-top: auto;
+  padding-top: var(--sidebar-inset);
+  flex-shrink: 0;
+}
+.compact-sidebar .sidebar-account {
+  padding-top: 0;
+}
+.compact-sidebar .user-profile {
+  grid-template-columns: 34px minmax(0, 1fr) 44px 44px;
+  border: 0;
+  background: transparent;
+  min-height: 44px;
+}
+.compact-sidebar .user-profile .sidebar-label {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.compact-sidebar .sidebar-account-action {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--on-dark-muted);
+  cursor: pointer;
+  text-decoration: none;
+}
+.compact-sidebar .sidebar-account-action:hover {
+  background: var(--on-dark-hover);
+  color: var(--on-dark);
+}
+.compact-sidebar .sidebar-settings[aria-current='page'] {
+  background: var(--on-dark-active);
+  color: var(--on-dark);
+}
+.compact-sidebar .user-profile strong {
+  color: var(--on-dark);
+}
+.compact-sidebar .user-profile small {
+  display: block;
+  color: var(--on-dark-muted);
+}
+.compact-sidebar :is(a, button):focus-visible {
+  outline: 2px solid var(--on-dark-nav);
+  outline-offset: -2px;
+}
+.compact-sidebar .nav-item.active:focus-visible {
+  outline-color: #fff;
+  outline-offset: -4px;
+}
+.compact-sidebar .nav-item {
+  position: relative;
+}
+.compact-sidebar .nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--on-dark);
+}
+.compact-sidebar .workspace strong {
+  color: var(--on-dark);
+}
+.compact-sidebar .brand {
+  color: var(--on-dark);
+}
+.workspace-list {
+  display: grid;
+  gap: 6px;
+}
+.workspace-option {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: var(--bg);
+  color: var(--text);
+  text-align: left;
+}
+.workspace-option:hover,
+.workspace-option[aria-current='true'] {
+  background: var(--bg-subtle);
+}
+.workspace-option-icon {
+  display: grid;
+  place-items: center;
+  height: 38px;
+  background: #ededed;
+  border-radius: 50%;
+}
+.workspace-option strong {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.workspace-option small {
+  display: block;
+  color: #666;
+  margin-top: 3px;
+}
+@media (max-width: 760px) {
+  body .app-shell > div.main-shell {
+    padding-top: 68px;
+  }
+  .sidebar-reopen {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+  .app-shell > .compact-sidebar {
+    width: min(280px, calc(100vw - 48px));
+    padding: var(--sidebar-inset) 12px max(var(--sidebar-inset), env(safe-area-inset-bottom));
+    height: 100dvh;
+    transform: translateX(-100%);
+  }
+  .app-shell > .compact-sidebar.is-open {
+    transform: translateX(0);
+  }
+  .app-shell > .main-shell {
+    margin-left: 0;
+  }
+  .compact-sidebar .sidebar-hide {
+    width: 44px;
+    height: 44px;
+  }
+  .compact-sidebar .sidebar-row,
+  .compact-sidebar .sidebar-icon {
+    min-height: 44px;
+  }
+  .compact-sidebar .sidebar-row {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+  .compact-sidebar .user-profile {
+    grid-template-columns: 40px minmax(0, 1fr) 44px 44px;
+  }
+  .compact-sidebar .sidebar-account-action {
+    width: 44px;
+    height: 44px;
+  }
+  .compact-sidebar .sidebar-label {
+    display: block;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-shell > .compact-sidebar,
+  .app-shell > .main-shell {
+    transition: none;
+  }
+}
+@media (pointer: coarse) {
+  .compact-sidebar .sidebar-row,
+  .compact-sidebar .sidebar-account-action {
+    min-height: 44px;
+  }
+}
+/* CoworkView NavItem: full-width rows and a selection marker at the shell edge. */
+.app-shell > .compact-sidebar {
+  padding-inline: 0;
+}
+.compact-sidebar .sidebar-heading {
+  padding-inline: 18px;
+  min-height: 42px;
+}
+.compact-sidebar .workspace {
+  width: calc(100% - 32px);
+  margin-inline: 16px;
+}
+.compact-sidebar .nav-item {
+  padding-inline: 16px;
+}
+.compact-sidebar .sidebar-section-title {
+  padding-inline: 16px;
+}
+.compact-sidebar .sidebar-bottom {
+  padding-inline: 16px;
+}
+.compact-sidebar .sidebar-bottom > .sidebar-section-title {
+  padding-inline: 0;
+}
+
+/* Keep the inner layout fixed while the desktop rail reveals its labels. */
+@media (min-width: 761px) {
+  .app-shell > .compact-sidebar > .sidebar-heading,
+  .app-shell > .compact-sidebar > nav,
+  .app-shell > .compact-sidebar > .sidebar-bottom {
+    width: 272px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+  .compact-sidebar .sidebar-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .navigation-collapsed .compact-sidebar .sidebar-label,
+  .navigation-collapsed .compact-sidebar .sidebar-section-title,
+  .navigation-collapsed .compact-sidebar .sidebar-settings-label {
+    visibility: hidden;
+  }
+}
+
+.sidebar-brand-symbol {
+  filter: invert(1);
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* Navigation is the explicit exception to otherwise immediate UI changes. */
+@media (prefers-reduced-motion: no-preference) {
+  .app-shell > .compact-sidebar {
+    transition:
+      transform var(--sidebar-motion),
+      width var(--sidebar-motion) !important;
+  }
+  .app-shell > .main-shell {
+    transition: margin-left var(--sidebar-motion) !important;
+  }
+}

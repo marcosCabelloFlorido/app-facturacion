@@ -1,0 +1,50 @@
+{
+  "name": "kronjop-facturacion",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently -k -n api,web \"tsx watch server/index.ts\" \"vite --host 127.0.0.1\"",
+    "build": "tsc --noEmit && vite build",
+    "start": "tsx server/index.ts",
+    "db:migrate": "tsx server/migrate.ts",
+    "test": "tsx --test tests/*.test.ts",
+    "check": "tsc --noEmit",
+    "backup": "powershell -NoProfile -File scripts/backup.ps1",
+    "format": "prettier --write src server shared tests package.json tsconfig.json vite.config.ts compose.yaml"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/rate-limit": "^10.3.0",
+    "@fastify/static": "^8.2.0",
+    "@fontsource-variable/inter": "^5.2.6",
+    "decimal.js": "^10.6.0",
+    "dotenv": "^17.2.2",
+    "exceljs": "^4.4.0",
+    "fastify": "^5.6.0",
+    "gsap": "^3.15.0",
+    "lucide-react": "^0.468.0",
+    "nodemailer": "^10.0.3",
+    "pdfjs-dist": "^6.3.289",
+    "pdfkit": "^0.17.2",
+    "pg": "^8.16.3",
+    "react": "^19.1.1",
+    "react-aria-components": "1.21.1",
+    "react-dom": "^19.1.1",
+    "tsx": "^4.20.5",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "@types/nodemailer": "^8.0.1",
+    "@types/pdfkit": "^0.17.3",
+    "@types/pg": "^8.15.5",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "concurrently": "^9.2.1",
+    "prettier": "^3.9.6",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5"
+  }
+}

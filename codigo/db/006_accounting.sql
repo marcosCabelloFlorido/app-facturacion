@@ -1,0 +1,9 @@
+ALTER TABLE chart_accounts ADD COLUMN section text NOT NULL DEFAULT 'asset' CHECK(section IN ('asset','liability','equity','expense','income'));
+UPDATE chart_accounts SET section=CASE WHEN code='100' THEN 'equity' WHEN code IN ('400','4751','477','555','438') THEN 'liability' WHEN code LIKE '6%' THEN 'expense' WHEN code LIKE '7%' THEN 'income' ELSE 'asset' END;
+CREATE TABLE journal_drafts(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),payload jsonb NOT NULL,version integer NOT NULL DEFAULT 1,created_by uuid NOT NULL REFERENCES public.users(id),created_at timestamptz NOT NULL DEFAULT now(),updated_at timestamptz NOT NULL DEFAULT now(),posted_id uuid UNIQUE REFERENCES journal_entries(id));
+CREATE TABLE journal_draft_versions(id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,draft_id uuid NOT NULL REFERENCES journal_drafts(id),version integer NOT NULL,payload jsonb NOT NULL,actor_id uuid NOT NULL REFERENCES public.users(id),created_at timestamptz NOT NULL DEFAULT now(),UNIQUE(draft_id,version));
+CREATE TRIGGER immutable_draft_history BEFORE UPDATE OR DELETE ON journal_draft_versions FOR EACH ROW EXECUTE FUNCTION guard_immutable();
+CREATE TABLE entry_reversals(original_id uuid PRIMARY KEY REFERENCES journal_entries(id),reversal_id uuid NOT NULL UNIQUE REFERENCES journal_entries(id),reason text NOT NULL);
+CREATE TRIGGER immutable_entry_reversals BEFORE UPDATE OR DELETE ON entry_reversals FOR EACH ROW EXECUTE FUNCTION guard_immutable();
+CREATE TABLE closing_reviews(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),month date NOT NULL REFERENCES periods(month),report jsonb NOT NULL,actor_id uuid NOT NULL REFERENCES public.users(id),created_at timestamptz NOT NULL DEFAULT now());
+CREATE TRIGGER immutable_closing_reviews BEFORE UPDATE OR DELETE ON closing_reviews FOR EACH ROW EXECUTE FUNCTION guard_immutable();

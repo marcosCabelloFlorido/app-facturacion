@@ -1,0 +1,205 @@
+/* FUENTE: 08-toolbar.md, AbsencesModule.tsx:2910–2911.
+   Separación por espacio según SISTEMA_VISUAL.md; la tabla conserva su composición. */
+.module-list-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-1);
+  min-height: var(--control-height-compact);
+  margin-bottom: var(--space-6);
+}
+
+.sales-summary-page .module-kpis,
+.catalog-summary-page .module-kpis {
+  margin-bottom: 0;
+}
+
+/* FUENTE: 15-side-panel-filters.md y 06-input.md; fechas con los campos comunes. */
+.list-filter-dates {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* FUENTE: 15-side-panel-filters.md, AbsencesModule.tsx:3216–3221;
+   06-input.md, components/ui/input.tsx:1–22. Intervalo de precio en una fila. */
+.list-filter-price {
+  display: grid;
+  gap: var(--space-4);
+}
+.list-filter-amounts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+/* FUENTE: 15-side-panel-filters.md, 16-modal.md y 06-input.md.
+   Resumen bajo acción contextual, sin añadir KPIs a la tabla. */
+.sales-filter-extra,
+.sales-history-content {
+  display: grid;
+  gap: var(--space-4);
+}
+.sales-filter-extra {
+  padding-top: var(--space-4);
+}
+.sales-summary-values {
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.sales-summary-values div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.sales-summary-values dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.sales-creation-assist {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+.sales-creation-assist p {
+  margin: 0;
+}
+.sales-creation-assist .optional-details {
+  margin: 0;
+}
+.sales-history-content {
+  padding-top: var(--space-4);
+}
+.sales-history-content > .button {
+  justify-self: start;
+}
+.sales-payment-terms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.sales-payment-terms .button[aria-pressed='true'] {
+  background: var(--text);
+  color: var(--bg);
+}
+.sales-creation-assist .quiet-link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  min-height: var(--control-height);
+}
+.sales-creation-assist .quiet-link,
+.sales-creation-assist a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Flujos de ventas: kit 4.1.0, campos y acciones planos. */
+.sales-batch-choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.sales-batch-choice input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.sales-document-navigation,
+.sales-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+.sales-document-navigation {
+  justify-content: flex-end;
+  gap: var(--space-2);
+  max-width: 100%;
+}
+.document-navigation-position {
+  display: inline-flex;
+  justify-content: center;
+  gap: var(--space-1);
+  min-width: 7ch;
+  white-space: nowrap;
+}
+.document-navigation-message {
+  flex-basis: 100%;
+  overflow-wrap: anywhere;
+}
+.sales-payment-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-block: var(--space-4);
+}
+.sales-payment-preview > div {
+  flex: 1 1 110px;
+  min-width: 0;
+}
+.sales-payment-preview dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.sales-batch-form,
+.sales-batch-rows {
+  display: grid;
+  gap: var(--space-6);
+  min-width: 0;
+}
+.sales-batch-row {
+  min-width: 0;
+}
+.sales-batch-choice {
+  min-height: var(--control-height);
+  cursor: pointer;
+}
+.sales-batch-choice span {
+  flex: 1;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.sales-batch-choice strong {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.sales-batch-amount {
+  display: grid;
+  grid-template-columns: minmax(100px, 1fr) minmax(0, 2fr);
+  gap: var(--space-4);
+  align-items: start;
+  margin-top: var(--space-2);
+}
+@media (max-width: 540px) {
+  .sales-batch-amount {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .sales-batch-choice {
+    flex-wrap: wrap;
+  }
+  .sales-batch-choice strong {
+    width: 100%;
+  }
+  .editor-page-invoice .wizard-actions .button {
+    white-space: normal;
+    height: auto;
+    min-height: var(--control-height);
+  }
+}
+
+.filter-list-tools {
+  display: grid;
+  gap: var(--space-4);
+}
+.filter-list-tools .optional-details {
+  margin: 0;
+}
+.filter-list-tools .sales-summary-values {
+  margin: 0;
+}
+.filter-list-tools p {
+  margin: 0;
+}

@@ -1,0 +1,189 @@
+/* Facturación: continuidad de los paneles, tipografía y controles de la app actual. */
+.workspace-save-status {
+  color: var(--text-muted);
+  min-height: 24px;
+  margin-bottom: 12px;
+}
+.recovery-panel {
+  margin-bottom: var(--section-gap);
+  border: 0;
+  box-shadow: none;
+}
+.recovery-panel .panel-heading {
+  border: 0;
+}
+.recovery-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-4);
+  align-items: center;
+  border: 0;
+}
+.recovery-copy {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.recovery-row p {
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.recovery-row .actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.recovery-row .icon-button {
+  min-width: var(--control-height);
+  height: var(--control-height);
+  color: var(--text);
+}
+/* Additional workflows reuse the existing form, panel and table vocabulary. */
+.advanced-options {
+  margin-top: 20px;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 16px;
+}
+.advanced-options > summary {
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.schedule-edit-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+.schedule-edit-row .field {
+  min-width: 0;
+}
+@media (max-width: 600px) {
+  .schedule-edit-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .schedule-edit-row > button {
+    grid-column: 1/-1;
+    justify-self: end;
+  }
+}
+.import-mapping {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+}
+.file-hash {
+  display: block;
+  overflow-wrap: anywhere;
+  max-width: 260px;
+}
+.batch-document-options {
+  max-height: 260px;
+  overflow: auto;
+  margin-bottom: 16px;
+}
+.batch-document-options input[type='checkbox'] {
+  width: auto;
+  margin-right: 8px;
+}
+.buyer-fieldset {
+  border: 1px solid #ddd;
+  border-radius: 0;
+  margin: 20px 0;
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+.buyer-fieldset legend {
+  padding: 0 6px;
+}
+.buyer-fieldset label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  cursor: pointer;
+}
+.buyer-fieldset input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  min-height: 16px;
+  flex: 0 0 16px;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+.buyer-fieldset input[type='checkbox']:focus {
+  box-shadow: none;
+}
+.buyer-policies .button:active {
+  transform: none;
+  background: var(--bg-muted);
+}
+.buyer-policies .button.primary:active {
+  background: color-mix(in srgb, var(--text) 78%, var(--bg));
+}
+.buyer-policies > .panel-heading > .icon-button:active {
+  color: var(--text);
+  background: var(--bg-muted);
+}
+
+/* Vencimientos: lista compacta sobre blanco, sin cabeceras ni fondos de fila. */
+.document-schedule > .panel-heading {
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-6);
+  margin-bottom: var(--space-4);
+}
+.document-schedule .schedule-list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text);
+  background: var(--bg);
+}
+.schedule-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-height: var(--control-height);
+}
+.schedule-data {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-8);
+  flex: 1;
+  min-width: 0;
+}
+.schedule-date {
+  display: grid;
+  gap: var(--space-1);
+  overflow-wrap: anywhere;
+}
+.schedule-amount {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.schedule-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-inline-start: auto;
+}
+.schedule-edit-action {
+  flex: 0 0 var(--control-height);
+}
+@media (max-width: 600px) {
+  .schedule-row {
+    gap: var(--space-3);
+  }
+  .schedule-data {
+    column-gap: var(--space-4);
+  }
+  .schedule-status {
+    flex-basis: 100%;
+    margin-inline-start: 0;
+  }
+}

@@ -1,0 +1,65 @@
+services:
+  db:
+    image: facturacion-portable:postgres-20260918-092100
+    platform: linux/amd64
+    pull_policy: never
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: facturacion
+      POSTGRES_DB: facturacion
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta configuracion.env}
+    volumes:
+      - datos:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, pg_isready -U facturacion -d facturacion]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  app:
+    image: facturacion-portable:sin-modal-20260918-092100
+    platform: linux/amd64
+    pull_policy: never
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://facturacion:${POSTGRES_PASSWORD}@db:5432/facturacion
+      HOST: 0.0.0.0
+      PORT: 3000
+      NODE_ENV: production
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      APP_ENCRYPTION_KEY_FILE: /app/private/encryption.key
+    volumes:
+      - privado:/app/private
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+  acceso:
+    image: facturacion-portable:sin-modal-20260918-092100
+    platform: linux/amd64
+    pull_policy: never
+    restart: unless-stopped
+    command: [node, /entrada/acceso.mjs]
+    depends_on:
+      app:
+        condition: service_healthy
+    volumes:
+      - ./instalacion/acceso.mjs:/entrada/acceso.mjs:ro
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${HTTP_PORT:-3800}:3000"
+    networks: [default, entrada]
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+volumes:
+  datos:
+  privado:
+networks:
+  default:
+    internal: ${AISLAR_RED:-true}
+  entrada: {}

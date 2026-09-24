@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-09-18T07:37:46.734Z",
+  "checks": [
+    {
+      "path": "/api/health",
+      "status": 200,
+      "bytes": 42
+    },
+    {
+      "path": "/api/documents?kind=invoice",
+      "status": 200,
+      "bytes": 29468
+    },
+    {
+      "path": "/api/documents?kind=quote",
+      "status": 200,
+      "bytes": 38712
+    },
+    {
+      "path": "/api/documents?kind=purchase",
+      "status": 200,
+      "bytes": 35390
+    },
+    {
+      "path": "/api/documents/:id",
+      "status": 200,
+      "bytes": 2142
+    },
+    {
+      "path": "/api/documents/:id/files",
+      "status": 200,
+      "bytes": 2
+    },
+    {
+      "path": "/api/documents/:id/pdf",
+      "status": 200,
+      "bytes": 2416
+    }
+  ],
+  "originalFilesVerified": 158,
+  "sourceFilesVerified": 146,
+  "frontendFilesServedVerified": 13,
+  "frontendRecompiled": false
+}

@@ -1,0 +1,161 @@
+.folio-sheet {
+  width: 100%;
+  min-height: 100%;
+  background: #fff;
+  color: #0a0a0a;
+  border-radius: var(--radius-dialog);
+  border: 1px solid var(--border);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.14);
+  padding: clamp(20px, 3.2vw, 40px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.folio-sheet::-webkit-scrollbar {
+  display: none;
+}
+/* Indicador de scroll pendiente: fijo sobre el folio, nunca desplaza layout;
+   solo cambia de opacidad para evitar saltos al aparecer/desaparecer. */
+.folio-scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: color-mix(in srgb, #000 78%, transparent);
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 260ms ease;
+}
+.folio-scroll-hint.is-visible {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .folio-scroll-hint {
+    transition: none;
+  }
+}
+.folio-document-meta {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+}
+.folio-rule {
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+.folio-client-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+}
+.folio-eyebrow {
+  margin: 0 0 var(--space-2);
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.folio-client {
+  min-width: 0;
+}
+.folio-client-name {
+  margin: 0 0 var(--space-2);
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-semibold);
+}
+.folio-client-line {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+}
+.folio-grand-total {
+  flex-shrink: 0;
+  text-align: right;
+}
+.folio-grand-total-amount {
+  margin: 0;
+  font-size: var(--text-display);
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+.folio-lines {
+  min-width: 0;
+}
+/* La tabla de líneas usa columnas fijas de 800px por defecto (editor de escritorio);
+   dentro del folio, más estrecho, se reduce para que nunca genere scroll horizontal. */
+.folio-sheet .document-lines-scroll {
+  overflow-x: hidden;
+}
+.folio-sheet .document-lines-table.document-lines-invoice {
+  min-width: 0;
+  width: 100%;
+}
+.folio-sheet .document-lines-invoice :is(th, td) {
+  padding: var(--space-2) var(--space-2);
+}
+.folio-sheet .document-lines-invoice .line-value {
+  min-height: auto;
+  padding: var(--space-1);
+  font-size: var(--text-caption);
+}
+.folio-sheet .document-lines-invoice .line-quantity,
+.folio-sheet .document-lines-invoice .line-tax {
+  width: 64px;
+  min-width: 64px;
+}
+.folio-sheet .document-lines-invoice .line-price {
+  width: 84px;
+  min-width: 84px;
+  padding-inline-end: var(--space-2);
+}
+.folio-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin-top: auto;
+}
+.folio-payment-info {
+  min-width: 0;
+}
+.folio-payment-heading {
+  margin: 0 0 var(--space-2);
+  font-weight: var(--weight-semibold);
+  font-size: var(--text-caption);
+}
+.folio-payment-line {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+  white-space: pre-line;
+}
+.folio-totals {
+  flex-shrink: 0;
+  width: min(280px, 45%);
+}
+@media (max-width: 640px) {
+  .folio-client-row,
+  .folio-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .folio-grand-total {
+    text-align: left;
+  }
+  .folio-totals {
+    width: 100%;
+  }
+}

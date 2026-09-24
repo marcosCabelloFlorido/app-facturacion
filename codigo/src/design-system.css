@@ -1,0 +1,5006 @@
+/* Shared visual hierarchy. See docs/SISTEMA_VISUAL.md before extending it.
+   Loaded after component styles; typography belongs here, layout stays with its component. */
+:root {
+  --font-ui: 'Inter Variable', Inter, system-ui, sans-serif;
+  --font-code: ui-monospace, SFMono-Regular, Consolas, monospace;
+  --text-caption: 0.75rem;
+  --text-body: 0.8125rem;
+  --text-subtitle: 1rem;
+  --text-section: 1.125rem;
+  --text-amount: 1.25rem;
+  --text-page: 1.25rem;
+  --text-metric: 1.625rem;
+  --text-display: 1.875rem;
+  --text-brand: 1.5rem;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --leading-body: 1.5;
+  --leading-copy: 1.6;
+  --leading-heading: 1.25;
+  --leading-metric: 1.2;
+  --tracking-heading: -0.01em;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --panel-inset: var(--space-6);
+  --section-gap: var(--space-6);
+  --control-text: var(--text-body);
+  --control-height: 44px;
+  --control-height-compact: 36px;
+  --table-row-height: 64px;
+  --table-column-gap: 28px;
+  --table-edge-inset: 24px;
+  --table-cell-inset: calc(var(--table-column-gap) / 2);
+  /* FUENTE: kit-design-v2/tokens/colors.css — kronjop-app/src/index.css:9–32.
+     Cuerpo de 13px y metadatos legibles en todas las pantallas. */
+  --bg: #fff;
+  --bg-subtle: #fafafa;
+  --bg-muted: #f4f4f5;
+  --bg-table-head: #ececed;
+  --text: #0a0a0a;
+  --border-strong: rgba(0, 0, 0, 0.16);
+  --module-width: 1280px;
+  --module-background: #000;
+  --on-dark: #fff;
+  --on-dark-title: #eaeaea;
+  --on-dark-muted: #a3a3a3;
+  --on-dark-nav: rgba(255, 255, 255, 0.78);
+  --on-dark-border: rgba(255, 255, 255, 0.16);
+  --on-dark-hover: rgba(255, 255, 255, 0.07);
+  --on-dark-active: rgba(255, 255, 255, 0.1);
+  --radius-control: 10px;
+  --radius-action: 10px;
+  --radius-dialog: 18px;
+  --focus-ring: var(--text);
+  --shadow-dialog: 0 24px 60px rgba(0, 0, 0, 0.18), 0 0 0 1px var(--border);
+  --text-muted: #6b7280;
+  --text-subtle: #6b7280;
+  --border: rgba(0, 0, 0, 0.08);
+  font-family: var(--font-ui);
+  font-size: 100%;
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  letter-spacing: 0;
+}
+/* Apply border radius through CSS variables */
+button,
+input,
+select,
+textarea,
+.button,
+.modal,
+.panel,
+.badge,
+.contact-card,
+.file-row {
+  border-radius: var(--radius-control);
+}
+body {
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-size: var(--text-body);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  overflow-wrap: anywhere;
+}
+h1 {
+  font-size: var(--text-page);
+}
+h2 {
+  font-size: var(--text-section);
+}
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--text-subtitle);
+}
+strong,
+b {
+  font-weight: var(--weight-semibold);
+}
+
+/* One size for all reading, navigation, table data and form controls. */
+table,
+.button,
+.text-link,
+.nav-item,
+.new-button,
+.tabs button,
+.settings-nav button,
+.editor-steps button,
+.add-line,
+.contact-name,
+.contact-card-actions .button,
+.contact-options strong,
+.table-name,
+.document-link,
+.activity-item strong,
+.journal-entry summary strong,
+.field-label,
+.buyer-fieldset legend,
+.advanced-options > summary,
+.optional-details summary,
+.confirmation-summary strong {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+}
+.button,
+.text-link,
+.new-button,
+.contact-nif-selected,
+.tabs button,
+.settings-nav button,
+.editor-steps button,
+.add-line,
+.field-label,
+.buyer-fieldset legend,
+.advanced-options > summary,
+.optional-details summary,
+.compact-sidebar .workspace strong,
+.compact-sidebar .user-profile strong {
+  font-weight: var(--weight-medium);
+}
+.nav-item {
+  font-weight: var(--weight-regular);
+}
+.nav-item.active,
+.tabs button.active,
+.settings-nav button.active,
+.editor-steps button[aria-current],
+.contact-name,
+.contact-options strong,
+.total-cell,
+tfoot td,
+.field-error-message,
+.toast > a {
+  font-weight: var(--weight-semibold);
+}
+input,
+select,
+textarea,
+.app-select-trigger,
+.app-select-search input {
+  font-size: var(--control-text);
+  line-height: var(--leading-body);
+}
+.app-select-popover,
+.product-concept-menu {
+  font-size: var(--control-text);
+  line-height: var(--leading-body);
+}
+
+/* Supporting information never competes with the value or name it describes. */
+small,
+.small,
+th,
+.badge,
+.subtle-tag,
+.eyebrow,
+.workspace-tag,
+.topbar-date,
+.app-footer,
+.environment,
+.compact-sidebar .sidebar-section-title,
+.nav-label,
+.section-label > span,
+.chart-axis,
+.month-bar > span,
+.chart-legend,
+.count,
+.draft-tag,
+.table-footer,
+.document-link small,
+.activity-item p,
+.activity-item small,
+.journal-number,
+.document-list .doc-date,
+.document-list .doc-due,
+.summary-note,
+.editor-tip,
+.line-number,
+.line-editor-title > strong,
+.line-amount small,
+.document-toolbar,
+.paper-foot,
+.payment-list span,
+.payment-list small,
+.timeline p,
+.installation-note,
+.auth-foot,
+.auth-note,
+.auth-kicker,
+.auth-clock,
+.auth-brand-caption,
+.workspace-save-status,
+.recovery-row p,
+.document-history-meta,
+.file-hash,
+.contact-type,
+.contact-tax,
+.contact-card p,
+.contact-card-details,
+.contact-pagination,
+.contact-hint,
+.contact-applied,
+.contact-select-label,
+.due-overdue > span > span,
+.due-overdue small,
+.due-party small,
+.due-row-meta,
+.due-direction,
+.due-list .doc-status small,
+.review-dates dt,
+.review-recipient small,
+.review-concepts small,
+.app-select-error {
+  font-size: var(--text-caption);
+  line-height: var(--leading-body);
+  letter-spacing: 0;
+}
+th,
+.badge,
+.contact-type,
+.contact-select-label,
+.due-direction,
+.compact-sidebar .sidebar-section-title,
+.nav-label,
+.eyebrow,
+.auth-kicker {
+  font-weight: var(--weight-medium);
+}
+th {
+  text-transform: none;
+}
+.compact-sidebar .sidebar-section-title,
+.nav-label,
+.eyebrow,
+.auth-kicker {
+  letter-spacing: 0.06em;
+}
+.field > small,
+.field small,
+.panel-heading p,
+.modal-head p,
+.setting-info p,
+.journal-entry summary small,
+.summary-note,
+.section-label > span,
+.table-footer,
+.contact-pagination {
+  color: var(--text-muted);
+}
+.panel-heading p,
+.modal-head p,
+.page-heading p,
+.empty p,
+.modal-copy,
+.next-step-copy,
+.setting-info p,
+.auth-form > p,
+.auth-welcome-copy,
+.auth-intro > p {
+  font-size: var(--text-body);
+  line-height: var(--leading-copy);
+}
+.help-bubble,
+.save-explanation,
+.auth-features li span {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-copy);
+}
+
+/* Amounts use Inter with aligned digits, including accounting and document references. */
+.mono {
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+}
+code,
+pre,
+.file-hash {
+  font-family: var(--font-code);
+}
+.numeric,
+.kpi > strong,
+.balance-big,
+.totals,
+.chart-footer strong,
+.due-amount,
+.due-overdue strong,
+.line-amount strong,
+.confirmation-summary span {
+  font-variant-numeric: tabular-nums;
+}
+.kpi > strong,
+.balance-big {
+  font-size: var(--text-metric);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-metric);
+  letter-spacing: var(--tracking-heading);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.kpi > div > span,
+.kpi > span {
+  font-weight: var(--weight-medium);
+}
+.chart-footer strong,
+.focus-item strong,
+.totals .grand-total {
+  font-size: var(--text-section);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+}
+.totals .grand-total > strong:last-child {
+  font-size: var(--text-amount);
+  letter-spacing: var(--tracking-heading);
+}
+.line-amount strong,
+.confirmation-summary span {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-semibold);
+}
+@container editor-totals (max-width: 360px) {
+  .totals .grand-total > .amount-long:last-child {
+    font-size: var(--text-subtitle);
+  }
+  .totals .grand-total > .amount-extra-long:last-child {
+    font-size: var(--text-body);
+  }
+}
+/* Documento: referencia del usuario del 14/09/2026. La identidad abre la
+   jerarquía; solo el total vuelve a destacar al terminar la lectura. */
+.document-sheet-issuer h2 {
+  font-size: var(--text-display);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-heading);
+}
+.document-sheet-recipient h3 {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-medium);
+}
+.document-sheet-concept {
+  font-size: var(--text-section);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-heading);
+}
+.document-sheet-label,
+.document-sheet-meta,
+.document-sheet-address,
+.document-sheet-exemption,
+.document-sheet-credit {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+.document-sheet-dates dd {
+  font-weight: var(--weight-medium);
+}
+.document-sheet-dates dd,
+.document-sheet-breakdown {
+  font-variant-numeric: tabular-nums;
+}
+.document-sheet-label,
+.document-sheet-meta dt,
+.document-sheet-address,
+.document-sheet-breakdown dt,
+.document-sheet-exemption,
+.document-sheet-credit,
+.document-sheet-totals .totals > div > span:first-child {
+  color: var(--text-muted);
+}
+.document-sheet-breakdown .document-sheet-line-net dt,
+.document-sheet-totals .totals > div:first-child > span:first-child {
+  color: var(--text);
+}
+.document-sheet-line-net dt span {
+  color: var(--text-muted);
+}
+.document-sheet-totals .grand-total > strong:first-child {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+}
+@container document-summary (max-width: 540px) {
+  .document-sheet-issuer h2 {
+    font-size: var(--text-metric);
+  }
+  .document-sheet-totals .grand-total > .amount-long:last-child {
+    font-size: var(--text-subtitle);
+  }
+  .document-sheet-totals .grand-total > .amount-extra-long:last-child {
+    font-size: var(--text-body);
+  }
+}
+.brand {
+  font-size: var(--text-brand);
+  font-weight: var(--weight-semibold);
+  letter-spacing: -0.04em;
+  line-height: var(--leading-heading);
+}
+.auth-intro h2 {
+  font-size: var(--text-display);
+}
+.auth-greeting,
+.auth-form > h1 {
+  font-size: var(--text-page);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+}
+
+/* Shared rhythm: 8px inside a text group, 16px inside a section, 24px between sections. */
+.page-heading h1 {
+  color: var(--on-dark-title);
+}
+.module-status .badge {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--on-dark-muted);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+}
+.module-status .badge-dot {
+  background: currentColor;
+}
+/* FUENTE: 03-module-header.md y 05-button.md; adaptación aprobada para todas las cabeceras.
+   El título enlazado solo se subraya al pasar el cursor y conserva el foco visible. */
+.module-title-link {
+  position: relative;
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+.module-title-link:hover {
+  color: var(--on-dark);
+  text-decoration: underline;
+}
+.module-title-link:focus-visible {
+  outline: 2px solid var(--on-dark);
+  outline-offset: 5px;
+}
+.module-subtitle-link {
+  color: var(--on-dark-title);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+.module-subtitle-link:hover {
+  color: var(--on-dark);
+  text-decoration: underline;
+}
+.module-subtitle-link:focus-visible {
+  outline: 2px solid var(--on-dark);
+  outline-offset: 4px;
+}
+@container billing-content (max-width: 760px) {
+  .module-title-link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 50%;
+    height: var(--control-height);
+    transform: translateY(-50%);
+  }
+}
+.main-shell .page-heading p {
+  color: var(--on-dark-muted);
+  margin-top: var(--space-2);
+}
+/* FUENTE: 03-module-header.md (AbsencesModule.tsx:2865–2880).
+   Secondary document metadata below the description, using the common caption scale. */
+.page-heading .module-heading-metadata {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+}
+.heading-actions {
+  gap: var(--space-2);
+}
+.page-heading .heading-actions .button {
+  min-height: var(--control-height-compact);
+  padding: 6px var(--space-3);
+  gap: 6px;
+}
+.page-heading .heading-actions .button > svg {
+  width: 14px;
+  height: 14px;
+}
+.panel,
+.kpi {
+  padding: var(--panel-inset);
+}
+.panel {
+  margin-bottom: var(--section-gap);
+}
+.panel-heading,
+.modal-head {
+  margin-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+.panel-heading > div,
+.modal-head > div {
+  min-width: 0;
+}
+.panel-heading p,
+.modal-head p {
+  margin-top: var(--space-2);
+  max-width: 70ch;
+}
+.table-panel {
+  padding: 0;
+}
+.recovery-panel {
+  padding: var(--panel-inset);
+}
+.recovery-panel .panel-heading {
+  padding: 0;
+  margin-bottom: var(--space-4);
+}
+.recovery-row {
+  padding: 0;
+}
+.recovery-row + .recovery-row {
+  margin-top: var(--space-4);
+}
+.settings-section-content .series-settings > .panel-heading {
+  margin-bottom: var(--space-8);
+}
+.series-settings > .recovery-row {
+  min-height: var(--control-height);
+  padding-block: var(--space-3);
+  column-gap: var(--space-8);
+}
+.series-settings > .recovery-row + .recovery-row {
+  margin-top: var(--space-6);
+}
+.table-panel > .panel-heading {
+  padding: var(--panel-inset);
+  margin-bottom: 0;
+}
+.chart-panel {
+  padding-bottom: 0;
+}
+.due-card .panel-heading,
+.chart-panel .panel-heading {
+  margin-bottom: var(--space-4);
+}
+.section-label {
+  margin-bottom: var(--space-4);
+  align-items: baseline;
+  gap: var(--space-4);
+}
+.section-label h2 {
+  color: var(--text);
+}
+.kpi-grid {
+  gap: var(--space-4);
+  margin-bottom: var(--section-gap);
+}
+.kpi > strong {
+  margin: var(--space-4) 0 0;
+}
+.kpi > small {
+  margin-top: var(--space-2);
+}
+.overview-grid {
+  gap: var(--section-gap);
+}
+.chart-footer {
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.chart-footer > span {
+  min-width: 0;
+}
+.activity-grid {
+  gap: var(--space-6);
+}
+.activity-item > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.form-grid {
+  gap: 0 var(--space-6);
+}
+.field {
+  margin-bottom: var(--space-4);
+}
+.field-label {
+  margin-bottom: var(--space-2);
+}
+.field > small {
+  margin-top: var(--space-1);
+}
+.editor-main .panel,
+.editor-summary .panel {
+  padding: var(--panel-inset);
+}
+.wizard-panel > h2 {
+  margin-bottom: var(--space-6);
+}
+.wizard-panel .form-grid .field {
+  margin-bottom: var(--space-4);
+}
+.modal {
+  padding: var(--panel-inset);
+}
+.modal-actions {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+.settings-layout {
+  gap: var(--section-gap);
+}
+.documents-toolbar,
+.due-filters {
+  padding: var(--space-4) var(--panel-inset);
+}
+.list-selector.app-select {
+  width: auto;
+  max-width: 100%;
+}
+.list-selector .app-select-prefix {
+  flex-shrink: 0;
+}
+.list-selector .app-select-value {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.list-selector .app-select-value .app-select-check {
+  display: none;
+}
+.table-footer {
+  min-height: var(--control-height-compact);
+  padding: var(--space-1) var(--panel-inset);
+  gap: var(--space-2);
+}
+.table-footer .button,
+.contact-pagination .button {
+  min-height: var(--control-height-compact);
+  padding: 6px var(--space-3);
+}
+.table-footer .icon-button {
+  width: var(--control-height-compact);
+  min-width: var(--control-height-compact);
+  height: var(--control-height-compact);
+  padding: 0;
+}
+.contact-pagination {
+  padding-top: var(--space-2);
+}
+th {
+  padding: var(--space-3) var(--panel-inset);
+}
+td {
+  padding: var(--space-4) var(--panel-inset);
+}
+/* All existing tables share the spacing of the pending payments list. */
+:where(.table-scroll > table) > tbody > tr > :is(td, th) {
+  height: var(--table-row-height);
+  padding-block: var(--space-3);
+}
+.due-entry-link {
+  min-height: var(--table-row-height);
+  padding-block: var(--space-3);
+}
+.button,
+input:not([type='checkbox']):not([type='radio']),
+select,
+.app-select-trigger {
+  min-height: var(--control-height);
+}
+.button.small-button {
+  min-height: var(--control-height-compact);
+}
+.accounting-controls .date-range input {
+  min-height: var(--control-height);
+  padding: 10px 12px;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --text-page: 1.0625rem;
+    --text-metric: 1.375rem;
+    --text-display: 1.875rem;
+    --panel-inset: var(--space-4);
+    --control-text: var(--text-subtitle);
+  }
+  .panel-heading {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .kpi-grid,
+  .kpi-grid.three {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  }
+  .document-list td {
+    padding: 0;
+    height: auto;
+  }
+  .document-list tr {
+    padding: var(--space-4);
+  }
+  .due-entry-link {
+    min-height: calc(var(--table-row-height) * 2);
+    align-content: center;
+  }
+  .table-footer .button,
+  .contact-pagination .button {
+    min-height: var(--control-height);
+  }
+  .table-footer .icon-button {
+    width: var(--control-height);
+    min-width: var(--control-height);
+    height: var(--control-height);
+  }
+}
+
+@media (max-width: 540px) {
+  .form-grid,
+  .form-grid.three,
+  .modal .form-grid.three,
+  .editor-main .form-grid.three,
+  .contacts-filters,
+  .contact-search-fields,
+  .import-mapping {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .form-grid > .span-2 {
+    grid-column: 1 / -1;
+  }
+}
+/* FUENTE: kit-design-v2/tokens/index.css — src/index.css reset;
+   components/05-button.md — button.tsx:7–31, TimeTrackingConfig.tsx:1828–1841;
+   components/06-input.md — input.tsx:5–19. Alturas y fuente aprobadas se conservan. */
+:root {
+  --select-field-radius: var(--radius-control);
+  --select-panel-radius: var(--radius-control);
+  --select-option-radius: var(--radius-control);
+  --select-border: var(--border-strong);
+  --select-background: var(--bg);
+  --select-text: var(--text);
+  --select-hover: var(--bg-muted);
+  --select-selected: var(--text);
+  --select-focus: var(--focus-ring);
+  --select-shadow: 0 8px 24px color-mix(in srgb, var(--text) 12%, transparent);
+}
+body {
+  color: var(--text);
+  background: var(--bg);
+  min-width: 0;
+  -webkit-font-smoothing: antialiased;
+}
+input,
+select,
+textarea {
+  border-radius: var(--radius-control);
+  color: var(--text);
+  background: var(--bg);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+input:not([type='checkbox']):not([type='radio']),
+select,
+textarea {
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--text) 4%, transparent);
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--text);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 22%, transparent);
+}
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline-color: var(--focus-ring);
+}
+.button {
+  border-radius: var(--radius-action);
+  border-color: var(--border-strong);
+}
+.button.primary {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.button.primary:hover {
+  background: color-mix(in srgb, var(--text) 85%, var(--bg));
+}
+.page-heading .button.light,
+.page-heading .button.contact-create {
+  background: var(--bg);
+  border-color: var(--bg);
+  color: var(--text);
+}
+.page-heading .button.dark-ghost {
+  color: var(--on-dark);
+  border-color: var(--on-dark-border);
+}
+.icon-button {
+  min-width: var(--control-height);
+  min-height: var(--control-height);
+  border-radius: var(--radius-action);
+}
+/* Acción solo con icono: sin superficie; conserva foco y área de interacción comunes. */
+.icon-button.icon-button-plain,
+.icon-button.icon-button-plain:hover {
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.app-select[data-invalid] .app-select-trigger {
+  border: 2px solid var(--text);
+}
+.app-select-error {
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+.app-select-option[data-selected][data-focus-visible],
+.app-select-option[data-selected][data-focused] {
+  outline-color: var(--on-dark);
+}
+.app-select-option[data-selected] {
+  font-weight: var(--weight-semibold);
+}
+.app-select-trigger:hover,
+.app-select[data-open] .app-select-trigger {
+  border-color: var(--text-muted);
+}
+
+/* FUENTE: components/07-table.md — TeamModule.tsx:1968–2000, src/index.css:355–359.
+   Filas de 64px, columna Estado condicional y pies compactos: acuerdos del proyecto. */
+.panel,
+.kpi,
+.table-panel,
+.contact-card,
+.contact-search-panel,
+.contact-options button,
+.due-overdue,
+.review-recipient,
+.review-concepts,
+.line-editor,
+.setting-info,
+.file-row,
+.import-dropzone,
+.confirmation-summary {
+  border-radius: var(--radius-control);
+  box-shadow: none;
+}
+th {
+  background: var(--bg-table-head);
+  color: var(--text-muted);
+}
+.table-scroll > table > tbody > tr:nth-child(odd) {
+  background: color-mix(in srgb, var(--text) 1.5%, var(--bg));
+}
+tbody tr:hover {
+  background: transparent;
+}
+.table-scroll > table > tbody > tr:has(a, button):hover {
+  background: var(--bg-muted);
+}
+.badge,
+.contact-type,
+.subtle-tag,
+.draft-tag {
+  background: var(--bg-muted);
+  color: var(--text);
+  border-radius: var(--radius-control);
+}
+.badge-dot,
+.status-dot,
+.workspace-avatar,
+.user-avatar {
+  border-radius: 50%;
+}
+.badge-dot {
+  width: 7px;
+  height: 7px;
+}
+.contact-applied,
+.contact-name,
+.contact-select-label {
+  color: var(--text);
+}
+.contact-select-label {
+  background: var(--bg-muted);
+  border-radius: var(--radius-control);
+}
+.contact-search-panel {
+  background: var(--bg-muted);
+  border-color: var(--border-strong);
+}
+.contact-options button {
+  color: var(--text);
+  background: var(--bg);
+  border-color: var(--border-strong);
+}
+.contact-options button:hover,
+.contact-options button:focus-visible {
+  background: var(--bg-muted);
+  border-color: var(--text);
+  outline-color: var(--text);
+}
+
+/* FUENTE: components/11-stat-tile.md — DashboardModule.tsx:115–169.
+   Separación vertical, sin caja independiente; etiqueta e importe mantienen su orden acordado. */
+.kpi-grid {
+  gap: 0;
+}
+.kpi {
+  border: 0;
+  background: transparent;
+  min-height: 132px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+.kpi + .kpi {
+  border-left: 1px solid var(--border);
+}
+.kpi > strong {
+  overflow-wrap: anywhere;
+  order: 1;
+  margin: 0;
+  font-size: var(--text-display);
+}
+.kpi > span,
+.kpi > div {
+  order: 2;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.kpi > small {
+  order: 3;
+  margin: 0;
+}
+.journal-entry {
+  border: 0;
+}
+.journal-entry:nth-child(odd) {
+  background: color-mix(in srgb, var(--text) 1.5%, transparent);
+}
+.journal-entry summary:hover {
+  background: var(--bg-muted);
+}
+@container billing-content (max-width: 540px) {
+  .kpi {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .kpi > strong {
+    order: 2;
+    font-size: var(--text-metric);
+  }
+  .kpi > span,
+  .kpi > div {
+    order: 1;
+  }
+}
+
+/* FUENTE: components/04-section-layout.md — AdminModule.tsx:3854–3950,
+   EmployeeModuleLayout.tsx:277–446. Aside de 200px + selector en móvil. */
+.settings-layout {
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 0;
+}
+.section-navigation {
+  --section-navigation-inset: var(--space-6);
+  align-self: stretch;
+  padding: 6px 24px 24px 0;
+  border-right: 1px solid var(--border);
+}
+.section-navigation-desktop {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+}
+.section-navigation-desktop button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  width: 100%;
+  padding: 7px 0;
+  background: transparent;
+  color: var(--text-muted);
+  border: 0;
+  text-align: left;
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+.section-navigation-desktop button:hover,
+.section-navigation-desktop button[aria-current='page'] {
+  color: var(--text);
+}
+.section-navigation-desktop button[aria-current='page'] {
+  font-weight: var(--weight-semibold);
+}
+.section-navigation-desktop button[aria-current='page']::after,
+.settings-side-group button[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  inset-block: var(--space-1);
+  inset-inline-end: calc(-1 * var(--section-navigation-inset));
+  width: 2px;
+  background: var(--text);
+}
+
+.section-navigation-mobile {
+  display: none;
+}
+.settings-main {
+  max-width: none;
+  padding: 24px 0 0 24px;
+}
+.settings-main > .panel {
+  border: 0;
+  padding: 0;
+}
+.settings-main > .table-panel > .panel-heading {
+  padding: 0 0 24px;
+}
+.settings-main > .panel > .form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* FUENTE: components/16-modal.md — TimeTrackingConfig.tsx:1804–1891.
+   Un único dialog accesible para todos los módulos; ancho según contenido. */
+.modal {
+  border-radius: var(--radius-dialog);
+  background: var(--bg);
+  box-shadow: var(--shadow-dialog);
+}
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+.modal-head > .icon-button {
+  margin: -8px -8px 0 0;
+}
+.modal-actions {
+  border-top: 0;
+}
+.modal-actions .button:not(.primary) {
+  border-color: transparent;
+  background: transparent;
+}
+.modal-actions .button:not(.primary):hover {
+  background: var(--bg-muted);
+}
+.access-permissions-actions .icon-button {
+  width: var(--control-height);
+  height: var(--control-height);
+  flex: 0 0 var(--control-height);
+}
+/* FUENTE: components/17-empty-state.md — EmptyState.tsx:23–76. */
+.empty {
+  padding: 80px 16px;
+}
+.empty-icon {
+  width: auto;
+  height: auto;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-control);
+  color: var(--text-muted);
+}
+.empty-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke-width: 1.4;
+}
+.empty h3 {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+}
+.empty p {
+  max-width: 40ch;
+  color: var(--text-muted);
+}
+/* Variante compacta de 17-empty-state.md para secciones auxiliares. */
+.empty.empty-compact,
+.loading.loading-compact {
+  min-height: 0;
+  padding: var(--space-4) 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: var(--space-3);
+  text-align: left;
+}
+.empty-compact .empty-icon {
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+.empty-compact .empty-icon svg {
+  width: 20px;
+  height: 20px;
+}
+.empty-compact .button {
+  margin-top: 0;
+}
+.toast {
+  max-width: calc(100vw - 32px);
+  background: var(--text);
+  color: var(--bg);
+  border-radius: var(--radius-control);
+}
+.toast > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.toast > button {
+  min-width: var(--control-height);
+  min-height: var(--control-height);
+}
+@media (max-width: 1100px) and (min-width: 761px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .kpi-grid:not(.three) .kpi:nth-child(3) {
+    border-left: 0;
+  }
+  .kpi-grid:not(.three) .kpi:nth-child(n + 3) {
+    border-top: 1px solid var(--border);
+  }
+}
+@media (max-width: 760px) {
+  .kpi-grid,
+  .kpi-grid.three {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .kpi {
+    min-height: 0;
+    padding: var(--space-4) 0;
+  }
+  .kpi + .kpi {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+  .settings-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .section-navigation {
+    border: 0;
+    padding: 0 0 var(--space-4);
+  }
+  .section-navigation-desktop {
+    display: none;
+  }
+  .section-navigation-mobile {
+    display: block;
+  }
+  .section-navigation-mobile .app-select-trigger {
+    background: var(--bg-muted);
+  }
+  .settings-main {
+    padding: var(--space-4) 0 0;
+  }
+  .settings-main > .panel > .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .settings-main .span-2 {
+    grid-column: 1 / -1;
+  }
+  .modal {
+    max-height: calc(100dvh - 32px);
+  }
+  .modal-actions .button {
+    white-space: normal;
+  }
+}
+@media (forced-colors: active) {
+  .section-navigation-desktop button[aria-current='page'] {
+    outline: 2px solid CanvasText;
+  }
+  .app-select-option[data-selected] {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+/* Campos de archivo: mismo primitivo que los controles del kit (input.tsx:5–19). */
+input[type='file'] {
+  padding: 8px 12px;
+  min-width: 0;
+}
+input[type='file']::file-selector-button {
+  border: 0;
+  border-right: 1px solid var(--border);
+  padding: 4px 12px 4px 0;
+  margin-right: 12px;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: var(--weight-medium);
+  cursor: pointer;
+}
+.auth-form > h1 {
+  margin-bottom: var(--space-2);
+}
+.auth-brand {
+  background: var(--module-background);
+}
+.buyer-fieldset,
+.notice,
+.demo-button {
+  border-radius: var(--radius-control);
+}
+/* El importe se mantiene legible incluso cuando supera el ancho de una tarjeta. */
+.kpi > strong {
+  overflow-wrap: anywhere;
+}
+/* Adaptación del aside del kit al ancho real del módulo dentro de Cronjob.
+   Una ventana ancha puede contener un módulo estrecho junto al menú anfitrión. */
+.main-shell {
+  container-name: billing-content;
+  container-type: inline-size;
+}
+@container billing-content (max-width: 760px) {
+  .settings-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .section-navigation {
+    border: 0;
+    padding: 0 0 var(--space-4);
+  }
+  .section-navigation-desktop {
+    display: none;
+  }
+  .section-navigation-mobile {
+    display: block;
+  }
+  .section-navigation-mobile .app-select-trigger {
+    background: var(--bg-muted);
+  }
+  .settings-main {
+    padding: var(--space-4) 0 0;
+  }
+}
+@container billing-content (max-width: 540px) {
+  .kpi-grid,
+  .kpi-grid.three {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .kpi {
+    min-height: 0;
+    padding: var(--space-4) 0;
+  }
+  .kpi + .kpi {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+  .form-grid,
+  .form-grid.three {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .form-grid > .span-2 {
+    grid-column: 1 / -1;
+  }
+  .settings-main > .panel > .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .settings-main .span-2 {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Detalle bajo demanda: los nuevos componentes usan la misma escala. */
+.actions-menu-item,
+.actions-trigger,
+.quiet-link,
+.metric-label {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+}
+.ui-tooltip,
+.metric-credit-label,
+.overview-period > span {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+.metric-link > strong,
+.metric-detail-summary > div > strong {
+  font-size: var(--text-display);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-metric);
+  letter-spacing: var(--tracking-heading);
+}
+
+/* Canonical roles from module-header (20/17), greeting (32) and stat tile (30/22).
+   Three weights and readable metadata remain common to every module. */
+.greeting-heading h1 {
+  font-size: 2rem;
+  line-height: 1.1;
+}
+.metric-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.greeting-heading .module-title > p {
+  font-size: 0.875rem;
+}
+
+/* Form source: 06-input.md, fields use bordered boxes with rounded corners.
+   Search boxes retain their frame; fields retain an explicit baseline and focus. */
+.field input:not([type='checkbox']):not([type='radio']),
+.field textarea,
+.field .app-select-trigger {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  padding-inline: var(--space-3);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--text) 4%, transparent);
+  border-radius: var(--radius-control);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.field input:focus,
+.field textarea:focus,
+.field .app-select-trigger[data-focus-visible] {
+  border-color: var(--text);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 22%, transparent);
+}
+.field input:disabled,
+.field textarea:disabled {
+  color: var(--text-muted);
+}
+/* 06-input.md (AbsencesModule.tsx:5049–5070), adapted by request:
+   neutral fields use rounded boxes with borders; labels, errors and keyboard focus remain. */
+.fields-filled .field input:not([type='checkbox']):not([type='radio']),
+.fields-filled .field textarea,
+.fields-filled .field .app-select-trigger {
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-control);
+}
+.fields-filled .field .input-suffix input {
+  padding-inline-end: var(--space-8);
+}
+.fields-filled .field .product-concept-control input {
+  padding-inline-end: calc(var(--space-8) + var(--space-2));
+}
+.fields-filled .field input:hover:not(:disabled),
+.fields-filled .field .app-select-trigger:hover:not(:disabled) {
+  background: var(--bg-subtle);
+  border-color: var(--text-muted);
+}
+.field-label-hidden .field-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* The invoice canvas uses the same quiet filled fields as its concepts. */
+.invoice-recipient-editor .contact-nif-control .field input[type='text'] {
+  border: 1px solid var(--border-strong);
+  background: var(--bg-muted);
+}
+/* NIF lookup uses the framed search variant from kit 06-input.md. */
+.contact-nif-control .field input[type='text'] {
+  border: 1px solid var(--border-strong);
+  padding-inline: 12px 52px;
+}
+.field:has([aria-invalid='true']) {
+  border-left: 2px solid var(--text);
+  padding-left: 12px;
+}
+.table-scroll > table > thead > tr > th {
+  border-bottom: 1px solid var(--border);
+  font-weight: var(--weight-regular);
+}
+.table-scroll > table > tbody > tr > :is(td, th) {
+  border-bottom: 1px solid var(--border);
+}
+.table-scroll > table > tbody > tr:last-child > :is(td, th) {
+  border-bottom: 0;
+}
+.table-scroll > table > thead > tr > th,
+.table-scroll > table > tbody > tr > :is(td, th),
+.table-scroll > table > tfoot > tr > td {
+  padding-inline: var(--table-cell-inset);
+}
+.table-scroll > table > :is(thead, tbody, tfoot) > tr > :is(th, td):first-child {
+  padding-left: var(--table-edge-inset);
+}
+.table-scroll > table > :is(thead, tbody, tfoot) > tr > :is(th, td):last-child {
+  padding-right: var(--table-edge-inset);
+}
+/* Las esquinas de la tabla deben seguir el radio del contenedor: el fondo de la
+   cabecera y el hover de fila no deben terminar en ángulo recto. */
+.table-scroll > table > thead > tr:first-child > th:first-child {
+  border-top-left-radius: var(--radius-control);
+}
+.table-scroll > table > thead > tr:first-child > th:last-child {
+  border-top-right-radius: var(--radius-control);
+}
+.table-scroll > table > tbody > tr:last-child > :is(td, th):first-child {
+  border-bottom-left-radius: var(--radius-control);
+}
+.table-scroll > table > tbody > tr:last-child > :is(td, th):last-child {
+  border-bottom-right-radius: var(--radius-control);
+}
+.form-footer {
+  border: 0;
+  padding-top: 24px;
+}
+.main-shell .page-content .table-panel > .panel-heading {
+  padding-inline: 0;
+}
+.modal {
+  padding: 28px 32px;
+}
+.modal-head h2 {
+  font-size: var(--text-subtitle);
+}
+@media (max-width: 760px) {
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 24px 20px;
+  }
+  .modal.wide {
+    width: 100%;
+    max-width: 100%;
+  }
+  .greeting-heading h1 {
+    font-size: var(--text-display);
+  }
+}
+.overview-period h2 {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-medium);
+}
+@container billing-content (max-width: 680px) {
+  .metric-link > strong,
+  .metric-detail-summary > div > strong {
+    font-size: var(--text-metric);
+  }
+}
+.command-trigger,
+.command-results > button {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+}
+.command-trigger kbd {
+  font-family: var(--font-ui);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+}
+.filter-summary,
+.filter-count {
+  font-size: var(--text-caption);
+}
+.contacts-table .contact-name {
+  font-weight: var(--weight-medium);
+}
+@container billing-content (max-width: 540px) {
+  .metric-table tbody td:nth-child(3),
+  .contacts-table tbody td:nth-child(2),
+  .contacts-table tbody td:nth-child(3) {
+    font-size: var(--text-caption);
+  }
+}
+@container billing-content (max-width: 540px) {
+  .funds-table tbody td:nth-child(2),
+  .funds-table tbody td:nth-child(3),
+  .funds-table td::before,
+  .payments-history tbody td:nth-child(3),
+  .payments-history tbody td:nth-child(4) {
+    font-size: var(--text-caption);
+    font-weight: var(--weight-regular);
+  }
+}
+/* Status labels describe state; they are never shaped like editable controls. */
+.subtle-tag,
+.contact-type {
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.search-field input:focus {
+  outline: none;
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 22%, transparent);
+}
+.buyer-fieldset {
+  border: 0;
+  padding: 0;
+  margin-block: 24px;
+}
+.buyer-fieldset legend {
+  padding: 0;
+  margin-bottom: 12px;
+}
+.table-scroll td > .badge {
+  border: 0;
+  background: transparent;
+  padding: 0;
+}
+@container billing-content (max-width: 540px) {
+  .kpi + .kpi {
+    border: 0;
+  }
+}
+.table-doc-icon {
+  border: 0;
+  background: transparent;
+}
+
+/* FUENTE: 07-table.md, TeamModule.tsx:1968–2000; espaciado aprobado en Cobros.
+   Se conservan las columnas, estados y distribuciones de cada tabla existente. */
+.table-scroll > table > tbody > tr > :is(td, th) {
+  vertical-align: middle;
+}
+.table-scroll > table > tbody > tr > td small {
+  margin-top: 5px;
+}
+.table-scroll > table > tbody > tr:focus-within {
+  background: var(--bg-muted);
+}
+.document-list .doc-identity .document-link small {
+  max-width: none;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.table-scroll .table-name {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.document-list .doc-party .text-link {
+  text-decoration: none;
+}
+@container billing-content (max-width: 760px) {
+  .table-scroll > table.document-list {
+    --table-cell-inset: 0px;
+    --table-edge-inset: 0px;
+  }
+  .table-scroll > table.document-list > tbody > tr {
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 0;
+  }
+  .table-scroll > table.document-list > tbody > tr > td {
+    height: auto;
+    min-width: 0;
+    padding-block: 0;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
+@container billing-content (max-width: 540px) {
+  .table-scroll
+    > table:is(
+      .metric-table,
+      .contacts-table,
+      .payments-history,
+      .funds-table,
+      .catalog-table,
+      .members-table,
+      .audit-table,
+      .periods-table,
+      .accounts-table,
+      .document-table,
+      .document-payments-table,
+      .import-results-table
+    ) {
+    --table-cell-inset: 0px;
+    --table-edge-inset: 0px;
+  }
+  .table-scroll
+    > table:is(
+      .metric-table,
+      .contacts-table,
+      .payments-history,
+      .funds-table,
+      .catalog-table,
+      .members-table,
+      .audit-table,
+      .periods-table,
+      .accounts-table,
+      .document-table,
+      .document-payments-table,
+      .import-results-table
+    )
+    > tbody
+    > tr {
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 0;
+  }
+}
+@container contact-detail (max-width: 540px) {
+  .table-scroll > table.contact-activity-table {
+    --table-cell-inset: 0px;
+    --table-edge-inset: 0px;
+  }
+  .table-scroll > table.contact-activity-table > tbody > tr {
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border: 0;
+  }
+}
+
+/* Directorio y ficha: roles de la escala común, sin tipografía local. */
+.contact-directory-item {
+  font: inherit;
+  color: var(--text);
+}
+.contact-directory-item > strong {
+  font-weight: var(--weight-medium);
+}
+.contact-directory-item > span,
+.contact-data-grid dt,
+.contact-detail-heading p {
+  font-size: var(--text-caption);
+  line-height: var(--leading-body);
+  color: var(--text-muted);
+}
+.contact-detail-heading h2 {
+  font: inherit;
+  font-size: var(--text-section);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+}
+.contact-summary .kpi > strong {
+  font-size: var(--text-metric);
+}
+.modal-head.modal-head-close-left {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.modal-head.modal-head-close-left > .icon-button {
+  margin: -8px 0 0 -8px;
+  flex-shrink: 0;
+}
+
+/* FUENTE: 06-input.md, AbsencesModule.tsx:2972–2991 y 5049–5070.
+   Propuesta 1 aprobada: búsqueda subrayada que se extiende en la barra. */
+.list-search {
+  width: min(100%, 410px);
+  margin-bottom: var(--space-6);
+}
+.list-search .search-field {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+.list-search-field {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+}
+.list-search-field:focus-within {
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 22%, transparent);
+}
+.list-search-field > svg {
+  left: 0;
+  color: var(--text-muted);
+}
+.list-search-field input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  padding-inline-start: var(--space-6);
+  padding-inline-end: calc(var(--control-height) + var(--space-2));
+}
+.list-search-field > .icon-button {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+  width: var(--control-height);
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
+.list-search-inline {
+  position: relative;
+  flex-shrink: 1;
+  min-width: 0;
+  width: var(--control-height-compact);
+  max-width: calc(100% - var(--control-height-compact) - var(--space-1));
+  margin: 0;
+  transition: width 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.list-search-inline[data-open] {
+  width: 360px;
+}
+.list-search-inline .list-search-field {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(var(--space-2));
+  transition:
+    opacity 180ms ease,
+    transform 240ms ease,
+    visibility 0s 240ms;
+}
+.list-search-inline[data-open] .list-search-field {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0);
+  transition-delay: 0s;
+}
+.list-search-inline .list-search-field input {
+  height: var(--control-height-compact);
+  min-height: var(--control-height-compact);
+  padding-block: 0;
+  padding-inline-end: calc(var(--control-height-compact) + var(--space-2));
+}
+.list-search-inline .list-search-field > .icon-button {
+  width: var(--control-height-compact);
+}
+.list-search-inline .list-search-trigger {
+  position: absolute;
+  inset: 0 0 auto auto;
+}
+.list-search-inline[data-open] .list-search-trigger {
+  visibility: hidden;
+}
+@container billing-content (max-width: 760px) {
+  .list-search-inline {
+    width: var(--control-height);
+    max-width: calc(100% - var(--control-height) - var(--space-1));
+  }
+  .list-search-inline .list-search-field input {
+    height: var(--control-height);
+    min-height: var(--control-height);
+    padding-inline-end: calc(var(--control-height) + var(--space-2));
+  }
+  .list-search-inline .list-search-field > .icon-button {
+    width: var(--control-height);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .list-search-inline,
+  .list-search-inline .list-search-field {
+    transition: none;
+  }
+}
+/* Filtrado de documentos desde el encabezado, como las acciones de 07-table.md. */
+.table-filter-select.app-select {
+  display: inline-block;
+  width: max-content;
+  max-width: 100%;
+}
+.table-filter-select .app-select-trigger {
+  width: auto;
+  min-height: var(--control-height-compact);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: inherit;
+  font: inherit;
+  justify-content: flex-start;
+  gap: var(--space-1);
+}
+.table-filter-select.is-filtered .app-select-trigger {
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+.table-filter-select .app-select-value {
+  white-space: normal;
+}
+.table-filter-select .app-select-chevron {
+  width: 12px;
+  height: 12px;
+}
+.doc-identity-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.doc-identity-content > .document-link {
+  flex: 1;
+}
+.table-scroll > table > tbody > tr.document-table-feedback {
+  background: transparent;
+}
+.table-scroll > table > tbody > tr.document-table-feedback > td {
+  padding: 0;
+}
+@container billing-content (max-width: 760px) {
+  .document-list-filtered > thead {
+    display: block;
+  }
+  .document-list-filtered > thead > tr {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 var(--space-4) var(--space-2);
+  }
+  .document-list-filtered > thead > tr > th {
+    display: none;
+  }
+  .document-list-filtered > thead > tr > th.document-status-heading,
+  .document-list-filtered > thead > tr > th.document-sort-heading {
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+  .table-filter-select .app-select-trigger {
+    min-height: var(--control-height);
+  }
+  .document-list-filtered > tbody > tr.document-table-feedback {
+    display: block;
+    padding: 0;
+  }
+}
+
+/* FUENTE: 11-stat-tile.md, DashboardModule.tsx:115–169.
+   Indicadores de módulos: base compartida con Visión general y selección monocroma. */
+.module-kpis.three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.module-kpis .metric-link[aria-current='true'] {
+  background: var(--bg-muted);
+}
+.module-kpis .metric-link[aria-current='true'] .metric-label {
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+/* FUENTE: 05-button.md, TeamModule.tsx:1731–1770.
+   Herramientas de 36px y 44px táctiles, conforme a la adaptación vigente. */
+.list-tool-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--control-height-compact);
+  height: var(--control-height-compact);
+  padding: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.list-tool-button:hover,
+.list-tool-button[data-active] {
+  background: var(--bg-muted);
+  border-color: var(--border);
+  color: var(--text);
+}
+.list-tool-dot {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 5px;
+  height: 5px;
+  background: var(--text);
+}
+/* FUENTE: 15-side-panel-filters.md, AbsencesModule.tsx:3040–3314.
+   Variante de Modal: mismo dialog, campos, foco y escala tipográfica comunes. */
+.modal.side-panel {
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  width: 380px;
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid var(--border);
+  box-shadow:
+    -8px 0 40px rgba(0, 0, 0, 0.1),
+    -24px 0 80px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+.modal.side-panel[open] {
+  display: flex;
+  flex-direction: column;
+}
+.modal.side-panel::backdrop {
+  background: transparent;
+}
+.side-panel > .modal-head {
+  flex-shrink: 0;
+  padding: 20px 20px 0;
+  margin: 0;
+}
+.side-panel-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.side-panel-body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-8);
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 20px 28px;
+}
+.side-panel-body > .quiet-link,
+.sales-search-preview .quiet-link {
+  align-self: flex-start;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.side-panel-form > .modal-actions {
+  flex-shrink: 0;
+  flex-direction: row;
+  gap: var(--space-4);
+  margin: 0;
+  padding: var(--space-6) 20px max(var(--space-6), env(safe-area-inset-bottom));
+}
+.side-panel-form > .modal-actions > .button {
+  flex: 1;
+}
+.side-panel-form > .modal-actions > .button,
+.filter-dialog .modal-actions > .button {
+  min-height: var(--control-height);
+}
+.side-panel-body > .quiet-link,
+.side-panel-body .kpi-filter .quiet-link,
+.filter-dialog .kpi-filter .quiet-link {
+  min-height: var(--control-height);
+}
+.side-panel-body > .kpi-filter {
+  margin: 0;
+}
+.filter-dialog .modal-actions {
+  gap: var(--space-4);
+}
+@media (max-width: 760px) {
+  .modal.side-panel {
+    width: 100%;
+  }
+}
+@container billing-content (max-width: 760px) {
+  .list-tool-button {
+    width: var(--control-height);
+    height: var(--control-height);
+  }
+}
+.kpi-filter .quiet-link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+.contact-summary .kpi[aria-pressed='true'] {
+  background: var(--bg-muted);
+}
+.contact-summary .kpi:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.kpi-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+}
+@container billing-content (max-width: 760px) {
+  .module-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2) 0;
+  }
+  .module-kpis .metric-link {
+    min-height: 112px;
+    padding: var(--space-4);
+  }
+  .module-kpis .metric-link:nth-child(3) {
+    border-left: 0;
+  }
+}
+@container billing-content (max-width: 540px) {
+  .module-kpis,
+  .module-kpis.three {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .module-kpis .metric-link {
+    align-items: flex-start;
+    text-align: left;
+    min-height: 0;
+    padding: var(--space-4) 4px;
+  }
+  .module-kpis .metric-link + .metric-link {
+    border-left: 0;
+  }
+  .module-kpis .metric-label {
+    order: 0;
+  }
+}
+
+/* Invoice concept text shares the printed sheet's typographic hierarchy. */
+.invoice-sheet-fields .product-concept-control textarea {
+  font-size: var(--text-section);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-copy);
+}
+
+/* Editable overview: fields use the form scale, with persistent compact labels. */
+.editor-invoice-document .invoice-sheet-fields .product-concept-control textarea {
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+.editor-invoice-document .invoice-sheet-fields .field-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+  color: var(--text-muted);
+}
+
+/* Directorio de contactos: identidad e importes con la escala compartida. */
+.contact-directory-item > .contact-directory-identity,
+.contact-directory-item > .contact-pending {
+  font-size: var(--text-body);
+}
+.contact-directory-identity > strong,
+.contact-pending strong {
+  font-weight: var(--weight-medium);
+  color: var(--text);
+}
+.contact-directory-identity > span,
+.contact-pending small {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+.contact-pending strong {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Búsqueda de facturas: interpretación en el flujo, bajo el campo del toolbar. */
+.list-search-inline[data-open][data-extended] {
+  width: 560px;
+}
+.sales-search-preview {
+  display: grid;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--text-muted);
+}
+.sales-search-preview p:empty {
+  display: none;
+}
+.sales-search-preview .field {
+  margin: 0;
+}
+.sales-search-preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+}
+.sales-search-preview .quiet-link {
+  color: var(--text);
+  min-height: var(--control-height);
+  width: fit-content;
+  max-width: 100%;
+  text-align: left;
+}
+@container billing-content (max-width: 760px) {
+  .list-search-inline[data-open][data-extended] {
+    width: 100%;
+  }
+}
+.module-list-toolbar:has(.sales-search-preview) {
+  align-items: flex-start;
+}
+
+/* Regreso bajo el título, con la misma escala y separación que los enlaces de módulo. */
+.module-back-link {
+  display: flex;
+  width: fit-content;
+}
+.module-back-link > span {
+  overflow-wrap: anywhere;
+}
+/* El campo cerrado no debe ampliar la página en móvil. */
+.list-search-inline:not([data-open]) .list-search-field {
+  overflow: clip;
+}
+
+/* Estado en la esquina inferior derecha de la cabecera. */
+.module-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: var(--space-2) var(--space-4);
+  max-width: 100%;
+  text-align: right;
+}
+
+.module-document-navigation {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--space-2);
+  color: var(--on-dark-muted);
+  text-align: right;
+}
+.document-navigation-position {
+  font-size: var(--text-body);
+  font-variant-numeric: tabular-nums;
+}
+.document-navigation-position strong {
+  color: var(--on-dark-title);
+  font-weight: var(--weight-medium);
+}
+.module-document-navigation .document-navigation-arrow {
+  color: var(--on-dark);
+  background: var(--on-dark-active);
+}
+.module-document-navigation .document-navigation-arrow:hover:not(:disabled) {
+  background: var(--on-dark-border);
+}
+.module-document-navigation .document-navigation-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.module-document-navigation a:focus-visible,
+.module-document-navigation button:focus-visible {
+  outline-color: var(--on-dark);
+}
+
+.catalog-record-data {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+}
+.catalog-record-data > div {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(0, 3fr);
+  gap: var(--space-4);
+}
+.catalog-record-data dt {
+  color: var(--text-muted);
+}
+.catalog-record-data dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 540px) {
+  .catalog-record-data > div {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}
+
+/* Ordenación directa de encabezados; Estado se filtra desde el panel. */
+.table-sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--control-height);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+}
+.table-sort-button.is-sorted {
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+.table-sort-button > svg {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  opacity: 0.75;
+}
+.table-sort-button.is-sorted > svg {
+  opacity: 1;
+}
+.table-sort-button:hover {
+  color: var(--text);
+}
+@container billing-content (max-width: 760px) {
+  .document-list-filtered > thead > tr {
+    column-gap: var(--space-4);
+  }
+}
+
+/* A row opens its record; linked party names have their own destination. */
+.record-row {
+  cursor: pointer;
+}
+.table-scroll > table a[href^='#contacts?'] {
+  width: fit-content;
+  max-width: 100%;
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+.table-scroll > table a[href^='#contacts?']:is(:hover, :focus-visible),
+.contact-directory-item:is(:hover, :focus-visible) .contact-directory-identity > strong {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Row actions follow the record's data, with one shared trailing column. */
+.document-list-actions {
+  --table-actions-width: calc(
+    var(--control-height) + var(--table-cell-inset) + var(--table-edge-inset)
+  );
+}
+.document-list-actions .document-column-actions {
+  width: var(--table-actions-width);
+}
+.document-list-actions .document-column-party {
+  width: calc(38% - var(--table-actions-width));
+}
+.document-list-priced.document-list-actions .document-column-identity,
+.document-list-priced.document-list-actions .document-column-due {
+  width: 18%;
+}
+.document-list-priced.document-list-actions .document-column-party {
+  width: calc(32% - var(--table-actions-width));
+}
+.table-scroll > table > tbody > tr > td.table-actions-cell {
+  text-align: right;
+}
+@container billing-content (max-width: 760px) {
+  .document-list .doc-actions {
+    grid-column: 2;
+    grid-row: 5;
+    justify-self: end;
+    align-self: center;
+  }
+  .document-list-priced.document-list-actions .doc-price {
+    grid-column: 1;
+    align-self: center;
+  }
+  .document-list-priced.document-list-actions .doc-actions {
+    grid-row: 4;
+  }
+}
+@media (max-width: 760px) {
+  .accounting-journal-table td.table-actions-cell {
+    grid-area: 4 / 2;
+    justify-self: end;
+  }
+  .accounting-journal-table td:nth-child(5) {
+    grid-area: 4 / 1;
+    align-self: center;
+  }
+}
+
+/* Cuatro mejoras aprobadas · 15/09/2026.
+   FUENTE: 03-module-header.md, 05-button.md y 08-toolbar.md;
+   Kronjop × Ley IA: controles, metadatos y legibilidad. */
+.header-primary {
+  width: auto;
+  min-width: var(--control-height-compact);
+  max-width: 100%;
+  height: auto;
+  min-height: var(--control-height-compact);
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+  text-decoration: none;
+}
+.header-primary > svg {
+  flex-shrink: 0;
+}
+.header-primary > span {
+  overflow-wrap: anywhere;
+}
+.list-tool-button:has(.list-tool-label) {
+  width: auto;
+  gap: var(--space-2);
+  padding-inline: var(--space-2);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+}
+.list-tool-label {
+  white-space: nowrap;
+}
+.list-search-inline {
+  width: calc(var(--control-height-compact) + var(--space-8) + var(--space-4));
+  max-width: calc(100% - var(--control-height-compact) - var(--space-8) - var(--space-4));
+}
+.list-search-inline .list-search-trigger {
+  width: 100%;
+}
+.module-list-toolbar {
+  flex-wrap: wrap;
+}
+.list-context {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  flex: 1 1 260px;
+  min-width: 0;
+  margin-right: auto;
+  font-size: var(--text-caption);
+  line-height: var(--leading-body);
+}
+.list-context-criteria {
+  overflow-wrap: anywhere;
+}
+.list-context-count {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.list-context-clear.quiet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--control-height-compact);
+  padding: 0 var(--space-1);
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.list-context-clear:hover {
+  color: var(--text);
+}
+.module-list-toolbar:has(.list-search[data-open]) .list-context {
+  flex-basis: 100%;
+}
+.document-list .doc-price > span {
+  font-variant-numeric: tabular-nums;
+}
+.document-list .document-list-balance {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  overflow-wrap: anywhere;
+}
+.document-list-balance strong {
+  color: var(--text);
+  font-size: inherit;
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+}
+.page-heading .module-heading-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+}
+.document-heading-number {
+  color: var(--on-dark-title);
+  font-variant-numeric: tabular-nums;
+  user-select: all;
+  overflow-wrap: anywhere;
+}
+.sidebar-reopen {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: auto;
+  padding-inline: var(--space-3);
+  font-size: var(--text-body);
+}
+/* Configuración ocupa una fila propia; la cuenta y el cierre conservan sus controles. */
+.app-shell .compact-sidebar .user-profile {
+  grid-template-columns: 34px minmax(0, 1fr) var(--control-height);
+}
+.app-shell .user-profile > .sidebar-icon {
+  grid-area: 2 / 1;
+}
+.app-shell .user-profile > .sidebar-label {
+  grid-area: 2 / 2;
+}
+.app-shell .user-profile > .sidebar-logout {
+  grid-area: 2 / 3;
+}
+.app-shell .compact-sidebar .sidebar-settings {
+  grid-area: 1 / 1 / 2 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  padding-inline: var(--space-2);
+}
+.sidebar-settings-label {
+  font-size: var(--text-caption);
+}
+
+.app-shell {
+  --sidebar-spacing: clamp(0px, calc((100dvh - 612px) / 24), var(--space-2));
+}
+@container billing-content (max-width: 760px) {
+  .header-primary {
+    min-height: var(--control-height);
+    min-width: var(--control-height);
+  }
+  .list-context {
+    flex-basis: 100%;
+  }
+  .list-context-clear.quiet-link {
+    min-height: var(--control-height);
+  }
+  .list-search-inline {
+    width: calc(var(--control-height) + var(--space-8) + var(--space-4));
+    max-width: calc(100% - var(--control-height) - var(--space-8) - var(--space-4));
+  }
+  .list-search-inline[data-open] {
+    width: 100%;
+  }
+  .document-list .doc-price:has(.document-list-balance) {
+    justify-content: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 var(--space-1);
+  }
+  .document-list .document-list-balance {
+    flex-basis: 100%;
+  }
+}
+
+/* Variante de Modal para leer documentos: visor con espacio propio, sin alterar el formulario. */
+.modal.document-preview {
+  width: min(1360px, calc(100vw - var(--space-6) * 2));
+  max-width: calc(100vw - var(--space-6) * 2);
+  height: calc(100dvh - var(--space-6) * 2);
+  max-height: calc(100dvh - var(--space-6) * 2);
+  padding: var(--space-4);
+  overflow: hidden;
+}
+.modal.document-preview[open] {
+  display: flex;
+  flex-direction: column;
+}
+.document-preview > .modal-head {
+  flex: 0 0 auto;
+  margin-bottom: var(--space-3);
+}
+.document-preview-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  gap: var(--space-3);
+}
+.document-preview-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.document-preview-body > iframe {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  border: 0;
+  background: var(--bg-muted);
+}
+@media (max-width: 760px) {
+  .modal.document-preview {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    border: 0;
+    padding: var(--space-3);
+  }
+}
+
+/* 04-section-layout.md + 05-button.md: icono contextual junto al título de sección. */
+.panel-heading:has(> .icon-button) {
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: var(--space-2);
+}
+.panel-heading > .icon-button {
+  flex-shrink: 0;
+  align-self: center;
+}
+
+/* Petición del usuario: icono de filtros con contador circular, sin etiqueta visible. */
+.list-filter-button,
+.list-filter-button:hover,
+.list-filter-button[data-active] {
+  background: transparent;
+  border-color: transparent;
+}
+.list-filter-button:hover,
+.list-filter-button[data-active] {
+  color: var(--text);
+}
+.list-tool-count {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50% !important;
+  background: var(--text);
+  color: var(--bg);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+/* Kits 05-button + icon-actions: flechas negras sin superficie, foco común. */
+.record-navigation {
+  margin-bottom: var(--space-4);
+}
+
+.document-navigation-plain {
+  width: 100%;
+  justify-content: space-between;
+  color: var(--text);
+  text-align: right;
+}
+.document-navigation-plain .document-navigation-arrow,
+.document-navigation-plain .document-navigation-arrow:hover {
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.document-navigation-plain .document-navigation-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.document-sheet-overview .document-sheet-issuer h2 {
+  font-size: var(--text-subtitle);
+  line-height: var(--leading-body);
+}
+
+/* Filtros: secciones plegadas y rango monetario con los tokens comunes. */
+.filter-section.optional-details {
+  margin: 0;
+  border: 0;
+}
+.filter-section > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding: 0;
+  list-style: none;
+}
+.filter-section > summary::-webkit-details-marker {
+  display: none;
+}
+.filter-section > summary > svg {
+  flex-shrink: 0;
+}
+.filter-section[open] > summary > svg {
+  transform: rotate(180deg);
+}
+.filter-section > .filter-section-content {
+  display: grid;
+  gap: var(--space-4);
+  padding-top: var(--space-3);
+}
+.amount-range-filter {
+  display: grid;
+  gap: var(--space-2);
+}
+.amount-range-value {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.amount-range-slider {
+  padding-inline: calc(var(--control-height) / 2);
+}
+.amount-range-track {
+  position: relative;
+  height: var(--control-height);
+  touch-action: none;
+}
+.amount-range-rail,
+.amount-range-fill {
+  position: absolute;
+  top: 50%;
+  height: 3px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.amount-range-rail {
+  width: 100%;
+  background: var(--border-strong);
+}
+.amount-range-fill {
+  background: var(--text);
+}
+.amount-range-thumb {
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: var(--control-height);
+  height: var(--control-height);
+  outline: none;
+  cursor: grab;
+  touch-action: none;
+}
+.amount-range-thumb::after {
+  content: '';
+  box-sizing: border-box;
+  width: var(--space-3);
+  height: var(--space-3);
+  border: 1px solid var(--text);
+  background: var(--bg);
+}
+.amount-range-thumb[data-focus-visible]::after {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+.amount-range-slider[data-disabled] .amount-range-thumb {
+  cursor: default;
+  opacity: 0.5;
+}
+.amount-range-thumb[data-dragging] {
+  cursor: grabbing;
+}
+.amount-range-thumb[data-dragging]::after {
+  background: var(--text);
+}
+
+/* Flat invoice fields: quiet baselines at rest, explicit focus while editing. */
+.editor-invoice-document
+  .document-sheet-overview
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger),
+.editor-invoice-document
+  .document-sheet-overview
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger):hover {
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  padding-inline: var(--space-3) var(--invoice-control-end, var(--space-3));
+}
+.editor-invoice-document
+  .document-sheet-overview
+  .field
+  :is(input, textarea, .app-select-trigger):hover:not(:disabled) {
+  border-color: var(--text-muted);
+}
+.editor-invoice-document
+  .document-sheet-overview
+  .field
+  :is(input, textarea, .app-select-trigger):is(
+    :focus,
+    [data-focus-visible],
+    [aria-invalid='true']
+  ) {
+  border-color: var(--text);
+}
+.editor-invoice-document .document-sheet-overview .field .input-suffix {
+  --invoice-control-end: var(--space-8);
+}
+.editor-invoice-document .document-sheet-overview .field .product-concept-control {
+  --invoice-control-end: calc(var(--space-8) + var(--space-2));
+}
+.editor-invoice-document .document-sheet-overview .field .quantity-control {
+  --invoice-control-end: var(--space-3);
+}
+.editor-invoice-document .document-sheet-overview .field .app-select-trigger {
+  --invoice-control-end: var(--space-3);
+}
+.editor-invoice-document .document-sheet-overview .field-label {
+  color: var(--text-muted);
+}
+.editor-page-invoice .document-sheet-overview .totals .grand-total {
+  padding-inline: 0;
+  background: var(--bg);
+}
+
+/* Compact command search: short downward reveal, following the kit's easing.
+   Keep this dialog compact on mobile as well as desktop. */
+.modal.command-dialog {
+  --command-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  inset: 0 0 auto;
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  height: auto;
+  max-height: calc(100dvh - 96px);
+  margin: clamp(24px, 10dvh, 96px) auto 24px;
+  padding: var(--space-4) var(--space-6);
+  overflow: hidden;
+  transform-origin: top center;
+}
+.command-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  animation: command-reveal 220ms var(--command-ease) both;
+}
+.command-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(2px);
+  animation: command-backdrop 220ms ease-out both;
+}
+.command-dialog > .modal-head {
+  align-items: center;
+  flex-shrink: 0;
+  margin-bottom: var(--space-3);
+}
+.command-dialog > .modal-head > .icon-button {
+  margin: 0 calc(-1 * var(--space-2)) 0 0;
+}
+.command-dialog .command-search {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.command-dialog .command-search p {
+  color: var(--text-muted);
+}
+.command-dialog .command-search [role='alert'] {
+  color: var(--text);
+}
+.command-dialog .search-field {
+  flex-shrink: 0;
+}
+.command-dialog .search-field input {
+  min-width: 0;
+}
+.command-dialog .command-results {
+  max-height: min(264px, 40dvh);
+  min-height: 0;
+  padding-block: var(--space-2) 0;
+  overscroll-behavior: contain;
+  animation: command-content 200ms 35ms var(--command-ease) both;
+}
+.command-dialog[open].is-closing {
+  animation: command-dismiss 160ms ease-in both;
+}
+.command-dialog.is-closing::backdrop {
+  animation: command-backdrop 160ms ease-in reverse both;
+}
+@keyframes command-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes command-content {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes command-dismiss {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.99);
+  }
+}
+@keyframes command-backdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 760px) {
+  .modal.command-dialog {
+    padding: var(--space-4);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .command-dialog[open],
+  .command-dialog[open].is-closing,
+  .command-dialog::backdrop,
+  .command-dialog .command-results {
+    animation: none;
+  }
+}
+
+/* Invoice concepts share the table-row surface; controls do not paint nested boxes. */
+.editor-invoice-document
+  .document-sheet-overview
+  .invoice-lines
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger),
+.editor-invoice-document
+  .document-sheet-overview
+  .invoice-lines
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger):hover {
+  background: transparent;
+}
+
+/* Conceptos de la factura guardada: jerarquía común a las dos columnas. */
+.document-summary:not(.invoice-editor) .document-sheet-overview .document-sheet-concept,
+.document-summary:not(.invoice-editor) .document-sheet-overview .document-sheet-recipient h3 {
+  font-size: var(--text-subtitle);
+  line-height: var(--leading-body);
+}
+
+/* Movimientos: misma escala y controles discretos que la creación documental. */
+.creation-dialog .modal-head h2 {
+  font-size: var(--text-page);
+}
+.payment-allocation h3 {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+}
+.creation-context > div > span,
+.payment-document-option > span > span {
+  font-size: var(--text-caption);
+}
+.creation-total strong {
+  font-size: var(--text-amount);
+  font-weight: var(--weight-semibold);
+}
+.creation-dialog .field :is(input:not([type='checkbox']), .app-select-trigger),
+.creation-dialog .field :is(input:not([type='checkbox']), .app-select-trigger):hover {
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+}
+.creation-dialog .payment-allocation .field input,
+.creation-dialog .payment-allocation .field input:hover {
+  background: transparent;
+}
+.creation-dialog .field-label {
+  color: var(--text-muted);
+}
+
+/* Referencias de facturas: texto plano con señal al interactuar. */
+.invoice-reference {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.invoice-reference:hover,
+.invoice-reference:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.invoice-reference:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+/* El disparador del acordeón conserva la jerarquía del título de sección. */
+.ui-accordion-trigger {
+  font: inherit;
+}
+
+/* Interruptor compacto con la geometría recta del sistema visual. */
+.toggle-switch {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  min-height: var(--control-height);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+}
+.toggle-switch-track {
+  position: relative;
+  display: block;
+  width: 44px;
+  height: 24px;
+  background: var(--border-strong);
+  transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.toggle-switch-thumb {
+  position: absolute;
+  z-index: 2;
+  top: 3px;
+  left: 3px;
+  display: block;
+  width: 18px;
+  height: 18px;
+  background: var(--bg);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toggle-switch-icon {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toggle-switch-icon-off {
+  left: 4px;
+  color: var(--text);
+  transform: translate(20px, -50%);
+}
+
+.toggle-switch-icon-on {
+  right: 4px;
+  color: var(--bg);
+  visibility: hidden;
+  transform: translate(0, -50%);
+}
+
+.toggle-switch-animated-indicators[aria-checked='true'] .toggle-switch-icon-off {
+  visibility: hidden;
+  transform: translate(0, -50%);
+}
+
+.toggle-switch-animated-indicators[aria-checked='true'] .toggle-switch-icon-on {
+  visibility: visible;
+  transform: translate(-20px, -50%);
+}
+.toggle-switch[aria-checked='true'] .toggle-switch-track {
+  background: var(--text);
+}
+.toggle-switch[aria-checked='true'] .toggle-switch-thumb {
+  transform: translateX(20px);
+}
+.toggle-switch:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+.toggle-switch[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.document-upload-title {
+  font-weight: var(--weight-medium);
+}
+.document-upload-meta,
+.document-upload-percent {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+}
+.document-upload-percent {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Creación documental: misma escala, superficies editables de la referencia aprobada. */
+.composer-paper-heading h2 {
+  font-size: var(--text-page);
+  font-weight: var(--weight-medium);
+}
+.composer-options h2,
+.composer-preview-notes h3 {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+}
+.composer-draft,
+.composer-issue-date > span {
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+.document-composer .document-sheet-overview .document-sheet-issuer h2,
+.document-composer .document-sheet-overview .document-sheet-recipient h3,
+.composer-preview .document-sheet-issuer h2 {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+}
+.document-composer.editor-invoice-document
+  .document-sheet-overview
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger),
+.document-composer.editor-invoice-document
+  .document-sheet-overview
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger):hover,
+.document-composer
+  .composer-sidebar
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger) {
+  background: var(--bg);
+  border: 1px solid transparent;
+  padding-inline: var(--space-3) max(var(--space-3), var(--invoice-control-end, 0px));
+}
+.document-composer
+  .composer-sidebar
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger) {
+  background: var(--bg);
+}
+.document-composer.editor-invoice-document
+  .document-sheet-overview
+  .field
+  :is(input, textarea, .app-select-trigger):is(
+    :focus,
+    [data-focus-visible],
+    [aria-invalid='true']
+  ) {
+  border-color: var(--text);
+  outline-offset: 2px;
+}
+.document-composer .invoice-sheet-fields .product-concept-control textarea {
+  font-size: var(--control-text);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+.document-composer .document-sheet-overview .totals .grand-total {
+  padding: var(--space-4);
+  background: var(--bg);
+}
+
+/* Fechas de la hoja: etiqueta común y valor alineado, sin superficie de campo. */
+.composer-heading-dates .composer-issue-date > span,
+.document-composer .composer-heading-dates .field-label {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+.composer-heading-dates .composer-issue-date time {
+  font-size: var(--control-text);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+}
+.document-composer.editor-invoice-document
+  .document-sheet-overview
+  .composer-heading-dates
+  .field
+  input[type='date'],
+.document-composer.editor-invoice-document
+  .document-sheet-overview
+  .composer-heading-dates
+  .field
+  input[type='date']:hover {
+  height: var(--control-height);
+  min-height: var(--control-height);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+}
+.document-composer .composer-heading-dates input[type='date']::-webkit-datetime-edit {
+  padding: 0;
+}
+.document-composer .composer-heading-dates input[type='date'][aria-invalid='true'] {
+  outline: 1px solid var(--text);
+  outline-offset: 3px;
+}
+
+/* Facturas de lectura: misma jerarquía que Crear factura, sin apariencia de campos. */
+.document-summary .document-readonly-view .document-sheet-overview .document-sheet-issuer h2,
+.document-summary .document-readonly-view .document-sheet-overview .document-sheet-recipient h3 {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+}
+.document-summary .document-readonly-view .document-sheet-overview .document-sheet-concept {
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+}
+.document-readonly-values dt,
+.document-readonly-unit-price,
+.document-readonly-discount {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-body);
+  color: var(--text-muted);
+}
+.document-readonly-values dd {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The preview paints the PDF bytes themselves, independently of the browser PDF plugin. */
+.pdf-pages {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--bg-muted);
+  padding: var(--space-4);
+}
+.pdf-pages:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+.pdf-page {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto var(--space-4);
+  background: var(--bg);
+}
+.pdf-page:last-child {
+  margin-bottom: 0;
+}
+.pdf-page canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 760px) {
+  .pdf-pages {
+    padding: var(--space-2);
+  }
+}
+
+/* Estados vacíos de configuración: misma composición que Archivos adjuntos. */
+.section-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: clamp(240px, 32dvh, 300px);
+  margin-bottom: var(--space-6);
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+}
+.section-empty > p {
+  margin: 0;
+}
+.section-empty > svg {
+  flex-shrink: 0;
+}
+.section-empty > .button {
+  max-width: 100%;
+  white-space: normal;
+}
+
+/* Configuración por niveles: iconos lineales sin fondos ni contenedores. */
+.settings-hierarchy-main.settings-main {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+}
+.settings-navigation-level {
+  min-width: 0;
+  max-width: 760px;
+}
+.settings-level-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding: 0 var(--space-2) 0 0;
+  margin-bottom: var(--space-4);
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  text-decoration: none;
+}
+.settings-level-back:hover {
+  background: transparent;
+  color: var(--text);
+}
+.settings-study-heading,
+.settings-category-heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.settings-study-heading > svg,
+.settings-category-heading > svg,
+.settings-level-icon,
+.settings-level-chevron {
+  flex-shrink: 0;
+  background: transparent;
+  border: 0;
+}
+.settings-study-heading h2,
+.settings-category-heading h2 {
+  margin: 0;
+}
+.settings-study-heading p {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+.settings-level-list {
+  display: grid;
+  gap: var(--space-2);
+}
+.settings-level-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 56px;
+  width: 100%;
+  padding: var(--space-2) 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+}
+.settings-level-row:hover {
+  background: transparent;
+}
+.settings-level-row:hover .settings-level-chevron {
+  color: var(--text);
+}
+.settings-level-copy {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.settings-level-copy strong {
+  display: block;
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+}
+.settings-level-copy small {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+}
+.settings-level-chevron {
+  color: var(--text-muted);
+}
+.settings-hierarchy .settings-form .settings-field-group {
+  margin: 0 0 var(--space-4);
+}
+.settings-field-group h3 {
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-body);
+  font-weight: var(--weight-medium);
+}
+.settings-hierarchy .settings-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.settings-hierarchy .settings-form .field {
+  padding: 0;
+  background: transparent;
+}
+.settings-hierarchy .settings-form .field > label {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2);
+}
+.settings-hierarchy .settings-form .field > small {
+  margin-left: 0;
+}
+@container billing-content (max-width: 600px) {
+  .settings-hierarchy .settings-form .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .settings-hierarchy .settings-form .span-2 {
+    grid-column: auto;
+  }
+}
+
+/* Creación de facturas: campos blancos sin líneas y hover tenue. */
+.document-composer.editor-invoice-document[data-document-kind]
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger) {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--bg);
+}
+.document-composer.editor-invoice-document[data-document-kind]
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger):hover {
+  border-color: var(--text-muted);
+  background: var(--bg-subtle);
+}
+.document-composer.editor-invoice-document[data-document-kind]
+  .document-sheet-overview
+  .composer-heading-dates
+  .field
+  input[type='date'],
+.document-composer.editor-invoice-document[data-document-kind]
+  .document-sheet-overview
+  .composer-heading-dates
+  .field
+  input[type='date']:hover {
+  padding: 0 var(--space-3);
+  border-width: 1px;
+  border-style: solid;
+}
+.document-composer.editor-invoice-document[data-document-kind]
+  .document-lines-editable
+  tbody
+  tr
+  + tr
+  > td {
+  border-top: 0;
+}
+/* Sangría de subsecciones respecto a su categoría. */
+.settings-category-heading + .settings-level-list {
+  padding-inline-start: var(--space-6);
+}
+
+/* Tabla común de conceptos: documentos guardados y edición. */
+.document-lines-scroll {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  grid-column: 1 / -1;
+  overflow-x: auto;
+}
+.document-lines-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  table-layout: auto;
+  font-size: var(--text-body);
+}
+.document-lines-table :is(th, td) {
+  padding: var(--space-4) var(--space-2);
+  border: 0;
+  vertical-align: top;
+  background: var(--bg);
+}
+.document-lines-table thead th {
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: normal;
+  text-align: left;
+  white-space: normal;
+  background: var(--bg-muted);
+}
+.document-lines-table tbody tr + tr > :is(th, td) {
+  border-top: 1px solid var(--border);
+}
+.document-lines-table .line-concept {
+  min-width: 200px;
+  text-align: left;
+  font-weight: var(--weight-regular);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.document-lines-table .line-numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.document-lines-table small {
+  display: block;
+  font-size: var(--text-caption);
+  color: var(--text-muted);
+  margin-top: var(--space-1);
+  white-space: normal;
+}
+.document-lines-table.document-lines-editable {
+  min-width: 800px;
+  table-layout: fixed;
+}
+.document-lines-editable .line-concept {
+  width: auto;
+}
+.document-lines-editable .line-quantity {
+  width: 148px;
+  min-width: 148px;
+}
+.document-lines-editable .line-price {
+  width: 180px;
+  min-width: 180px;
+}
+.document-lines-editable .line-tax {
+  width: 148px;
+  min-width: 148px;
+}
+.document-lines-editable .line-actions {
+  width: calc(var(--control-height) + var(--space-6) + var(--space-4));
+}
+.document-lines-editable .field {
+  margin: 0;
+}
+.document-lines-editable .field-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.document-lines-editable .line-exemption-field {
+  margin-top: var(--space-3);
+}
+.document-lines-editable .line-exemption-field .field-label {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip-path: none;
+  white-space: normal;
+}
+.document-lines-editable .line-numeric input {
+  text-align: right;
+}
+.document-lines-editable .product-concept-control textarea {
+  min-height: var(--control-height);
+}
+.document-lines-editable .field-error-message {
+  white-space: normal;
+  text-align: left;
+}
+.document-lines-editable .quantity-control input {
+  padding-inline-end: var(--space-3);
+}
+
+.settings-study-heading h2,
+.settings-category-heading h2 {
+  font-size: var(--text-subtitle);
+}
+.settings-level-copy,
+.settings-level-chevron {
+  transition:
+    transform 160ms ease,
+    color 160ms ease;
+}
+.settings-level-row:is(:hover, :focus-visible) .settings-level-copy,
+.settings-level-row:is(:hover, :focus-visible) .settings-level-chevron {
+  transform: translateX(var(--space-1));
+}
+.settings-level-row:is(:hover, :focus-visible) .settings-level-chevron {
+  color: var(--text);
+}
+@media (prefers-reduced-motion: reduce) {
+  .settings-level-copy,
+  .settings-level-chevron {
+    transition: none;
+  }
+  .settings-level-row:is(:hover, :focus-visible) .settings-level-copy,
+  .settings-level-row:is(:hover, :focus-visible) .settings-level-chevron {
+    transform: none;
+  }
+}
+
+/* La tabla editable aprovecha la hoja completa; opciones debajo. */
+.document-composer.editor-page:has(.document-lines-editable) .editor-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+.document-composer:has(.document-lines-editable) .composer-sidebar {
+  position: static;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+}
+.document-lines-editable .product-concept-input {
+  margin-bottom: 0;
+}
+@container billing-content (max-width: 760px) {
+  .document-composer:has(.document-lines-editable) .composer-sidebar {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Portada de Configuración: más aire bajo la cabecera, sin separar sus filas. */
+.settings-navigation-level:has(> .settings-study-heading) {
+  padding-top: var(--space-6);
+}
+
+/* Campos de conceptos separados y descuento compacto. */
+.document-lines-editable :is(th, td) {
+  padding-inline: var(--space-4);
+}
+.document-lines-editable .line-discount {
+  width: 104px;
+  min-width: 104px;
+}
+.document-lines-editable .line-discount .field {
+  width: 72px;
+  margin-inline-start: auto;
+}
+.document-lines-editable .line-actions {
+  padding-inline-start: var(--space-6);
+  padding-inline-end: var(--space-4);
+}
+
+/* Plazo junto a la fecha que determina. */
+.document-composer .composer-heading-dates .invoice-date-fields {
+  width: min(100%, 392px);
+}
+.composer-payment-dates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+@container document-summary (max-width: 540px) {
+  .document-composer .composer-heading-dates .invoice-date-fields {
+    width: 100%;
+  }
+  .composer-payment-dates {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+  }
+}
+
+/* Categorías horizontales: la navegación ocurre al elegir un apartado. */
+.settings-navbar-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+  margin-bottom: var(--space-8);
+}
+.settings-navbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+}
+.settings-navbar-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding: var(--space-2) 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+}
+.settings-navbar-trigger:is(:hover, [data-pressed], [aria-expanded='true'], [aria-current='page']) {
+  background: transparent;
+  color: var(--text);
+}
+.settings-navbar-trigger[aria-current='page'] {
+  border-bottom-color: var(--text);
+}
+.settings-navbar-trigger svg {
+  transition: transform 160ms ease;
+}
+.settings-navbar-trigger[aria-expanded='true'] svg {
+  transform: rotate(180deg);
+}
+.settings-navbar-company {
+  margin-left: auto;
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+}
+.settings-navbar-popover .actions-menu-item[aria-current='page'] {
+  font-weight: var(--weight-medium);
+}
+@media (prefers-reduced-motion: reduce) {
+  .settings-navbar-trigger svg {
+    transition: none;
+  }
+}
+@container billing-content (max-width: 600px) {
+  .settings-navbar-company {
+    width: 100%;
+    margin-left: 0;
+  }
+  .settings-navbar {
+    column-gap: var(--space-4);
+  }
+}
+
+.document-composer .composer-sheet-footer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  grid-column: 1 / -1;
+}
+.composer-sheet-footer .composer-options-trigger {
+  flex-shrink: 0;
+}
+.document-composer .document-sheet-overview .composer-sheet-footer .document-sheet-totals {
+  margin-left: auto;
+}
+.composer-save-status:empty {
+  display: none;
+}
+.composer-save-status {
+  margin-top: var(--space-4);
+}
+.document-options-modal {
+  width: min(520px, calc(100vw - 32px));
+}
+.document-retention-options {
+  border: 0;
+  padding: 0;
+  margin: 0 0 var(--space-4);
+}
+.document-retention-options legend {
+  padding: 0;
+  margin-bottom: var(--space-2);
+}
+.document-retention-options > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
+}
+.document-retention-options label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  cursor: pointer;
+}
+.document-options-fields .optional-details {
+  margin: 0;
+  padding: 0;
+}
+.document-options-fields .optional-details > summary {
+  min-height: var(--control-height);
+  padding-block: var(--space-3);
+}
+.document-options-fields .optional-details > div {
+  display: grid;
+  gap: var(--space-4);
+  padding-top: var(--space-3);
+}
+.document-options-fields .field {
+  margin: 0;
+}
+@container document-summary (max-width: 540px) {
+  .composer-sheet-footer .composer-options-trigger {
+    order: 2;
+  }
+  .document-composer .document-sheet-overview .composer-sheet-footer .document-sheet-totals {
+    width: 100%;
+  }
+}
+
+.modal.document-options-modal {
+  height: fit-content;
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+}
+.document-retention-options label {
+  white-space: nowrap;
+}
+.document-retention-options input[type='radio'] {
+  width: 16px;
+  height: 16px;
+  min-height: 0;
+  flex: 0 0 16px;
+  margin: 0;
+  accent-color: var(--text);
+}
+.document-options-fields .optional-details {
+  border: 0;
+}
+
+/* Separación entre las entradas de contraseña. */
+.settings-password-form > .field + .field {
+  margin-top: var(--space-6);
+}
+
+.document-options-fields .concept-discounts .field > label {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 80px;
+  align-items: center;
+  gap: var(--space-4);
+}
+.document-options-fields .concept-discounts .field-label {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.document-options-fields .concept-discounts .field-label {
+  margin: 0;
+}
+.concept-discount-input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  padding-inline: var(--space-2);
+}
+.document-options-fields .concept-discounts .concept-discount-input input {
+  min-width: 0;
+  width: 100%;
+  padding-inline: 0;
+  text-align: right;
+  border: 0;
+  background: var(--bg);
+}
+.concept-discount-input > span {
+  flex-shrink: 0;
+  padding-inline-end: var(--space-2);
+}
+.document-lines-editable .concept-discount {
+  color: var(--text);
+}
+
+.document-lines-table .line-concept > .concept-discount {
+  display: inline;
+  margin-inline-start: var(--space-2);
+  white-space: nowrap;
+}
+
+/* Cabeceras alineadas con el valor, descontando las flechas de los selectores. */
+.document-lines-editable thead th:first-child,
+.document-lines-editable thead .line-tax {
+  padding-inline-start: calc(var(--space-4) + var(--space-3));
+  text-align: left;
+}
+.document-lines-editable thead .line-quantity {
+  padding-inline-end: calc(var(--space-4) + var(--space-3));
+}
+.document-lines-editable thead .line-price {
+  padding-inline-end: calc(var(--space-4) + var(--space-3));
+}
+
+/* Configuración: lista compacta y contenido separado mediante espacio. */
+.settings-two-level {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  align-items: start;
+  gap: calc(var(--space-8) * 2);
+}
+.settings-side-navigation {
+  --section-navigation-inset: var(--space-6);
+  min-width: 0;
+}
+.settings-section-content,
+.settings-section-content.settings-main {
+  min-width: 0;
+  padding: 0;
+}
+.settings-side-desktop {
+  display: grid;
+  gap: var(--space-4);
+}
+.settings-side-group h2 {
+  margin: 0 0 var(--space-2);
+  padding-inline: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+}
+.settings-side-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-1);
+}
+.settings-side-group button {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 32px;
+  padding: var(--space-1) var(--space-2);
+  border: 0;
+
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: var(--text-body);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.settings-side-group button:hover {
+  color: var(--text);
+  background: var(--bg-subtle, #fafafa);
+}
+.settings-side-group button[aria-current='page'] {
+  color: var(--text);
+  font-weight: var(--weight-medium);
+}
+.settings-side-group button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+.settings-side-mobile {
+  display: none;
+}
+@container billing-content (max-width: 900px) {
+  .settings-two-level {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+  .settings-side-desktop {
+    display: none;
+  }
+  .settings-side-mobile {
+    display: block;
+  }
+}
+
+.document-composer.editor-invoice-document[data-document-kind] .quantity-control {
+  border-bottom: 0;
+}
+
+@media (pointer: coarse) {
+  .settings-side-group button {
+    position: relative;
+    min-height: var(--control-height);
+  }
+}
+
+/* Dos separadores de sección en la hoja de nueva factura. */
+.document-composer[data-document-kind] .invoice-sheet-fields {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-6);
+}
+.document-composer[data-document-kind] .composer-sheet-footer {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-6);
+}
+
+/* El foco de los campos de factura se señala con una única línea negra. */
+.document-composer.editor-invoice-document[data-document-kind]
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger):is(
+    :focus,
+    :focus-visible,
+    [data-focus-visible]
+  ) {
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 22%, transparent);
+  outline: none;
+}
+
+/* Densidad compacta limitada al contenido de Configuración. */
+.settings-section-content {
+  --control-height: var(--control-height-compact);
+  --table-row-height: 56px;
+  --section-gap: var(--space-4);
+  width: 100%;
+  max-width: 800px;
+}
+.settings-section-content h2 {
+  font-size: var(--text-body);
+}
+.settings-section-content .panel-heading {
+  margin-bottom: var(--space-4);
+}
+.settings-section-content.settings-main > .table-panel > .panel-heading {
+  padding-bottom: var(--space-4);
+}
+.settings-hierarchy .settings-section-content .settings-form .form-grid {
+  gap: var(--space-3) var(--space-4);
+}
+.settings-section-content .settings-field-group h3 {
+  margin-bottom: var(--space-3);
+}
+@media (pointer: coarse) {
+  .settings-section-content {
+    --control-height: 44px;
+  }
+}
+@container billing-content (max-width: 600px) {
+  .settings-section-content {
+    --control-height: 44px;
+  }
+}
+
+/* Las flechas del concepto se muestran solo durante la edición de su fila. */
+.document-composer[data-document-kind]
+  .document-lines-editable
+  tbody
+  tr
+  :is(.product-concept-control > svg, .app-select-chevron) {
+  opacity: 0;
+}
+.document-composer[data-document-kind]
+  .document-lines-editable
+  tbody
+  tr:is(:focus-within, :has([aria-expanded='true']))
+  :is(.product-concept-control > svg, .app-select-chevron) {
+  opacity: 1;
+}
+
+/* Nueva factura: cabecera gris y conceptos alternos. */
+.document-composer[data-document-kind] .document-lines-editable thead th {
+  background: var(--bg-table-head);
+}
+.document-composer[data-document-kind] .document-lines-editable tbody tr:nth-child(even) > td {
+  background: var(--bg-subtle);
+}
+.document-composer.editor-invoice-document[data-document-kind]
+  .document-lines-editable
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger) {
+  background: transparent;
+}
+.document-composer.editor-invoice-document[data-document-kind]
+  .document-lines-editable
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger):hover {
+  background: var(--bg-muted);
+}
+
+/* Emisor y cliente comparten la altura de etiqueta, con o sin lápiz. */
+.document-composer[data-document-kind] .document-sheet-overview .document-sheet-caption {
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height);
+  margin: 0 0 var(--space-2);
+  gap: var(--space-2);
+}
+.document-composer[data-document-kind] .document-sheet-caption > .document-sheet-label {
+  margin: 0;
+}
+.document-composer[data-document-kind] .document-sheet-caption > .icon-button {
+  width: var(--control-height);
+  height: var(--control-height);
+  min-height: var(--control-height);
+  padding: 0;
+  flex: 0 0 var(--control-height);
+}
+
+/* Más aire entre el precio unitario y el IVA de nueva factura. */
+.document-composer[data-document-kind] .document-lines-editable .line-price {
+  width: 196px;
+  min-width: 196px;
+  padding-inline-end: var(--space-8);
+}
+.document-composer[data-document-kind] .document-lines-editable thead .line-price {
+  padding-inline-end: calc(var(--space-8) + var(--space-3));
+}
+
+/* Ancho estable del grupo de fechas: no depende del tamaño intrínseco del input. */
+.document-composer[data-document-kind] .composer-heading-dates {
+  width: 392px;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+.document-composer[data-document-kind] .composer-heading-dates .invoice-date-fields {
+  width: 100%;
+}
+.document-composer[data-document-kind] .composer-payment-dates > .field,
+.document-composer[data-document-kind] .composer-payment-dates > .field > label {
+  min-width: 0;
+}
+@container document-summary (max-width: 540px) {
+  .document-composer[data-document-kind] .composer-heading-dates {
+    width: 100%;
+  }
+}
+
+/* Configuración: campos limpios con subrayado contextual. */
+:is(.settings-section-content, body:has(.settings-section-content) .modal)
+  .field
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='color']),
+    textarea,
+    .app-select-trigger
+  ) {
+  border-color: var(--border-strong);
+  box-shadow: none;
+}
+:is(.settings-section-content, body:has(.settings-section-content) .modal)
+  .field
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='color']),
+    textarea,
+    .app-select-trigger
+  ):hover:not(:disabled) {
+  border-color: var(--text-muted);
+  border-radius: var(--radius-control);
+  background: var(--bg-muted);
+}
+:is(.settings-section-content, body:has(.settings-section-content) .modal)
+  .field
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='color']),
+    textarea,
+    .app-select-trigger
+  ):is(:focus, :focus-visible, [data-focus-visible], [aria-expanded='true']):not(:disabled) {
+  border-color: var(--text);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 22%, transparent);
+}
+
+/* Datos de empresa: jerarquía común y campos sangrados bajo cada sección. */
+.settings-section-content .settings-form[data-settings-section='company'] > .panel-heading {
+  margin-bottom: var(--space-8);
+}
+.settings-form[data-settings-section='company'] > .panel-heading h2 {
+  font-size: var(--text-section);
+}
+.settings-section-content .settings-form[data-settings-section='company'] > .settings-field-group {
+  margin: 0 0 var(--space-8);
+}
+.settings-form[data-settings-section='company'] > .settings-field-group > h3 {
+  margin-bottom: var(--space-4);
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-semibold);
+}
+.settings-form[data-settings-section='company'] > .settings-field-group > .form-grid {
+  padding-inline-start: var(--space-6);
+}
+@container billing-content (max-width: 600px) {
+  .settings-form[data-settings-section='company'] > .settings-field-group > .form-grid {
+    padding-inline-start: var(--space-4);
+  }
+}
+
+/* Formularios: foco mediante línea negra, sin relleno ni recuadro. */
+:is(form, .field)
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='color']):not(
+        [type='range']
+      ):not([type='button']):not([type='submit']):not([type='reset']),
+    textarea,
+    select,
+    .app-select-trigger
+  ):is(:focus, :focus-visible, [data-focus-visible], [aria-expanded='true']):not(:disabled) {
+  /* Prevalece sobre las variantes locales de campos y su hover simultáneo. */
+  background: var(--field-focus-background, var(--bg)) !important;
+  border-color: var(--text) !important;
+  box-shadow: var(
+    --field-focus-shadow,
+    0 0 0 3px color-mix(in srgb, var(--focus-ring) 22%, transparent)
+  ) !important;
+  outline: none !important;
+}
+
+/* Mi seguridad: los dos campos de contraseña se reconocen por su fondo gris. */
+.settings-password-form {
+  --field-focus-background: var(--bg-muted);
+}
+.settings-section-content .settings-password-form .field input[type='password'] {
+  background: var(--bg-muted) !important;
+  padding-inline: var(--space-3);
+  min-height: 44px;
+}
+
+.invoice-status-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+  color: var(--text);
+  vertical-align: middle;
+}
+
+/* Factura: ninguna línea residual fuera del control que conserva el foco. */
+.document-composer[data-document-kind] .quantity-control {
+  border-bottom: 0;
+}
+.document-composer[data-document-kind]
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger)
+  :not(*) {
+  /* Reserved: rules below target the control itself. */
+}
+.document-composer[data-document-kind]
+  .field
+  :is(input:not([type='checkbox']):not([type='radio']), textarea, .app-select-trigger):not(
+    :focus
+  ):not([data-focus-visible]):not([aria-expanded='true']) {
+  border-color: var(--border-strong) !important;
+  box-shadow: none !important;
+  outline: none;
+}
+
+/* Estados de documentos: cuadrado discreto y texto, sin cápsula. */
+.badge.document-status,
+.badge.document-status.solid,
+.badge.document-status.overdue {
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: inherit;
+  font-weight: var(--weight-regular);
+}
+.document-status .badge-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  background: #aaa;
+}
+.document-status.solid .badge-dot,
+.document-status.overdue .badge-dot {
+  background: #272727;
+}
+.module-status .document-status .badge-dot {
+  background: currentColor;
+}
+
+/* StatusBadge: pill de estado con icono, sustituye el indicador de puntos en listas y tablas. */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 35px;
+  min-width: 130px;
+  width: max-content;
+  max-width: 100%;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+.status-badge svg {
+  flex-shrink: 0;
+  color: currentColor;
+}
+.status-badge-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* StatusPill: chip de estado con punto de color y fondo tintado según el
+   estado (dot color + label), inspirado en los items de un select de shadcn.
+   Fondo/texto llegan vía style inline (color-mix con --dot color), aquí solo
+   la forma del chip. */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  width: max-content;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.status-pill-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.status-pill-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+}
+.table-scroll td > .status-badge,
+.table-scroll td > .status-pill {
+  margin-inline: auto 0;
+}
+
+/* La factura guardada y su editor comparten la misma tabla y composición. */
+.document-lines-table.document-lines-invoice {
+  min-width: 800px;
+  table-layout: fixed;
+}
+.document-lines-invoice :is(th, td) {
+  padding: var(--space-4);
+}
+.document-lines-invoice thead th {
+  background: var(--bg-table-head);
+}
+.document-lines-invoice tbody tr + tr > :is(th, td) {
+  border-top: 0;
+}
+.document-lines-invoice tbody tr:nth-child(even) > :is(th, td) {
+  background: var(--bg-subtle);
+}
+.document-lines-invoice .line-concept {
+  width: auto;
+  color: var(--text);
+}
+.document-lines-invoice .line-quantity,
+.document-lines-invoice .line-tax {
+  width: 148px;
+  min-width: 148px;
+}
+.document-lines-invoice .line-price {
+  width: 196px;
+  min-width: 196px;
+  padding-inline-end: var(--space-8);
+}
+.document-lines-invoice .line-actions {
+  width: calc(var(--control-height) + var(--space-6) + var(--space-4));
+  padding-inline: var(--space-6) var(--space-4);
+}
+.document-lines-invoice thead th:first-child,
+.document-lines-invoice thead .line-tax {
+  padding-inline-start: calc(var(--space-4) + var(--space-3));
+  text-align: left;
+}
+.document-lines-invoice thead .line-quantity {
+  padding-inline-end: calc(var(--space-4) + var(--space-3));
+}
+.document-lines-invoice thead .line-price {
+  padding-inline-end: calc(var(--space-8) + var(--space-3));
+}
+.document-lines-invoice .line-value {
+  display: block;
+  min-height: var(--control-height);
+  padding: var(--space-3);
+  font-size: var(--text-subtitle);
+  line-height: var(--leading-body);
+}
+.document-lines-invoice .line-tax .line-value {
+  text-align: left;
+}
+.document-summary .document-sheet-invoice .document-sheet-overview .composer-paper-heading {
+  margin-bottom: 0;
+}
+.document-summary .document-sheet-invoice .document-sheet-overview .document-sheet-caption {
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height);
+  margin: 0 0 var(--space-2);
+}
+.document-sheet-invoice .document-sheet-caption > .document-sheet-label {
+  margin: 0;
+}
+.document-sheet-invoice .invoice-sheet-fields,
+.document-sheet-invoice .composer-sheet-footer {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-6);
+}
+.document-sheet-invoice .composer-sheet-footer {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 0;
+}
+.document-summary
+  .document-sheet-invoice
+  .document-sheet-overview
+  .composer-sheet-footer
+  .document-sheet-totals {
+  width: min(100%, 360px);
+  margin: 0 0 0 auto;
+}
+.document-sheet-invoice .composer-heading-dates {
+  width: 392px;
+  max-width: 100%;
+  flex-shrink: 0;
+}
+.document-sheet-invoice .composer-heading-dates > .composer-issue-date {
+  flex: 1;
+}
+.document-sheet-invoice .composer-heading-dates .invoice-readonly-term {
+  display: flex;
+  align-items: center;
+  min-height: var(--control-height);
+  color: var(--text);
+  font-size: var(--text-body);
+}
+@container document-summary (min-width: 541px) {
+  .document-summary .document-sheet-invoice .document-sheet-overview .document-sheet-recipient {
+    width: min(100%, 300px);
+    margin-inline-end: 0;
+    justify-self: end;
+  }
+}
+@container document-summary (max-width: 540px) {
+  .document-sheet-invoice .composer-heading-dates {
+    width: 100%;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+}
+
+/* Clientes, catálogo y cobros: campos contextuales como en el documento. */
+:is(.contact-modal, .contact-creation-dialog, .product-modal, .creation-dialog)
+  .field
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='file']),
+    textarea,
+    .app-select-trigger
+  ) {
+  background: var(--bg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+}
+:is(.contact-modal, .contact-creation-dialog, .product-modal, .creation-dialog)
+  .field
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='file']),
+    textarea,
+    .app-select-trigger
+  ):hover:not(:disabled) {
+  background: var(--bg-subtle);
+}
+
+/* Immediate controls; sidebar.css explicitly restores smooth navigation movement. */
+*,
+*::before,
+*::after,
+dialog::backdrop {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+.document-sheet-unwrapped {
+  display: contents;
+}
+.document-sheet-invoice .invoice-sheet-fields {
+  margin: 0;
+}
+.document-lines-invoice .line-concept > .concept-discount {
+  display: block;
+  margin-inline-start: var(--space-2);
+  color: var(--text);
+}
+.document-summary
+  .document-sheet-invoice
+  .document-sheet-overview
+  .document-sheet-totals
+  .totals
+  .grand-total {
+  margin-top: var(--space-1);
+  padding: var(--space-4) 0;
+  background: var(--bg);
+}
+@container document-summary (max-width: 540px) {
+  .document-sheet-invoice .composer-heading-dates {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Datos de pago arriba, alineados con el margen del cliente y de la hoja. */
+.document-composer[data-document-kind] .composer-heading-dates,
+.document-sheet-invoice .composer-heading-dates {
+  width: 392px;
+  max-width: 100%;
+  margin-inline-start: auto;
+  align-self: start;
+}
+.document-sheet-invoice .composer-heading-dates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3) var(--space-6);
+}
+.document-sheet-invoice
+  .composer-heading-dates
+  > .composer-issue-date:first-child:nth-last-child(3) {
+  grid-column: 1 / -1;
+}
+@container document-summary (max-width: 540px) {
+  .document-composer[data-document-kind] .composer-heading-dates,
+  .document-sheet-invoice .composer-heading-dates {
+    width: 100%;
+  }
+}
+
+@container document-summary (min-width: 541px) {
+  .document-composer .document-sheet-overview .document-sheet-recipient,
+  .document-summary .document-sheet-invoice .document-sheet-overview .document-sheet-recipient {
+    width: min(100%, 392px);
+    justify-self: end;
+  }
+}
+.document-composer .composer-heading-dates .document-date-fields-quote > .field:first-child,
+.document-composer .composer-heading-dates .document-date-fields-purchase > .field:first-child {
+  grid-column: 1 / -1;
+}
+
+/* Descuento asociado al nombre, aprovechando el ancho libre del extremo derecho. */
+.document-lines-table .line-concept > .concept-discount {
+  display: block;
+  margin: 0 0 var(--space-2);
+  padding-inline: var(--space-3);
+  color: var(--text-muted);
+  font-size: var(--text-body);
+  font-weight: var(--weight-regular);
+}
+.document-lines-table:is(.document-lines-invoice, .document-lines-editable) .line-tax {
+  width: 112px;
+  min-width: 112px;
+}
+.document-lines-table.document-lines-editable .line-actions {
+  width: 64px;
+  padding-inline: var(--space-2) var(--space-3);
+}
+
+/* Adjuntos: título discreto y clip en el extremo derecho. */
+.document-files > .panel-heading,
+.document-files > .panel-heading:has(> .icon-button) {
+  justify-content: space-between;
+}
+.document-files > .panel-heading h2 {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-semibold);
+}
+.document-files > .panel-heading > .icon-button {
+  margin-inline-start: auto;
+}
+.document-file-row .document-upload-title > .document-file-open,
+.document-section-table .document-file-open {
+  grid-column: 1;
+  grid-row: 1;
+  display: block;
+  min-width: 0;
+  width: 100%;
+  padding: 0;
+  min-height: var(--control-height);
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.attachment-preview .modal-head {
+  min-width: 0;
+}
+.attachment-preview .modal-head h2 {
+  overflow-wrap: anywhere;
+}
+.attachment-image {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  place-items: center;
+  background: var(--bg-subtle);
+}
+.attachment-image img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.attachment-table-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+.attachment-table-tools .field {
+  margin: 0;
+  min-width: 160px;
+}
+.attachment-table-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+.attachment-table-scroll table {
+  min-width: 100%;
+  width: max-content;
+}
+.attachment-table-scroll :is(th, td) {
+  max-width: 400px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.attachment-table-scroll thead {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 1;
+}
+
+.attachment-preview .modal-head > .modal-title {
+  flex: 1;
+  min-width: 0;
+}
+.attachment-preview .modal-head > .modal-header-actions {
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+}
+
+/* Visor de adjuntos más contenido, con margen visible alrededor. */
+.modal.document-preview.attachment-preview {
+  width: min(1120px, calc(100vw - var(--space-6) * 2));
+  height: min(840px, 84dvh);
+  max-height: 84dvh;
+  margin: auto;
+}
+@media (max-width: 760px) {
+  .modal.document-preview.attachment-preview {
+    width: calc(100vw - var(--space-3) * 2);
+    max-width: calc(100vw - var(--space-3) * 2);
+    height: 90dvh;
+    max-height: 90dvh;
+    margin: auto;
+  }
+}
+
+/* Configuración: al salir del campo no queda subrayado ni sombra de foco. */
+:is(.settings-section-content, body:has(.settings-section-content) .modal)
+  .field
+  :is(
+    input:not([type='checkbox']):not([type='radio']):not([type='file']):not([type='color']):not(
+        [type='range']
+      ),
+    textarea,
+    .app-select-trigger
+  ):not(:focus):not(:focus-visible):not([data-focus-visible]):not([aria-expanded='true']) {
+  border-color: var(--border-strong) !important;
+  box-shadow: none !important;
+  outline: none;
+}
+
+.attachment-preview .modal-head h2 {
+  font-size: var(--text-section);
+  font-weight: var(--weight-semibold);
+}
+
+/* Títulos de los apartados del documento: misma escala que Archivos adjuntos. */
+.document-section-content .panel-heading h2,
+.document-section-content .document-sheet-overview .composer-paper-heading h2 {
+  font-size: var(--text-subtitle);
+  font-weight: var(--weight-semibold);
+}
+
+/* Cierre único de modales en el extremo superior derecho. */
+.modal-head > .modal-close-button {
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-inline-start: auto;
+}
+
+.document-status-history .document-history-row {
+  font-weight: var(--weight-regular);
+}
+
+/* Buscador global accesible desde la barra principal. */
+.compact-sidebar .sidebar-search {
+  width: calc(100% - 32px);
+  margin-inline: var(--space-4);
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--on-dark-border);
+  border-radius: var(--radius-control);
+  background: var(--on-dark-hover);
+  color: var(--on-dark-muted);
+  text-align: left;
+  font-size: var(--text-body);
+  cursor: pointer;
+}
+.compact-sidebar .sidebar-search:hover,
+.compact-sidebar .sidebar-search:focus-visible {
+  color: var(--on-dark);
+  border-color: var(--on-dark-muted);
+}
+.compact-sidebar.is-collapsed .sidebar-search {
+  width: calc(100% - 32px);
+}
+
+/* Nueva plantilla: superficies de los campos de escritura. */
+.modal.template-wizard .field :is(input:not([type]), input[type='text'], textarea) {
+  --field-focus-background: var(--bg-muted);
+  background: var(--bg-muted) !important;
+  padding: var(--space-3);
+}
+.modal.template-wizard .field :is(input:not([type]), input[type='text'], textarea) {
+  border-color: var(--border-strong) !important;
+  box-shadow: none !important;
+}
+
+/* Recorrido de estado exclusivo del listado de facturas de venta. */
+.invoice-pipeline-trigger {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+  padding: var(--space-1) 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+.invoice-pipeline-track {
+  display: flex;
+  align-items: center;
+  width: 72px;
+  justify-content: space-between;
+  position: relative;
+}
+.invoice-pipeline-track::before {
+  content: '';
+  position: absolute;
+  inset-inline: 4px;
+  top: 50%;
+  height: 1px;
+  background: var(--border-strong);
+}
+.invoice-pipeline-point {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50% !important;
+  background: var(--bg);
+}
+.invoice-pipeline-point.is-past {
+  background: var(--text-muted);
+  border-color: var(--text-muted);
+}
+.invoice-pipeline-point.is-current {
+  background: var(--text);
+  border-color: var(--text);
+  outline: 2px solid var(--bg);
+  box-shadow: 0 0 0 3px var(--text);
+}
+.invoice-pipeline-label {
+  font-size: var(--text-caption);
+}
+.invoice-pipeline-trigger:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+}
+.invoice-pipeline-popover {
+  width: min(260px, calc(100vw - 32px));
+  max-height: min(320px, 60vh);
+  overflow-y: auto;
+  padding: var(--space-3);
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-dialog);
+  font-size: var(--text-body);
+  z-index: 100;
+}
+.invoice-pipeline-title {
+  font-weight: var(--weight-medium);
+  margin-bottom: var(--space-3);
+}
+.invoice-pipeline-popover p {
+  margin: 0 0 var(--space-3);
+}
+.invoice-pipeline-history {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.invoice-pipeline-history li {
+  display: flex;
+  gap: var(--space-3);
+  position: relative;
+  padding-bottom: var(--space-2);
+}
+.invoice-pipeline-history li:last-child {
+  padding-bottom: 0;
+}
+.invoice-pipeline-history li:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 12px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border-strong);
+}
+.invoice-pipeline-history-dot {
+  flex: 0 0 9px;
+  height: 9px;
+  margin-top: 5px;
+  border: 1px solid var(--text-muted);
+  border-radius: 50% !important;
+  background: var(--text-muted);
+}
+.invoice-pipeline-history [data-state='current'] .invoice-pipeline-history-dot {
+  background: var(--text);
+  border-color: var(--text);
+}
+.invoice-pipeline-history [data-state='next'] .invoice-pipeline-history-dot {
+  background: var(--bg);
+}
+.invoice-pipeline-history small {
+  display: block;
+  color: var(--text-muted);
+  font-size: var(--text-caption);
+  margin-top: var(--space-1);
+}
+
+
+
+/* Datos de empresa: sin líneas antes, durante ni después de editar. */
+.settings-form[data-settings-section='company'] .field :is(input, textarea),
+.settings-form[data-settings-section='billing'] .field textarea {
+  --field-focus-border: 0;
+  --field-focus-shadow: none;
+  --field-focus-background: var(--bg-muted);
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* El recorrido de cabecera contrasta sobre la superficie oscura. */
+.invoice-pipeline-header {
+  --text: #fff;
+  --text-muted: #b5b5b5;
+  --bg: #000;
+  --border-strong: #737373;
+}
+
+/* Separadores entre funciones relacionadas de los menús extensos. */
+.actions-menu-section + .actions-menu-section {
+  margin-top: var(--space-1);
+  padding-top: var(--space-1);
+  border-top: 1px solid var(--border);
+}
+
+/* Perfil: campos de identidad con fondo gris fijo y sin subrayado. */
+.modal.profile-edit-modal .field input {
+  --field-focus-background: var(--bg-muted);
+  background: var(--bg-muted) !important;
+  border: 1px solid var(--border-strong) !important;
+  box-shadow: none !important;
+  padding: var(--space-3);
+}
+
+/* Identidad del cliente en requisitos: campos grises como Cambiar contraseña. */
+.buyer-policies-modal .buyer-client-fields .field :is(input, .app-select-trigger) {
+  --field-focus-background: var(--bg-muted);
+  background: var(--bg-muted) !important;
+  padding-inline: var(--space-3);
+}
+
+/* Campos de escritura con superficie gris persistente. */
+.field.field-filled :is(input, textarea) {
+  --field-focus-background: var(--bg-muted);
+  --field-focus-border: 0;
+  --field-focus-shadow: none;
+  background: var(--bg-muted) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: var(--space-3);
+}
+
+/* Acciones de alta persistentes dentro del selector común. */
+.app-select-actions {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-2);
+}
+.app-select-action {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  min-height: var(--control-height);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+}
+.app-select-action:is(:hover, [data-focused]) {
+  background: var(--bg-muted);
+}
+.app-select-action:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+
+/* Selectores con la misma superficie rectangular que los campos grises. */
+.field.field-filled .app-select-trigger {
+  --field-focus-background: var(--bg-muted);
+  background: var(--bg-muted) !important;
+  padding: var(--space-3);
+}
+
+/* Ficha de cliente o proveedor: todos los controles sobre fondo gris fijo. */
+.modal.contact-modal .field :is(input, textarea, .app-select-trigger) {
+  --field-focus-background: var(--bg-muted);
+  --field-focus-border: 0;
+  --field-focus-shadow: none;
+  background: var(--bg-muted) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: var(--space-3);
+}
+
+/* Explorador del historial: rail de capítulos y previsualización contextual. */
+.contact-activity-tools { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+.contact-activity-panel > .panel-heading { flex-wrap: wrap; }
+.contact-history-trigger { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--control-height); padding: var(--space-1) 0; background: transparent; border: 0; color: var(--text); font-size: var(--text-body); font-weight: var(--weight-regular); cursor: pointer; }
+.contact-history-trigger[data-hovered] { color: var(--text-muted); }
+.contact-history-trigger[data-focus-visible], .chapter-tick:focus-visible, .chapter-open:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.contact-history-popover { width: min(380px, calc(100vw - 32px)); max-height: min(560px, var(--available-height)); overflow-y: auto; background: var(--bg); color: var(--text); border: 1px solid var(--border); box-shadow: var(--shadow-dialog); padding: var(--space-4); z-index: 1000; }
+.contact-history-dialog { outline: none; }
+.contact-history-heading { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); }
+.contact-history-heading h2 { margin: 0; font-size: var(--text-subtitle); font-weight: var(--weight-semibold); }
+.contact-history-range { margin: var(--space-2) 0 var(--space-4); color: var(--text-muted); font-size: var(--text-caption); font-variant-numeric: tabular-nums; }
+.chapter-scrubber { display: grid; grid-template-columns: 64px minmax(0, 1fr); align-items: start; gap: var(--space-4); min-height: 180px; }
+.chapter-rail { display: flex; flex-direction: column; padding: var(--space-1); }
+.chapter-tick { display: flex; align-items: center; width: 56px; height: 22px; min-height: 0; flex-shrink: 0; padding: 0; border: 0; background: transparent; color: var(--text); cursor: pointer; }
+.chapter-tick-mark { display: block; height: 2px; width: var(--chapter-length); opacity: var(--chapter-opacity); background: currentColor; }
+.chapter-tick[aria-selected='true'] .chapter-tick-mark { height: 3px; }
+.chapter-preview { min-width: 0; padding-block: var(--space-1); }
+.chapter-meta, .chapter-detail { color: var(--text-muted); font-size: var(--text-caption); }
+.chapter-preview h3 { margin: var(--space-2) 0; font-size: var(--text-subtitle); font-weight: var(--weight-medium); overflow-wrap: anywhere; }
+.chapter-preview p { margin: var(--space-2) 0; overflow-wrap: anywhere; }
+.chapter-amount { font-size: var(--text-section); font-weight: var(--weight-medium); font-variant-numeric: tabular-nums; }
+.chapter-open { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--control-height); margin-top: var(--space-3); padding: 0; border: 0; background: transparent; color: var(--text); font-size: var(--text-body); cursor: pointer; text-decoration: none; }
+.chapter-open:hover { text-decoration: underline; }
+.contact-history-popover .contact-pagination { margin-top: var(--space-4); gap: var(--space-2); }
+@media (prefers-reduced-motion: no-preference) {
+  .chapter-tick-mark { transition: width 120ms ease-out, opacity 120ms ease-out !important; }
+}
+@media (max-width: 600px), (pointer: coarse) {
+  .contact-history-popover { padding: var(--space-3); }
+  .chapter-scrubber { gap: var(--space-3); }
+  .chapter-rail { max-height: 264px; overflow-y: auto; scrollbar-width: thin; }
+  .chapter-tick, .contact-history-trigger, .chapter-open { min-height: 44px; }
+}
+
+.document-preview-pdf { color: var(--text-primary, #000); }
+
+/* Vista previa del documento: marco de Registrar cobro, sin afectar otros visores. */
+.modal.document-preview.document-preview-creation {
+  width: 1040px;
+  max-width: calc(100vw - 48px);
+  padding: var(--space-6);
+  border: 0;
+}
+.document-preview-creation > .document-preview-body {
+  padding-top: var(--space-4);
+}
+@media (max-width: 760px) {
+  .modal.document-preview.document-preview-creation {
+    width: 100%;
+    max-width: 100%;
+    padding: var(--space-4);
+  }
+}
+
+/* Fechas de lectura: etiqueta y valor compactos, sin altura de campo editable. */
+.document-summary .composer-heading-dates .composer-issue-date {
+  gap: var(--space-1);
+}
+.document-summary .composer-heading-dates .composer-issue-date time,
+.document-summary .composer-heading-dates .invoice-readonly-term {
+  min-height: 0;
+}
+
+/* Emisor y cliente en lectura: misma separación compacta que las fechas. */
+.document-summary .document-sheet-invoice .document-sheet-overview .document-sheet-caption {
+  min-height: 0;
+  margin-bottom: var(--space-1);
+}
+.document-summary .document-sheet-issuer h2,
+.document-summary .document-sheet-recipient h3 {
+  margin-top: 0;
+}
+
+/* Producto y valores en lectura: escala de texto habitual de las tablas. */
+.document-summary .document-lines-invoice .line-value {
+  font-size: var(--text-body);
+}
+
+
+/* Tablas documentales: misma superficie y filas que Movimientos. */
+.document-section-content .table-scroll > .document-section-table { min-width: 0; width: 100%; }
+.document-section-table td { overflow-wrap: anywhere; }
+.document-section-table td > small { display: block; }
+.document-section-table td:last-child:has(> .icon-button),
+.document-section-table td:last-child:has(.document-file-remove) { width: 64px; }
+.document-section-table .document-file-open { text-align: left; overflow-wrap: anywhere; }
+.document-dues-table .schedule-edit-action { position: static; margin: 0; }
+@media (max-width: 760px) {
+  .document-section-content .document-section-table :is(th, td) { padding: var(--space-3) var(--space-2); }
+}
+
+
+/* Lectura documental: encabezados y valores numéricos comparten centro de columna. */
+.document-summary .document-lines-invoice .line-numeric {
+  text-align: center;
+  padding-inline: var(--space-4);
+}
+.document-summary .document-lines-invoice .line-numeric .line-value {
+  text-align: center;
+}
+
+
+/* Acercar el separador inferior a los conceptos sin alterar el resto de la hoja. */
+.document-summary .document-sheet-invoice .invoice-sheet-fields + .composer-sheet-footer {
+  margin-top: calc(-1 * var(--space-6));
+}
+
+/* Total en lectura: etiqueta e importe comparten la jerarquía principal. */
+.document-summary .document-sheet-totals .grand-total > strong:first-child {
+  font-size: var(--text-amount);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-heading);
+}
+
+/* Datos de pago más próximos y desplazados hacia el margen derecho. */
+.document-summary .document-sheet-invoice .composer-heading-dates {
+  column-gap: var(--space-4);
+}
+@container document-summary (min-width: 541px) {
+  .document-summary .document-sheet-invoice .composer-heading-dates {
+    width: 320px;
+  }
+}
+
+/* Cliente alineado con el bloque compacto de vencimiento y plazo. */
+@container document-summary (min-width: 541px) {
+  .document-summary .document-sheet-invoice .document-sheet-overview .document-sheet-recipient {
+    width: min(100%, 320px);
+  }
+}

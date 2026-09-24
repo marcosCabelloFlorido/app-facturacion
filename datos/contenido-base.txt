@@ -1,0 +1,686 @@
+;
+; Archive created at 2026-09-18 07:22:43 UTC
+;     dbname: facturacion
+;     TOC Entries: 675
+;     Compression: gzip
+;     Dump Version: 1.15-0
+;     Format: CUSTOM
+;     Integer: 4 bytes
+;     Offset: 8 bytes
+;     Dumped from database version: 16.15
+;     Dumped by pg_dump version: 16.15
+;
+;
+; Selected TOC Entries:
+;
+6; 2615 1447174 SCHEMA - workspace_13b8b1f06aaf49f4ba08ee1103461f2a facturacion
+360; 1255 16672 FUNCTION public check_entry() facturacion
+362; 1255 16679 FUNCTION public check_issuance() facturacion
+343; 1255 17598 FUNCTION public complete_payment() facturacion
+364; 1255 16684 FUNCTION public guard_credit() facturacion
+358; 1255 16664 FUNCTION public guard_document() facturacion
+342; 1255 17596 FUNCTION public guard_entry_append() facturacion
+365; 1255 30183 FUNCTION public guard_fund_application() facturacion
+359; 1255 16666 FUNCTION public guard_immutable() facturacion
+344; 1255 49289 FUNCTION public guard_message_content() facturacion
+366; 1255 16682 FUNCTION public guard_payment() facturacion
+361; 1255 16677 FUNCTION public guard_period() facturacion
+346; 1255 217908 FUNCTION public guard_stored_file() facturacion
+363; 1255 17601 FUNCTION public validate_credit_document() facturacion
+369; 1255 1447432 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a check_entry() facturacion
+345; 1255 1447439 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a check_issuance() facturacion
+372; 1255 1447448 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a complete_payment() facturacion
+374; 1255 1447444 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a guard_credit() facturacion
+367; 1255 1447424 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a guard_document() facturacion
+371; 1255 1447446 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a guard_entry_append() facturacion
+375; 1255 1447664 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a guard_fund_application() facturacion
+368; 1255 1447426 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a guard_immutable() facturacion
+377; 1255 1448030 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a guard_message_content() facturacion
+376; 1255 1447442 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a guard_payment() facturacion
+370; 1255 1447437 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a guard_period() facturacion
+378; 1255 1448117 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a guard_stored_file() facturacion
+373; 1255 1447451 FUNCTION workspace_13b8b1f06aaf49f4ba08ee1103461f2a validate_credit_document() facturacion
+276; 1259 198048 TABLE public file_removals facturacion
+254; 1259 49015 TABLE public stored_files facturacion
+277; 1259 198064 VIEW public active_stored_files facturacion
+231; 1259 16611 TABLE public audit_events facturacion
+230; 1259 16610 SEQUENCE public audit_events_id_seq facturacion
+245; 1259 30105 TABLE public batch_payments facturacion
+260; 1259 49107 TABLE public buyer_policies facturacion
+262; 1259 49119 TABLE public buyer_policy_versions facturacion
+261; 1259 49118 SEQUENCE public buyer_policy_versions_id_seq facturacion
+243; 1259 30075 TABLE public chart_accounts facturacion
+253; 1259 38031 TABLE public closing_reviews facturacion
+268; 1259 49228 TABLE public communication_settings facturacion
+217; 1259 16395 TABLE public company facturacion
+264; 1259 49150 TABLE public contacts facturacion
+225; 1259 16540 TABLE public credit_applications facturacion
+235; 1259 21788 TABLE public document_archives facturacion
+223; 1259 16466 TABLE public documents facturacion
+247; 1259 30148 TABLE public fund_applications facturacion
+224; 1259 16516 TABLE public payments facturacion
+242; 1259 30070 VIEW public document_balances facturacion
+241; 1259 30054 TABLE public document_dues facturacion
+240; 1259 30033 TABLE public document_schedules facturacion
+248; 1259 30186 VIEW public document_due_balances facturacion
+267; 1259 49209 TABLE public document_renderings facturacion
+279; 1259 684930 TABLE public document_template_choices facturacion
+265; 1259 49172 TABLE public document_templates facturacion
+252; 1259 38011 TABLE public entry_reversals facturacion
+255; 1259 49038 TABLE public file_extractions facturacion
+233; 1259 16639 TABLE public fiscal_records facturacion
+232; 1259 16626 TABLE public idempotency_keys facturacion
+256; 1259 49053 TABLE public import_batches facturacion
+258; 1259 49076 TABLE public import_items facturacion
+257; 1259 49075 SEQUENCE public import_items_id_seq facturacion
+259; 1259 49092 TABLE public import_results facturacion
+263; 1259 49135 TABLE public issued_requirement_checks facturacion
+251; 1259 37990 TABLE public journal_draft_versions facturacion
+250; 1259 37989 SEQUENCE public journal_draft_versions_id_seq facturacion
+249; 1259 37966 TABLE public journal_drafts facturacion
+227; 1259 16560 TABLE public journal_entries facturacion
+226; 1259 16559 SEQUENCE public journal_entries_number_seq facturacion
+4936; 0 0 SEQUENCE OWNED BY public journal_entries_number_seq facturacion
+229; 1259 16591 TABLE public journal_lines facturacion
+228; 1259 16590 SEQUENCE public journal_lines_id_seq facturacion
+271; 1259 49274 TABLE public message_attempts facturacion
+270; 1259 49273 SEQUENCE public message_attempts_id_seq facturacion
+216; 1259 16389 TABLE public migrations facturacion
+269; 1259 49242 TABLE public outgoing_messages facturacion
+244; 1259 30090 TABLE public payment_batches facturacion
+221; 1259 16447 TABLE public periods facturacion
+275; 1259 49338 TABLE public portal_events facturacion
+274; 1259 49337 SEQUENCE public portal_events_id_seq facturacion
+273; 1259 49314 TABLE public portal_receipts facturacion
+280; 1259 684951 TABLE public portal_settings facturacion
+272; 1259 49291 TABLE public portal_shares facturacion
+220; 1259 16431 TABLE public products facturacion
+278; 1259 259360 TABLE public sales_views facturacion
+222; 1259 16458 TABLE public series facturacion
+238; 1259 30004 TABLE public series_config facturacion
+239; 1259 30014 TABLE public series_counters facturacion
+219; 1259 16418 TABLE public sessions facturacion
+266; 1259 49190 TABLE public template_versions facturacion
+246; 1259 30124 TABLE public unapplied_funds facturacion
+218; 1259 16405 TABLE public users facturacion
+234; 1259 21773 TABLE public working_drafts facturacion
+237; 1259 21815 TABLE public workspace_members facturacion
+236; 1259 21803 TABLE public workspaces facturacion
+337; 1259 1448095 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_removals facturacion
+315; 1259 1447759 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a stored_files facturacion
+338; 1259 1448111 VIEW workspace_13b8b1f06aaf49f4ba08ee1103461f2a active_stored_files facturacion
+294; 1259 1447371 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a audit_events facturacion
+293; 1259 1447370 SEQUENCE workspace_13b8b1f06aaf49f4ba08ee1103461f2a audit_events_id_seq facturacion
+306; 1259 1447586 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a batch_payments facturacion
+321; 1259 1447851 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policies facturacion
+323; 1259 1447863 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policy_versions facturacion
+322; 1259 1447862 SEQUENCE workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policy_versions_id_seq facturacion
+304; 1259 1447556 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a chart_accounts facturacion
+314; 1259 1447739 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a closing_reviews facturacion
+329; 1259 1447969 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a communication_settings facturacion
+282; 1259 1447181 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a company facturacion
+325; 1259 1447894 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a contacts facturacion
+288; 1259 1447300 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a credit_applications facturacion
+298; 1259 1447468 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_archives facturacion
+286; 1259 1447226 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents facturacion
+308; 1259 1447629 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications facturacion
+287; 1259 1447276 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a payments facturacion
+303; 1259 1447551 VIEW workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_balances facturacion
+302; 1259 1447535 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_dues facturacion
+301; 1259 1447514 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_schedules facturacion
+309; 1259 1447667 VIEW workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_due_balances facturacion
+328; 1259 1447950 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_renderings facturacion
+340; 1259 1448139 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_template_choices facturacion
+326; 1259 1447913 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_templates facturacion
+313; 1259 1447719 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a entry_reversals facturacion
+316; 1259 1447782 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_extractions facturacion
+296; 1259 1447399 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a fiscal_records facturacion
+295; 1259 1447386 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a idempotency_keys facturacion
+317; 1259 1447797 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_batches facturacion
+319; 1259 1447820 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_items facturacion
+318; 1259 1447819 SEQUENCE workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_items_id_seq facturacion
+320; 1259 1447836 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_results facturacion
+324; 1259 1447879 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a issued_requirement_checks facturacion
+312; 1259 1447698 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_draft_versions facturacion
+311; 1259 1447697 SEQUENCE workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_draft_versions_id_seq facturacion
+310; 1259 1447674 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_drafts facturacion
+290; 1259 1447320 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries facturacion
+289; 1259 1447319 SEQUENCE workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries_number_seq facturacion
+4937; 0 0 SEQUENCE OWNED BY workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries_number_seq facturacion
+292; 1259 1447351 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines facturacion
+291; 1259 1447350 SEQUENCE workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines_id_seq facturacion
+332; 1259 1448015 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a message_attempts facturacion
+331; 1259 1448014 SEQUENCE workspace_13b8b1f06aaf49f4ba08ee1103461f2a message_attempts_id_seq facturacion
+281; 1259 1447175 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a migrations facturacion
+330; 1259 1447983 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a outgoing_messages facturacion
+305; 1259 1447571 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a payment_batches facturacion
+284; 1259 1447207 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a periods facturacion
+336; 1259 1448079 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_events facturacion
+335; 1259 1448078 SEQUENCE workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_events_id_seq facturacion
+334; 1259 1448055 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_receipts facturacion
+341; 1259 1448160 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_settings facturacion
+333; 1259 1448032 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_shares facturacion
+283; 1259 1447191 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a products facturacion
+339; 1259 1448124 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a sales_views facturacion
+285; 1259 1447218 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a series facturacion
+299; 1259 1447485 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a series_config facturacion
+300; 1259 1447495 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a series_counters facturacion
+327; 1259 1447931 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a template_versions facturacion
+307; 1259 1447605 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a unapplied_funds facturacion
+297; 1259 1447453 TABLE workspace_13b8b1f06aaf49f4ba08ee1103461f2a working_drafts facturacion
+3811; 2604 16564 DEFAULT public journal_entries number facturacion
+3921; 2604 1447324 DEFAULT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries number facturacion
+4825; 0 16611 TABLE DATA public audit_events facturacion
+4838; 0 30105 TABLE DATA public batch_payments facturacion
+4852; 0 49107 TABLE DATA public buyer_policies facturacion
+4854; 0 49119 TABLE DATA public buyer_policy_versions facturacion
+4836; 0 30075 TABLE DATA public chart_accounts facturacion
+4845; 0 38031 TABLE DATA public closing_reviews facturacion
+4860; 0 49228 TABLE DATA public communication_settings facturacion
+4811; 0 16395 TABLE DATA public company facturacion
+4856; 0 49150 TABLE DATA public contacts facturacion
+4819; 0 16540 TABLE DATA public credit_applications facturacion
+4829; 0 21788 TABLE DATA public document_archives facturacion
+4835; 0 30054 TABLE DATA public document_dues facturacion
+4859; 0 49209 TABLE DATA public document_renderings facturacion
+4834; 0 30033 TABLE DATA public document_schedules facturacion
+4870; 0 684930 TABLE DATA public document_template_choices facturacion
+4857; 0 49172 TABLE DATA public document_templates facturacion
+4817; 0 16466 TABLE DATA public documents facturacion
+4844; 0 38011 TABLE DATA public entry_reversals facturacion
+4847; 0 49038 TABLE DATA public file_extractions facturacion
+4868; 0 198048 TABLE DATA public file_removals facturacion
+4827; 0 16639 TABLE DATA public fiscal_records facturacion
+4840; 0 30148 TABLE DATA public fund_applications facturacion
+4826; 0 16626 TABLE DATA public idempotency_keys facturacion
+4848; 0 49053 TABLE DATA public import_batches facturacion
+4850; 0 49076 TABLE DATA public import_items facturacion
+4851; 0 49092 TABLE DATA public import_results facturacion
+4855; 0 49135 TABLE DATA public issued_requirement_checks facturacion
+4843; 0 37990 TABLE DATA public journal_draft_versions facturacion
+4841; 0 37966 TABLE DATA public journal_drafts facturacion
+4821; 0 16560 TABLE DATA public journal_entries facturacion
+4823; 0 16591 TABLE DATA public journal_lines facturacion
+4863; 0 49274 TABLE DATA public message_attempts facturacion
+4810; 0 16389 TABLE DATA public migrations facturacion
+4861; 0 49242 TABLE DATA public outgoing_messages facturacion
+4837; 0 30090 TABLE DATA public payment_batches facturacion
+4818; 0 16516 TABLE DATA public payments facturacion
+4815; 0 16447 TABLE DATA public periods facturacion
+4867; 0 49338 TABLE DATA public portal_events facturacion
+4865; 0 49314 TABLE DATA public portal_receipts facturacion
+4871; 0 684951 TABLE DATA public portal_settings facturacion
+4864; 0 49291 TABLE DATA public portal_shares facturacion
+4814; 0 16431 TABLE DATA public products facturacion
+4869; 0 259360 TABLE DATA public sales_views facturacion
+4816; 0 16458 TABLE DATA public series facturacion
+4832; 0 30004 TABLE DATA public series_config facturacion
+4833; 0 30014 TABLE DATA public series_counters facturacion
+4813; 0 16418 TABLE DATA public sessions facturacion
+4846; 0 49015 TABLE DATA public stored_files facturacion
+4858; 0 49190 TABLE DATA public template_versions facturacion
+4839; 0 30124 TABLE DATA public unapplied_funds facturacion
+4812; 0 16405 TABLE DATA public users facturacion
+4828; 0 21773 TABLE DATA public working_drafts facturacion
+4831; 0 21815 TABLE DATA public workspace_members facturacion
+4830; 0 21803 TABLE DATA public workspaces facturacion
+4885; 0 1447371 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a audit_events facturacion
+4896; 0 1447586 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a batch_payments facturacion
+4910; 0 1447851 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policies facturacion
+4912; 0 1447863 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policy_versions facturacion
+4894; 0 1447556 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a chart_accounts facturacion
+4903; 0 1447739 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a closing_reviews facturacion
+4918; 0 1447969 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a communication_settings facturacion
+4873; 0 1447181 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a company facturacion
+4914; 0 1447894 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a contacts facturacion
+4879; 0 1447300 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a credit_applications facturacion
+4889; 0 1447468 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_archives facturacion
+4893; 0 1447535 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_dues facturacion
+4917; 0 1447950 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_renderings facturacion
+4892; 0 1447514 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_schedules facturacion
+4928; 0 1448139 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_template_choices facturacion
+4915; 0 1447913 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_templates facturacion
+4877; 0 1447226 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents facturacion
+4902; 0 1447719 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a entry_reversals facturacion
+4905; 0 1447782 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_extractions facturacion
+4926; 0 1448095 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_removals facturacion
+4887; 0 1447399 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a fiscal_records facturacion
+4898; 0 1447629 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications facturacion
+4886; 0 1447386 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a idempotency_keys facturacion
+4906; 0 1447797 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_batches facturacion
+4908; 0 1447820 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_items facturacion
+4909; 0 1447836 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_results facturacion
+4913; 0 1447879 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a issued_requirement_checks facturacion
+4901; 0 1447698 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_draft_versions facturacion
+4899; 0 1447674 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_drafts facturacion
+4881; 0 1447320 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries facturacion
+4883; 0 1447351 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines facturacion
+4921; 0 1448015 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a message_attempts facturacion
+4872; 0 1447175 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a migrations facturacion
+4919; 0 1447983 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a outgoing_messages facturacion
+4895; 0 1447571 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a payment_batches facturacion
+4878; 0 1447276 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a payments facturacion
+4875; 0 1447207 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a periods facturacion
+4925; 0 1448079 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_events facturacion
+4923; 0 1448055 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_receipts facturacion
+4929; 0 1448160 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_settings facturacion
+4922; 0 1448032 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_shares facturacion
+4874; 0 1447191 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a products facturacion
+4927; 0 1448124 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a sales_views facturacion
+4876; 0 1447218 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a series facturacion
+4890; 0 1447485 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a series_config facturacion
+4891; 0 1447495 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a series_counters facturacion
+4904; 0 1447759 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a stored_files facturacion
+4916; 0 1447931 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a template_versions facturacion
+4897; 0 1447605 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a unapplied_funds facturacion
+4888; 0 1447453 TABLE DATA workspace_13b8b1f06aaf49f4ba08ee1103461f2a working_drafts facturacion
+4938; 0 0 SEQUENCE SET public audit_events_id_seq facturacion
+4939; 0 0 SEQUENCE SET public buyer_policy_versions_id_seq facturacion
+4940; 0 0 SEQUENCE SET public import_items_id_seq facturacion
+4941; 0 0 SEQUENCE SET public journal_draft_versions_id_seq facturacion
+4942; 0 0 SEQUENCE SET public journal_entries_number_seq facturacion
+4943; 0 0 SEQUENCE SET public journal_lines_id_seq facturacion
+4944; 0 0 SEQUENCE SET public message_attempts_id_seq facturacion
+4945; 0 0 SEQUENCE SET public portal_events_id_seq facturacion
+4946; 0 0 SEQUENCE SET workspace_13b8b1f06aaf49f4ba08ee1103461f2a audit_events_id_seq facturacion
+4947; 0 0 SEQUENCE SET workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policy_versions_id_seq facturacion
+4948; 0 0 SEQUENCE SET workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_items_id_seq facturacion
+4949; 0 0 SEQUENCE SET workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_draft_versions_id_seq facturacion
+4950; 0 0 SEQUENCE SET workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries_number_seq facturacion
+4951; 0 0 SEQUENCE SET workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines_id_seq facturacion
+4952; 0 0 SEQUENCE SET workspace_13b8b1f06aaf49f4ba08ee1103461f2a message_attempts_id_seq facturacion
+4953; 0 0 SEQUENCE SET workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_events_id_seq facturacion
+4168; 2606 16619 CONSTRAINT public audit_events audit_events_pkey facturacion
+4202; 2606 30111 CONSTRAINT public batch_payments batch_payments_payment_id_key facturacion
+4204; 2606 30109 CONSTRAINT public batch_payments batch_payments_pkey facturacion
+4244; 2606 49117 CONSTRAINT public buyer_policies buyer_policies_pkey facturacion
+4246; 2606 49126 CONSTRAINT public buyer_policy_versions buyer_policy_versions_pkey facturacion
+4248; 2606 49128 CONSTRAINT public buyer_policy_versions buyer_policy_versions_tax_id_version_key facturacion
+4198; 2606 30084 CONSTRAINT public chart_accounts chart_accounts_pkey facturacion
+4226; 2606 38039 CONSTRAINT public closing_reviews closing_reviews_pkey facturacion
+4264; 2606 49236 CONSTRAINT public communication_settings communication_settings_pkey facturacion
+4123; 2606 16404 CONSTRAINT public company company_pkey facturacion
+4253; 2606 49165 CONSTRAINT public contacts contacts_pkey facturacion
+4255; 2606 49167 CONSTRAINT public contacts contacts_tax_key_unique facturacion
+4154; 2606 16548 CONSTRAINT public credit_applications credit_applications_credit_id_key facturacion
+4156; 2606 16546 CONSTRAINT public credit_applications credit_applications_pkey facturacion
+4178; 2606 21796 CONSTRAINT public document_archives document_archives_pkey facturacion
+4194; 2606 30060 CONSTRAINT public document_dues document_dues_pkey facturacion
+4196; 2606 30062 CONSTRAINT public document_dues document_dues_schedule_id_position_key facturacion
+4262; 2606 49216 CONSTRAINT public document_renderings document_renderings_pkey facturacion
+4190; 2606 30043 CONSTRAINT public document_schedules document_schedules_document_id_version_key facturacion
+4192; 2606 30041 CONSTRAINT public document_schedules document_schedules_pkey facturacion
+4286; 2606 684935 CONSTRAINT public document_template_choices document_template_choices_pkey facturacion
+4257; 2606 49183 CONSTRAINT public document_templates document_templates_pkey facturacion
+4142; 2606 16496 CONSTRAINT public documents documents_converted_id_key facturacion
+4145; 2606 16494 CONSTRAINT public documents documents_number_key facturacion
+4147; 2606 16492 CONSTRAINT public documents documents_pkey facturacion
+4222; 2606 38017 CONSTRAINT public entry_reversals entry_reversals_pkey facturacion
+4224; 2606 38019 CONSTRAINT public entry_reversals entry_reversals_reversal_id_key facturacion
+4232; 2606 49047 CONSTRAINT public file_extractions file_extractions_pkey facturacion
+4281; 2606 198053 CONSTRAINT public file_removals file_removals_pkey facturacion
+4172; 2606 16653 CONSTRAINT public fiscal_records fiscal_records_document_id_key facturacion
+4174; 2606 16651 CONSTRAINT public fiscal_records fiscal_records_pkey facturacion
+4210; 2606 30160 CONSTRAINT public fund_applications fund_applications_entry_id_key facturacion
+4212; 2606 30158 CONSTRAINT public fund_applications fund_applications_pkey facturacion
+4170; 2606 16633 CONSTRAINT public idempotency_keys idempotency_keys_pkey facturacion
+4234; 2606 49064 CONSTRAINT public import_batches import_batches_file_id_kind_mapping_hash_key facturacion
+4236; 2606 49062 CONSTRAINT public import_batches import_batches_pkey facturacion
+4238; 2606 49086 CONSTRAINT public import_items import_items_batch_id_row_number_key facturacion
+4240; 2606 49084 CONSTRAINT public import_items import_items_pkey facturacion
+4242; 2606 49099 CONSTRAINT public import_results import_results_pkey facturacion
+4250; 2606 49142 CONSTRAINT public issued_requirement_checks issued_requirement_checks_pkey facturacion
+4218; 2606 37999 CONSTRAINT public journal_draft_versions journal_draft_versions_draft_id_version_key facturacion
+4220; 2606 37997 CONSTRAINT public journal_draft_versions journal_draft_versions_pkey facturacion
+4214; 2606 37976 CONSTRAINT public journal_drafts journal_drafts_pkey facturacion
+4216; 2606 37978 CONSTRAINT public journal_drafts journal_drafts_posted_id_key facturacion
+4158; 2606 16572 CONSTRAINT public journal_entries journal_entries_number_key facturacion
+4160; 2606 16570 CONSTRAINT public journal_entries journal_entries_pkey facturacion
+4165; 2606 16603 CONSTRAINT public journal_lines journal_lines_pkey facturacion
+4269; 2606 49282 CONSTRAINT public message_attempts message_attempts_pkey facturacion
+4121; 2606 16394 CONSTRAINT public migrations migrations_pkey facturacion
+4266; 2606 49256 CONSTRAINT public outgoing_messages outgoing_messages_pkey facturacion
+4200; 2606 30099 CONSTRAINT public payment_batches payment_batches_pkey facturacion
+4152; 2606 16528 CONSTRAINT public payments payments_pkey facturacion
+4138; 2606 16452 CONSTRAINT public periods periods_pkey facturacion
+4279; 2606 49346 CONSTRAINT public portal_events portal_events_pkey facturacion
+4275; 2606 49323 CONSTRAINT public portal_receipts portal_receipts_pkey facturacion
+4277; 2606 49325 CONSTRAINT public portal_receipts portal_receipts_share_id_key facturacion
+4288; 2606 684960 CONSTRAINT public portal_settings portal_settings_pkey facturacion
+4271; 2606 49301 CONSTRAINT public portal_shares portal_shares_pkey facturacion
+4273; 2606 49303 CONSTRAINT public portal_shares portal_shares_token_hash_key facturacion
+4134; 2606 16444 CONSTRAINT public products products_pkey facturacion
+4136; 2606 16446 CONSTRAINT public products products_sku_key facturacion
+4284; 2606 259368 CONSTRAINT public sales_views sales_views_pkey facturacion
+4186; 2606 30013 CONSTRAINT public series_config series_config_pkey facturacion
+4188; 2606 30021 CONSTRAINT public series_counters series_counters_pkey facturacion
+4140; 2606 16465 CONSTRAINT public series series_pkey facturacion
+4129; 2606 38062 CONSTRAINT public sessions session_id_unique facturacion
+4132; 2606 16424 CONSTRAINT public sessions sessions_pkey facturacion
+4230; 2606 49024 CONSTRAINT public stored_files stored_files_pkey facturacion
+4260; 2606 49197 CONSTRAINT public template_versions template_versions_pkey facturacion
+4206; 2606 30137 CONSTRAINT public unapplied_funds unapplied_funds_entry_id_key facturacion
+4208; 2606 30135 CONSTRAINT public unapplied_funds unapplied_funds_pkey facturacion
+4125; 2606 16417 CONSTRAINT public users users_email_key facturacion
+4127; 2606 16415 CONSTRAINT public users users_pkey facturacion
+4176; 2606 21782 CONSTRAINT public working_drafts working_drafts_pkey facturacion
+4184; 2606 21822 CONSTRAINT public workspace_members workspace_members_pkey facturacion
+4180; 2606 21812 CONSTRAINT public workspaces workspaces_pkey facturacion
+4182; 2606 21814 CONSTRAINT public workspaces workspaces_schema_name_key facturacion
+4328; 2606 1447379 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a audit_events audit_events_pkey facturacion
+4356; 2606 1447592 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a batch_payments batch_payments_payment_id_key facturacion
+4358; 2606 1447590 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a batch_payments batch_payments_pkey facturacion
+4398; 2606 1447861 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policies buyer_policies_pkey facturacion
+4400; 2606 1447870 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policy_versions buyer_policy_versions_pkey facturacion
+4402; 2606 1447872 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policy_versions buyer_policy_versions_tax_id_version_key facturacion
+4352; 2606 1447565 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a chart_accounts chart_accounts_pkey facturacion
+4380; 2606 1447747 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a closing_reviews closing_reviews_pkey facturacion
+4418; 2606 1447977 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a communication_settings communication_settings_pkey facturacion
+4292; 2606 1447190 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a company company_pkey facturacion
+4407; 2606 1447909 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a contacts contacts_pkey facturacion
+4409; 2606 1447911 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a contacts contacts_tax_key_unique facturacion
+4314; 2606 1447308 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a credit_applications credit_applications_credit_id_key facturacion
+4316; 2606 1447306 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a credit_applications credit_applications_pkey facturacion
+4338; 2606 1447476 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_archives document_archives_pkey facturacion
+4348; 2606 1447541 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_dues document_dues_pkey facturacion
+4350; 2606 1447543 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_dues document_dues_schedule_id_position_key facturacion
+4416; 2606 1447957 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_renderings document_renderings_pkey facturacion
+4344; 2606 1447524 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_schedules document_schedules_document_id_version_key facturacion
+4346; 2606 1447522 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_schedules document_schedules_pkey facturacion
+4440; 2606 1448144 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_template_choices document_template_choices_pkey facturacion
+4411; 2606 1447924 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_templates document_templates_pkey facturacion
+4302; 2606 1447256 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents documents_converted_id_key facturacion
+4305; 2606 1447254 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents documents_number_key facturacion
+4307; 2606 1447252 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents documents_pkey facturacion
+4376; 2606 1447725 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a entry_reversals entry_reversals_pkey facturacion
+4378; 2606 1447727 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a entry_reversals entry_reversals_reversal_id_key facturacion
+4386; 2606 1447791 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_extractions file_extractions_pkey facturacion
+4435; 2606 1448100 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_removals file_removals_pkey facturacion
+4332; 2606 1447413 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a fiscal_records fiscal_records_document_id_key facturacion
+4334; 2606 1447411 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a fiscal_records fiscal_records_pkey facturacion
+4364; 2606 1447641 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications fund_applications_entry_id_key facturacion
+4366; 2606 1447639 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications fund_applications_pkey facturacion
+4330; 2606 1447393 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a idempotency_keys idempotency_keys_pkey facturacion
+4388; 2606 1447808 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_batches import_batches_file_id_kind_mapping_hash_key facturacion
+4390; 2606 1447806 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_batches import_batches_pkey facturacion
+4392; 2606 1447830 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_items import_items_batch_id_row_number_key facturacion
+4394; 2606 1447828 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_items import_items_pkey facturacion
+4396; 2606 1447843 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_results import_results_pkey facturacion
+4404; 2606 1447886 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a issued_requirement_checks issued_requirement_checks_pkey facturacion
+4372; 2606 1447707 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_draft_versions journal_draft_versions_draft_id_version_key facturacion
+4374; 2606 1447705 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_draft_versions journal_draft_versions_pkey facturacion
+4368; 2606 1447684 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_drafts journal_drafts_pkey facturacion
+4370; 2606 1447686 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_drafts journal_drafts_posted_id_key facturacion
+4318; 2606 1447332 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries journal_entries_number_key facturacion
+4320; 2606 1447330 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries journal_entries_pkey facturacion
+4325; 2606 1447363 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines journal_lines_pkey facturacion
+4423; 2606 1448023 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a message_attempts message_attempts_pkey facturacion
+4290; 2606 1447180 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a migrations migrations_pkey facturacion
+4420; 2606 1447997 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a outgoing_messages outgoing_messages_pkey facturacion
+4354; 2606 1447580 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a payment_batches payment_batches_pkey facturacion
+4312; 2606 1447288 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a payments payments_pkey facturacion
+4298; 2606 1447212 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a periods periods_pkey facturacion
+4433; 2606 1448087 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_events portal_events_pkey facturacion
+4429; 2606 1448064 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_receipts portal_receipts_pkey facturacion
+4431; 2606 1448066 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_receipts portal_receipts_share_id_key facturacion
+4442; 2606 1448169 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_settings portal_settings_pkey facturacion
+4425; 2606 1448042 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_shares portal_shares_pkey facturacion
+4427; 2606 1448044 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_shares portal_shares_token_hash_key facturacion
+4294; 2606 1447204 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a products products_pkey facturacion
+4296; 2606 1447206 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a products products_sku_key facturacion
+4438; 2606 1448132 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a sales_views sales_views_pkey facturacion
+4340; 2606 1447494 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a series_config series_config_pkey facturacion
+4342; 2606 1447502 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a series_counters series_counters_pkey facturacion
+4300; 2606 1447225 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a series series_pkey facturacion
+4384; 2606 1447768 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a stored_files stored_files_pkey facturacion
+4414; 2606 1447938 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a template_versions template_versions_pkey facturacion
+4360; 2606 1447618 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a unapplied_funds unapplied_funds_entry_id_key facturacion
+4362; 2606 1447616 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a unapplied_funds unapplied_funds_pkey facturacion
+4336; 2606 1447462 CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a working_drafts working_drafts_pkey facturacion
+4166; 1259 16625 INDEX public audit_entity facturacion
+4251; 1259 49168 INDEX public contacts_name facturacion
+4143; 1259 16514 INDEX public documents_date facturacion
+4148; 1259 16515 INDEX public documents_status facturacion
+4227; 1259 49035 INDEX public file_once_document facturacion
+4228; 1259 217907 INDEX public file_once_source facturacion
+4163; 1259 16609 INDEX public journal_lines_entry facturacion
+4161; 1259 16588 INDEX public journal_once_document facturacion
+4162; 1259 16589 INDEX public journal_once_payment facturacion
+4258; 1259 49189 INDEX public one_active_template facturacion
+4267; 1259 49267 INDEX public outgoing_work facturacion
+4150; 1259 16539 INDEX public payments_document facturacion
+4149; 1259 30032 INDEX public purchase_supplier_reference facturacion
+4282; 1259 259374 INDEX public sales_views_owner_name facturacion
+4130; 1259 16430 INDEX public sessions_expiry facturacion
+4326; 1259 1447385 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a audit_entity facturacion
+4405; 1259 1447912 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a contacts_name facturacion
+4303; 1259 1447274 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents_date facturacion
+4308; 1259 1447275 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents_status facturacion
+4381; 1259 1447779 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_once_document facturacion
+4382; 1259 1448116 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_once_source facturacion
+4323; 1259 1447369 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines_entry facturacion
+4321; 1259 1447348 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_once_document facturacion
+4322; 1259 1447349 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_once_payment facturacion
+4412; 1259 1447930 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a one_active_template facturacion
+4421; 1259 1448008 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a outgoing_work facturacion
+4310; 1259 1447299 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a payments_document facturacion
+4309; 1259 1447513 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a purchase_supplier_reference facturacion
+4436; 1259 1448138 INDEX workspace_13b8b1f06aaf49f4ba08ee1103461f2a sales_views_owner_name facturacion
+4596; 2620 16673 TRIGGER public journal_entries balanced_entry facturacion
+4599; 2620 16675 TRIGGER public journal_lines balanced_line facturacion
+4589; 2620 16680 TRIGGER public documents complete_issuance facturacion
+4594; 2620 16685 TRIGGER public credit_applications credit_guard facturacion
+4590; 2620 16665 TRIGGER public documents document_guard facturacion
+4610; 2620 30184 TRIGGER public fund_applications fund_application_guard facturacion
+4604; 2620 21802 TRIGGER public document_archives immutable_archive facturacion
+4602; 2620 16669 TRIGGER public audit_events immutable_audit facturacion
+4608; 2620 30123 TRIGGER public batch_payments immutable_batch_payments facturacion
+4607; 2620 30122 TRIGGER public payment_batches immutable_batches facturacion
+4617; 2620 49134 TRIGGER public buyer_policy_versions immutable_buyer_policy_versions facturacion
+4614; 2620 38050 TRIGGER public closing_reviews immutable_closing_reviews facturacion
+4595; 2620 16671 TRIGGER public credit_applications immutable_credit facturacion
+4620; 2620 49227 TRIGGER public document_renderings immutable_document_renderings facturacion
+4612; 2620 38010 TRIGGER public journal_draft_versions immutable_draft_history facturacion
+4606; 2620 30069 TRIGGER public document_dues immutable_dues facturacion
+4597; 2620 16667 TRIGGER public journal_entries immutable_entries facturacion
+4613; 2620 38030 TRIGGER public entry_reversals immutable_entry_reversals facturacion
+4603; 2620 16670 TRIGGER public fiscal_records immutable_fiscal facturacion
+4611; 2620 30182 TRIGGER public fund_applications immutable_fund_applications facturacion
+4609; 2620 30181 TRIGGER public unapplied_funds immutable_funds facturacion
+4616; 2620 49105 TRIGGER public import_results immutable_import_results facturacion
+4618; 2620 49148 TRIGGER public issued_requirement_checks immutable_issued_requirement_checks facturacion
+4600; 2620 16668 TRIGGER public journal_lines immutable_lines facturacion
+4622; 2620 49288 TRIGGER public message_attempts immutable_message_attempts facturacion
+4624; 2620 49352 TRIGGER public portal_events immutable_portal_events facturacion
+4623; 2620 49336 TRIGGER public portal_receipts immutable_portal_receipts facturacion
+4605; 2620 30068 TRIGGER public document_schedules immutable_schedules facturacion
+4615; 2620 217909 TRIGGER public stored_files immutable_stored_file facturacion
+4619; 2620 49208 TRIGGER public template_versions immutable_template_versions facturacion
+4621; 2620 49290 TRIGGER public outgoing_messages message_content facturacion
+4601; 2620 17597 TRIGGER public journal_lines no_append_to_posted_entry facturacion
+4592; 2620 17599 TRIGGER public payments payment_accounted facturacion
+4593; 2620 16683 TRIGGER public payments payment_guard facturacion
+4598; 2620 16678 TRIGGER public journal_entries period_entry facturacion
+4591; 2620 17602 TRIGGER public documents validate_credit facturacion
+4632; 2620 1447433 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries balanced_entry facturacion
+4635; 2620 1447435 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines balanced_line facturacion
+4625; 2620 1447440 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents complete_issuance facturacion
+4630; 2620 1447445 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a credit_applications credit_guard facturacion
+4626; 2620 1447425 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents document_guard facturacion
+4646; 2620 1447665 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications fund_application_guard facturacion
+4640; 2620 1447482 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_archives immutable_archive facturacion
+4638; 2620 1447429 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a audit_events immutable_audit facturacion
+4644; 2620 1447604 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a batch_payments immutable_batch_payments facturacion
+4643; 2620 1447603 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a payment_batches immutable_batches facturacion
+4653; 2620 1447878 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policy_versions immutable_buyer_policy_versions facturacion
+4650; 2620 1447758 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a closing_reviews immutable_closing_reviews facturacion
+4631; 2620 1447431 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a credit_applications immutable_credit facturacion
+4656; 2620 1447968 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_renderings immutable_document_renderings facturacion
+4648; 2620 1447718 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_draft_versions immutable_draft_history facturacion
+4642; 2620 1447550 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_dues immutable_dues facturacion
+4633; 2620 1447427 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries immutable_entries facturacion
+4649; 2620 1447738 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a entry_reversals immutable_entry_reversals facturacion
+4639; 2620 1447430 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a fiscal_records immutable_fiscal facturacion
+4647; 2620 1447663 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications immutable_fund_applications facturacion
+4645; 2620 1447662 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a unapplied_funds immutable_funds facturacion
+4652; 2620 1447849 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_results immutable_import_results facturacion
+4654; 2620 1447892 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a issued_requirement_checks immutable_issued_requirement_checks facturacion
+4636; 2620 1447428 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines immutable_lines facturacion
+4658; 2620 1448029 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a message_attempts immutable_message_attempts facturacion
+4660; 2620 1448093 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_events immutable_portal_events facturacion
+4659; 2620 1448077 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_receipts immutable_portal_receipts facturacion
+4641; 2620 1447549 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_schedules immutable_schedules facturacion
+4651; 2620 1448118 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a stored_files immutable_stored_file facturacion
+4655; 2620 1447949 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a template_versions immutable_template_versions facturacion
+4657; 2620 1448031 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a outgoing_messages message_content facturacion
+4637; 2620 1447447 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines no_append_to_posted_entry facturacion
+4628; 2620 1447449 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a payments payment_accounted facturacion
+4629; 2620 1447443 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a payments payment_guard facturacion
+4634; 2620 1447438 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries period_entry facturacion
+4627; 2620 1447452 TRIGGER workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents validate_credit facturacion
+4459; 2606 16620 FK CONSTRAINT public audit_events audit_events_actor_id_fkey facturacion
+4471; 2606 30112 FK CONSTRAINT public batch_payments batch_payments_batch_id_fkey facturacion
+4472; 2606 30117 FK CONSTRAINT public batch_payments batch_payments_payment_id_fkey facturacion
+4494; 2606 49129 FK CONSTRAINT public buyer_policy_versions buyer_policy_versions_created_by_fkey facturacion
+4485; 2606 38045 FK CONSTRAINT public closing_reviews closing_reviews_actor_id_fkey facturacion
+4486; 2606 38040 FK CONSTRAINT public closing_reviews closing_reviews_month_fkey facturacion
+4501; 2606 49237 FK CONSTRAINT public communication_settings communication_settings_updated_by_fkey facturacion
+4452; 2606 16549 FK CONSTRAINT public credit_applications credit_applications_credit_id_fkey facturacion
+4453; 2606 16554 FK CONSTRAINT public credit_applications credit_applications_invoice_id_fkey facturacion
+4463; 2606 21797 FK CONSTRAINT public document_archives document_archives_document_id_fkey facturacion
+4469; 2606 30063 FK CONSTRAINT public document_dues document_dues_schedule_id_fkey facturacion
+4499; 2606 49217 FK CONSTRAINT public document_renderings document_renderings_document_id_fkey facturacion
+4500; 2606 49222 FK CONSTRAINT public document_renderings document_renderings_template_id_fkey facturacion
+4467; 2606 30049 FK CONSTRAINT public document_schedules document_schedules_created_by_fkey facturacion
+4468; 2606 30044 FK CONSTRAINT public document_schedules document_schedules_document_id_fkey facturacion
+4446; 2606 30027 FK CONSTRAINT public documents document_series facturacion
+4515; 2606 684936 FK CONSTRAINT public document_template_choices document_template_choices_document_id_fkey facturacion
+4516; 2606 684941 FK CONSTRAINT public document_template_choices document_template_choices_template_id_fkey facturacion
+4517; 2606 684946 FK CONSTRAINT public document_template_choices document_template_choices_updated_by_fkey facturacion
+4496; 2606 49184 FK CONSTRAINT public document_templates document_templates_created_by_fkey facturacion
+4447; 2606 16502 FK CONSTRAINT public documents documents_converted_id_fkey facturacion
+4448; 2606 16507 FK CONSTRAINT public documents documents_created_by_fkey facturacion
+4449; 2606 16497 FK CONSTRAINT public documents documents_original_id_fkey facturacion
+4483; 2606 38020 FK CONSTRAINT public entry_reversals entry_reversals_original_id_fkey facturacion
+4484; 2606 38025 FK CONSTRAINT public entry_reversals entry_reversals_reversal_id_fkey facturacion
+4489; 2606 49048 FK CONSTRAINT public file_extractions file_extractions_file_id_fkey facturacion
+4512; 2606 198054 FK CONSTRAINT public file_removals file_removals_file_id_fkey facturacion
+4513; 2606 198059 FK CONSTRAINT public file_removals file_removals_removed_by_fkey facturacion
+4461; 2606 16654 FK CONSTRAINT public fiscal_records fiscal_records_document_id_fkey facturacion
+4475; 2606 30176 FK CONSTRAINT public fund_applications fund_applications_created_by_fkey facturacion
+4476; 2606 30166 FK CONSTRAINT public fund_applications fund_applications_document_id_fkey facturacion
+4477; 2606 30171 FK CONSTRAINT public fund_applications fund_applications_entry_id_fkey facturacion
+4478; 2606 30161 FK CONSTRAINT public fund_applications fund_applications_fund_id_fkey facturacion
+4460; 2606 16634 FK CONSTRAINT public idempotency_keys idempotency_keys_actor_id_fkey facturacion
+4490; 2606 49070 FK CONSTRAINT public import_batches import_batches_created_by_fkey facturacion
+4491; 2606 49065 FK CONSTRAINT public import_batches import_batches_file_id_fkey facturacion
+4492; 2606 49087 FK CONSTRAINT public import_items import_items_batch_id_fkey facturacion
+4493; 2606 49100 FK CONSTRAINT public import_results import_results_batch_id_fkey facturacion
+4495; 2606 49143 FK CONSTRAINT public issued_requirement_checks issued_requirement_checks_document_id_fkey facturacion
+4457; 2606 30085 FK CONSTRAINT public journal_lines journal_account facturacion
+4481; 2606 38005 FK CONSTRAINT public journal_draft_versions journal_draft_versions_actor_id_fkey facturacion
+4482; 2606 38000 FK CONSTRAINT public journal_draft_versions journal_draft_versions_draft_id_fkey facturacion
+4479; 2606 37979 FK CONSTRAINT public journal_drafts journal_drafts_created_by_fkey facturacion
+4480; 2606 37984 FK CONSTRAINT public journal_drafts journal_drafts_posted_id_fkey facturacion
+4454; 2606 16583 FK CONSTRAINT public journal_entries journal_entries_created_by_fkey facturacion
+4455; 2606 16573 FK CONSTRAINT public journal_entries journal_entries_document_id_fkey facturacion
+4456; 2606 16578 FK CONSTRAINT public journal_entries journal_entries_payment_id_fkey facturacion
+4458; 2606 16604 FK CONSTRAINT public journal_lines journal_lines_entry_id_fkey facturacion
+4506; 2606 49283 FK CONSTRAINT public message_attempts message_attempts_message_id_fkey facturacion
+4502; 2606 49262 FK CONSTRAINT public outgoing_messages outgoing_messages_created_by_fkey facturacion
+4503; 2606 1533892 FK CONSTRAINT public outgoing_messages outgoing_messages_deleted_by_fkey facturacion
+4504; 2606 49257 FK CONSTRAINT public outgoing_messages outgoing_messages_document_id_fkey facturacion
+4505; 2606 49268 FK CONSTRAINT public outgoing_messages outgoing_messages_queued_by_fkey facturacion
+4470; 2606 30100 FK CONSTRAINT public payment_batches payment_batches_created_by_fkey facturacion
+4450; 2606 16534 FK CONSTRAINT public payments payments_created_by_fkey facturacion
+4451; 2606 16529 FK CONSTRAINT public payments payments_document_id_fkey facturacion
+4445; 2606 16453 FK CONSTRAINT public periods periods_closed_by_fkey facturacion
+4511; 2606 49347 FK CONSTRAINT public portal_events portal_events_share_id_fkey facturacion
+4509; 2606 49331 FK CONSTRAINT public portal_receipts portal_receipts_document_id_fkey facturacion
+4510; 2606 49326 FK CONSTRAINT public portal_receipts portal_receipts_share_id_fkey facturacion
+4507; 2606 49309 FK CONSTRAINT public portal_shares portal_shares_created_by_fkey facturacion
+4508; 2606 49304 FK CONSTRAINT public portal_shares portal_shares_document_id_fkey facturacion
+4514; 2606 259369 FK CONSTRAINT public sales_views sales_views_owner_id_fkey facturacion
+4466; 2606 30022 FK CONSTRAINT public series_counters series_counters_code_fkey facturacion
+4443; 2606 16425 FK CONSTRAINT public sessions sessions_user_id_fkey facturacion
+4444; 2606 21833 FK CONSTRAINT public sessions sessions_workspace_id_fkey facturacion
+4487; 2606 49030 FK CONSTRAINT public stored_files stored_files_created_by_fkey facturacion
+4488; 2606 217910 FK CONSTRAINT public stored_files stored_files_document_id_fkey facturacion
+4497; 2606 49203 FK CONSTRAINT public template_versions template_versions_created_by_fkey facturacion
+4498; 2606 49198 FK CONSTRAINT public template_versions template_versions_template_id_fkey facturacion
+4473; 2606 30143 FK CONSTRAINT public unapplied_funds unapplied_funds_created_by_fkey facturacion
+4474; 2606 30138 FK CONSTRAINT public unapplied_funds unapplied_funds_entry_id_fkey facturacion
+4462; 2606 21783 FK CONSTRAINT public working_drafts working_drafts_owner_id_fkey facturacion
+4464; 2606 21828 FK CONSTRAINT public workspace_members workspace_members_user_id_fkey facturacion
+4465; 2606 21823 FK CONSTRAINT public workspace_members workspace_members_workspace_id_fkey facturacion
+4532; 2606 1447380 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a audit_events audit_events_actor_id_fkey facturacion
+4542; 2606 1447593 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a batch_payments batch_payments_batch_id_fkey facturacion
+4543; 2606 1447598 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a batch_payments batch_payments_payment_id_fkey facturacion
+4565; 2606 1447873 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a buyer_policy_versions buyer_policy_versions_created_by_fkey facturacion
+4556; 2606 1447753 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a closing_reviews closing_reviews_actor_id_fkey facturacion
+4557; 2606 1447748 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a closing_reviews closing_reviews_month_fkey facturacion
+4572; 2606 1447978 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a communication_settings communication_settings_updated_by_fkey facturacion
+4525; 2606 1447309 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a credit_applications credit_applications_credit_id_fkey facturacion
+4526; 2606 1447314 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a credit_applications credit_applications_invoice_id_fkey facturacion
+4536; 2606 1447477 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_archives document_archives_document_id_fkey facturacion
+4540; 2606 1447544 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_dues document_dues_schedule_id_fkey facturacion
+4570; 2606 1447958 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_renderings document_renderings_document_id_fkey facturacion
+4571; 2606 1447963 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_renderings document_renderings_template_id_fkey facturacion
+4538; 2606 1447530 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_schedules document_schedules_created_by_fkey facturacion
+4539; 2606 1447525 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_schedules document_schedules_document_id_fkey facturacion
+4519; 2606 1447508 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents document_series facturacion
+4586; 2606 1448145 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_template_choices document_template_choices_document_id_fkey facturacion
+4587; 2606 1448150 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_template_choices document_template_choices_template_id_fkey facturacion
+4588; 2606 1448155 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_template_choices document_template_choices_updated_by_fkey facturacion
+4567; 2606 1447925 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a document_templates document_templates_created_by_fkey facturacion
+4520; 2606 1447262 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents documents_converted_id_fkey facturacion
+4521; 2606 1447267 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents documents_created_by_fkey facturacion
+4522; 2606 1447257 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a documents documents_original_id_fkey facturacion
+4554; 2606 1447728 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a entry_reversals entry_reversals_original_id_fkey facturacion
+4555; 2606 1447733 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a entry_reversals entry_reversals_reversal_id_fkey facturacion
+4560; 2606 1447792 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_extractions file_extractions_file_id_fkey facturacion
+4583; 2606 1448101 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_removals file_removals_file_id_fkey facturacion
+4584; 2606 1448106 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a file_removals file_removals_removed_by_fkey facturacion
+4534; 2606 1447414 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a fiscal_records fiscal_records_document_id_fkey facturacion
+4546; 2606 1447657 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications fund_applications_created_by_fkey facturacion
+4547; 2606 1447647 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications fund_applications_document_id_fkey facturacion
+4548; 2606 1447652 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications fund_applications_entry_id_fkey facturacion
+4549; 2606 1447642 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a fund_applications fund_applications_fund_id_fkey facturacion
+4533; 2606 1447394 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a idempotency_keys idempotency_keys_actor_id_fkey facturacion
+4561; 2606 1447814 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_batches import_batches_created_by_fkey facturacion
+4562; 2606 1447809 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_batches import_batches_file_id_fkey facturacion
+4563; 2606 1447831 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_items import_items_batch_id_fkey facturacion
+4564; 2606 1447844 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a import_results import_results_batch_id_fkey facturacion
+4566; 2606 1447887 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a issued_requirement_checks issued_requirement_checks_document_id_fkey facturacion
+4530; 2606 1447566 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines journal_account facturacion
+4552; 2606 1447713 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_draft_versions journal_draft_versions_actor_id_fkey facturacion
+4553; 2606 1447708 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_draft_versions journal_draft_versions_draft_id_fkey facturacion
+4550; 2606 1447687 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_drafts journal_drafts_created_by_fkey facturacion
+4551; 2606 1447692 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_drafts journal_drafts_posted_id_fkey facturacion
+4527; 2606 1447343 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries journal_entries_created_by_fkey facturacion
+4528; 2606 1447333 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries journal_entries_document_id_fkey facturacion
+4529; 2606 1447338 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_entries journal_entries_payment_id_fkey facturacion
+4531; 2606 1447364 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a journal_lines journal_lines_entry_id_fkey facturacion
+4577; 2606 1448024 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a message_attempts message_attempts_message_id_fkey facturacion
+4573; 2606 1448003 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a outgoing_messages outgoing_messages_created_by_fkey facturacion
+4574; 2606 1533898 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a outgoing_messages outgoing_messages_deleted_by_fkey facturacion
+4575; 2606 1447998 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a outgoing_messages outgoing_messages_document_id_fkey facturacion
+4576; 2606 1448009 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a outgoing_messages outgoing_messages_queued_by_fkey facturacion
+4541; 2606 1447581 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a payment_batches payment_batches_created_by_fkey facturacion
+4523; 2606 1447294 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a payments payments_created_by_fkey facturacion
+4524; 2606 1447289 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a payments payments_document_id_fkey facturacion
+4518; 2606 1447213 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a periods periods_closed_by_fkey facturacion
+4582; 2606 1448088 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_events portal_events_share_id_fkey facturacion
+4580; 2606 1448072 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_receipts portal_receipts_document_id_fkey facturacion
+4581; 2606 1448067 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_receipts portal_receipts_share_id_fkey facturacion
+4578; 2606 1448050 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_shares portal_shares_created_by_fkey facturacion
+4579; 2606 1448045 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a portal_shares portal_shares_document_id_fkey facturacion
+4585; 2606 1448133 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a sales_views sales_views_owner_id_fkey facturacion
+4537; 2606 1447503 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a series_counters series_counters_code_fkey facturacion
+4558; 2606 1447774 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a stored_files stored_files_created_by_fkey facturacion
+4559; 2606 1448119 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a stored_files stored_files_document_id_fkey facturacion
+4568; 2606 1447944 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a template_versions template_versions_created_by_fkey facturacion
+4569; 2606 1447939 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a template_versions template_versions_template_id_fkey facturacion
+4544; 2606 1447624 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a unapplied_funds unapplied_funds_created_by_fkey facturacion
+4545; 2606 1447619 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a unapplied_funds unapplied_funds_entry_id_fkey facturacion
+4535; 2606 1447463 FK CONSTRAINT workspace_13b8b1f06aaf49f4ba08ee1103461f2a working_drafts working_drafts_owner_id_fkey facturacion

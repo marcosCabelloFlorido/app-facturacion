@@ -1,0 +1,34 @@
+/* Alta contextual: misma ventana y controles comunes que la ficha de cliente. */
+.modal.product-modal {
+  width: 640px;
+  max-width: calc(100vw - 32px);
+}
+.product-fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.product-modal .modal-title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 540px) {
+  .product-modal .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .modal.product-modal .form-grid.product-pricing-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .product-modal .product-pricing-fields > .field:last-child {
+    grid-column: 1 / -1;
+  }
+  .product-modal .product-pricing-fields > .field:not(:last-child) .field-label {
+    display: flex;
+    align-items: end;
+    min-height: 2lh;
+  }
+  .product-modal .modal-actions .button {
+    flex: 0 1 auto;
+  }
+}

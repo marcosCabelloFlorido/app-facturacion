@@ -1,0 +1,385 @@
+/* FUENTE: 04-section-layout.md / 07-table.md del kit.
+   Hoja y barra de gestión: adaptación solicitada el 14/09/2026.
+   La tipografía se define en design-system.css. */
+/* FUENTE: 04-section-layout.md, AdminModule.tsx:4256–4495;
+   10-setting-row.md, AdminModule.tsx:204–217. Historial compacto sin cajas. */
+.document-activity {
+  display: grid;
+  align-content: start;
+  gap: var(--space-6);
+  min-width: 0;
+  container: document-activity / inline-size;
+}
+.document-activity > section {
+  min-width: 0;
+}
+.document-activity .panel-heading {
+  margin-bottom: var(--space-4);
+}
+.document-activity .table-scroll > .document-payments-table {
+  min-width: 0;
+}
+.document-payments-table td:nth-child(2) {
+  overflow-wrap: anywhere;
+}
+.document-history {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.document-history-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-6);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.document-history-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  min-width: 0;
+  color: var(--text-muted);
+}
+.document-activity-empty {
+  margin: 0;
+  color: var(--text-muted);
+}
+@container document-activity (max-width: 540px) {
+  .document-history-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .document-history-meta {
+    max-width: 100%;
+  }
+}
+.document-summary {
+  container: document-summary / inline-size;
+  min-width: 0;
+}
+.document-management {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-6);
+}
+.document-management-status,
+.document-management-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  min-width: 0;
+}
+.document-management-status > span {
+  overflow-wrap: anywhere;
+}
+.document-management-actions {
+  margin-left: auto;
+}
+@container billing-content (max-width: 760px) {
+  .page-heading .heading-actions .button.document-edit-action {
+    min-height: var(--control-height);
+  }
+}
+.document-management-balance {
+  color: var(--text-muted);
+}
+.document-management-balance strong {
+  color: var(--text);
+}
+.document-sheet-stage {
+  padding: var(--space-6);
+  background: var(--bg-muted);
+}
+.document-sheet {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: calc(var(--space-6) * 2);
+  background: var(--bg);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.document-sheet-issuer h2 {
+  margin: 0 0 var(--space-4);
+}
+.document-sheet-address p {
+  margin: 0;
+  white-space: pre-line;
+}
+.document-sheet-parties {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-8);
+  margin-top: var(--space-8);
+}
+.document-sheet-recipient h3 {
+  margin: var(--space-2) 0 var(--space-3);
+}
+.document-sheet-label {
+  margin: 0;
+}
+.document-sheet-meta {
+  min-width: 0;
+  width: max-content;
+  max-width: 240px;
+}
+.document-sheet-meta dl {
+  margin: 0;
+}
+.document-sheet-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-6);
+}
+.document-sheet-dates > div {
+  display: grid;
+  gap: var(--space-2);
+}
+.document-sheet-dates time {
+  white-space: nowrap;
+}
+.document-sheet-meta .document-sheet-references {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+.document-sheet-references > div {
+  display: grid;
+  gap: var(--space-1);
+}
+.document-sheet-meta dd {
+  margin: 0;
+}
+.document-sheet-lines {
+  display: grid;
+  gap: var(--space-8);
+  padding: 0;
+  margin: calc(var(--space-8) + var(--space-2)) 0 0;
+  list-style: none;
+}
+.document-sheet-lines > li {
+  min-width: 0;
+}
+.document-sheet-concept {
+  margin: 0 0 var(--space-4);
+  white-space: pre-line;
+}
+.document-sheet-breakdown {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+.document-sheet-breakdown > div,
+.document-sheet-totals .totals > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+.document-sheet-breakdown dt,
+.document-sheet-totals .totals > div > :first-child {
+  flex: 1 1 12ch;
+  min-width: 0;
+}
+.document-sheet-breakdown dd,
+.document-sheet-totals .totals > div > :last-child {
+  min-width: 0;
+  max-width: 100%;
+  margin: 0 0 0 auto;
+  text-align: right;
+}
+.document-sheet-line-net {
+  padding-top: var(--space-1);
+}
+.document-sheet-line-tax {
+  display: block;
+  margin-top: var(--space-1);
+}
+.document-sheet-exemption {
+  margin: var(--space-2) 0 0;
+  white-space: pre-line;
+}
+.document-sheet-totals {
+  margin-top: var(--space-6);
+}
+.document-sheet-totals .totals {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+.document-sheet-totals .totals > div {
+  margin: 0;
+}
+.document-sheet-totals .totals .grand-total {
+  border: 0;
+  margin: var(--space-3) 0 0;
+  padding: var(--space-6);
+  background: var(--bg-muted);
+}
+.document-sheet-credit {
+  margin: 0 0 var(--space-4);
+}
+
+@container document-summary (max-width: 700px) {
+  .document-sheet-stage {
+    padding: var(--space-4);
+  }
+  .document-sheet {
+    padding: var(--space-8);
+  }
+  .document-sheet-parties {
+    gap: var(--space-6);
+  }
+}
+@container document-summary (max-width: 540px) {
+  .document-management-actions {
+    width: 100%;
+  }
+  .document-management-actions .button {
+    flex: 1 1 auto;
+  }
+  .document-sheet-stage {
+    padding: var(--space-2);
+  }
+  .document-sheet {
+    padding: var(--space-8) var(--space-4);
+  }
+  .document-sheet-parties {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .document-sheet-meta {
+    max-width: 100%;
+  }
+  .document-sheet-lines {
+    margin-top: var(--space-8);
+  }
+  .document-sheet-totals .totals .grand-total {
+    padding: var(--space-4);
+  }
+}
+
+/* FUENTE: kit fusion/header + aside. Fichas compactas y estado en cabecera. */
+.main-shell .page-content.document-sections {
+  padding-top: var(--space-4);
+}
+.document-sections.settings-layout {
+  grid-template-columns: 176px minmax(0, 1fr);
+}
+.document-sections > .section-navigation {
+  --section-navigation-inset: var(--space-3);
+  padding: 0 var(--space-3) var(--space-4) 0;
+  border-right: 0;
+}
+
+.document-sections > .document-section-content {
+  padding: 0 0 0 var(--space-8);
+}
+.document-section-content .document-management {
+  margin-bottom: var(--space-4);
+}
+.document-section-content .document-sheet-stage {
+  padding: var(--space-4);
+}
+.document-section-content .document-sheet {
+  max-width: none;
+  padding: var(--space-8);
+}
+@container billing-content (max-width: 760px) {
+  .document-sections.settings-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .document-sections > .section-navigation {
+    padding: 0 0 var(--space-4);
+  }
+  .document-sections > .document-section-content {
+    padding: 0;
+  }
+}
+@container document-summary (max-width: 540px) {
+  .document-section-content .document-sheet-stage {
+    padding: var(--space-2);
+  }
+  .document-section-content .document-sheet {
+    padding: var(--space-6) var(--space-4);
+  }
+}
+
+/* Recorrido del listado sobre el contenido de todas las secciones documentales. */
+.document-record-navigation {
+  margin-bottom: var(--space-4);
+}
+
+.document-record-navigation > .sales-document-navigation {
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* Fechas de pago junto al cliente en la factura guardada. */
+.document-summary
+  .document-sheet-invoice
+  .document-sheet-overview:has(.document-sheet-payment-terms)
+  .document-sheet-recipient {
+  width: 100%;
+  margin-inline-end: 0;
+  justify-self: stretch;
+}
+.document-summary
+  .document-sheet-invoice
+  .document-sheet-overview:has(.document-sheet-payment-terms)
+  .document-sheet-meta {
+  display: grid;
+  grid-column: 2;
+  grid-row: 3;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: none;
+}
+.document-sheet-payment-terms {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+.document-sheet-overview .document-sheet-meta .document-sheet-payment-terms > div {
+  display: block;
+  min-width: 0;
+}
+.document-sheet-payment-terms dt {
+  color: var(--text-muted);
+}
+.document-sheet-payment-terms time {
+  white-space: nowrap;
+}
+@container document-summary (min-width: 900px) {
+  .document-summary
+    .document-sheet-invoice
+    .document-sheet-overview:has(.document-sheet-payment-terms) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 256px;
+  }
+  .document-summary
+    .document-sheet-invoice
+    .document-sheet-overview:has(.document-sheet-payment-terms)
+    .document-sheet-meta {
+    grid-column: 3;
+    grid-row: 2;
+  }
+}
+@container document-summary (max-width: 540px) {
+  .document-summary
+    .document-sheet-invoice
+    .document-sheet-overview:has(.document-sheet-payment-terms)
+    .document-sheet-meta {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}

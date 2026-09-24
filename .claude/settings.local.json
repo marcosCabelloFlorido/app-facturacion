@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(cd \"C:\\\\Users\\\\marco\\\\Downloads\\\\facturacion\\\\FACTURACION_SIN_MODAL_20260918-092100\"; powershell -ExecutionPolicy Bypass -File .\\\\instalar.ps1 -ProjectName facturacion-sin-modal-mi-copia -Port 3800)",
+      "PowerShell(cd \"C:\\\\Users\\\\marco\\\\Downloads\\\\facturacion\\\\FACTURACION_SIN_MODAL_20260918-092100\"; powershell -ExecutionPolicy Bypass -File .\\\\instalar.ps1 -ProjectName facturacion-demo-v1 -Port 3800)",
+      "PowerShell(cd \"C:\\\\Users\\\\marco\\\\Downloads\\\\facturacion\\\\FACTURACION_SIN_MODAL_20260918-092100\"; powershell -ExecutionPolicy Bypass -File .\\\\instalar.ps1 -ProjectName facturacion-sin-modal-v1 -Port 3800)"
+    ]
+  }
+}

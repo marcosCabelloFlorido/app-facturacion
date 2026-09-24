@@ -1,0 +1,204 @@
+.communications-panel {
+  padding: 24px;
+  min-width: 0;
+}
+.communication-stack,
+.communication-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+.communication-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.communication-form legend {
+  margin-bottom: 12px;
+}
+.communication-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.communication-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.communication-row.communication-message-row {
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+.communication-row > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.communication-row p {
+  margin: 4px 0 0;
+}
+.communication-inline-actions,
+.communication-preview-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.communication-preview-controls > .field {
+  flex: 1;
+  min-width: 180px;
+}
+.public-portal {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+.public-portal-content {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.public-portal .page-content {
+  padding: 24px 0;
+}
+.public-portal .document-hash {
+  overflow-wrap: anywhere;
+}
+.portal-proof {
+  padding: 0 24px 24px;
+}
+@media (max-width: 760px) {
+  .communications-panel {
+    padding: 16px;
+  }
+  .communication-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .communication-form .modal-actions,
+  .communication-form .form-footer {
+    flex-wrap: wrap;
+  }
+  .communication-form .modal-actions > * {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .public-portal {
+    padding: 16px;
+  }
+}
+
+/* Composiciones de configuración y documento: espaciado común sin sumar márgenes de panel. */
+.communications-panel.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+}
+.communication-stack > .communications-panel.panel {
+  padding: var(--space-4) 0;
+}
+.communications-panel > .panel-heading,
+.communications-panel > p {
+  margin: 0;
+}
+.communication-form .checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-height: var(--control-height);
+}
+.communication-form .checkbox-row input {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+  min-height: 16px;
+  padding: 0;
+  margin: 2px 0 0;
+  accent-color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .communication-form .modal-actions,
+  .communication-form .form-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
+  }
+  .communication-form .modal-actions > .button,
+  .communication-form .form-footer > .button {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* Correo y portal se abren desde las acciones de la ficha. */
+.document-mail-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-4);
+}
+
+.document-delivery-modal > .modal-head > .modal-header-actions {
+  margin-inline-start: auto;
+  margin-block-start: calc(-1 * var(--space-2));
+}
+
+/* Nueva plantilla: datos, diseño y revisión, con navegación inmediata. */
+.template-wizard .editor-steps {
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+}
+.template-wizard .template-step-content {
+  min-height: 220px;
+  outline: none;
+}
+.template-wizard .template-step-content > fieldset:has(.form-grid:empty) {
+  display: none;
+}
+.template-wizard-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.template-wizard-actions > .primary {
+  margin-left: auto;
+}
+.template-review {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4) var(--space-6);
+  margin: 0 0 var(--space-6);
+}
+.template-review dt {
+  color: var(--text-muted);
+}
+.template-review dd {
+  margin: var(--space-2) 0 0;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.template-review-footer {
+  grid-column: 1 / -1;
+}
+@media (max-width: 760px) {
+  .template-wizard .editor-steps button {
+    flex-direction: column;
+  }
+  .template-wizard .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

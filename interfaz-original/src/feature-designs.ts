@@ -1,0 +1,1555 @@
+/** Visual inventory only. References point to the historical requirements matrix.
+ * Samples are synthetic; these definitions must never be passed to the API. */
+export type DesignField = {
+  label: string;
+  type: 'text' | 'number' | 'date' | 'select' | 'toggle' | 'textarea' | 'file';
+  options?: string[];
+  value?: string;
+};
+export type FeatureDesign = {
+  id: string;
+  area: string;
+  title: string;
+  requirements: string[];
+  fields: DesignField[];
+  columns: string[];
+  rows: string[][];
+  actions: string[];
+  layout: 'form' | 'document' | 'reconcile' | 'mapping' | 'report' | 'permissions';
+};
+export const designAreas = [
+  ['overview', 'Visión general'],
+  ['sales', 'Facturas de venta'],
+  ['quotes', 'Presupuestos'],
+  ['purchases', 'Compras y gastos'],
+  ['payments', 'Cobros y pagos'],
+  ['contacts', 'Clientes y proveedores'],
+  ['catalog', 'Catálogo'],
+  ['accounting', 'Contabilidad'],
+  ['tax', 'Fiscalidad'],
+  ['templates', 'PDF y envío'],
+  ['imports', 'Importación y archivo'],
+  ['automation', 'Automatizaciones'],
+  ['business', 'Gestión empresarial'],
+  ['settings', 'Empresa y seguridad'],
+  ['integrations', 'Integraciones y operación'],
+].map(([value, label]) => ({ value, label }));
+
+const types = {
+  t: 'text',
+  n: 'number',
+  d: 'date',
+  s: 'select',
+  b: 'toggle',
+  m: 'textarea',
+  f: 'file',
+} as const;
+function fields(spec: string): DesignField[] {
+  return spec.split(';').map((item) => {
+    const [label, key = 't', value = ''] = item.split(':');
+    const type = types[key as keyof typeof types] || 'text';
+    return {
+      label,
+      type,
+      ...(type === 'select'
+        ? { options: value.split('|'), value: value.split('|')[0] }
+        : { value }),
+    };
+  });
+}
+function design(
+  area: string,
+  id: string,
+  title: string,
+  requirements: string,
+  fieldSpec: string,
+  table: [string[], string[][]],
+  actions: string,
+  layout: FeatureDesign['layout'] = 'form',
+): FeatureDesign {
+  return {
+    area,
+    id,
+    title,
+    requirements: requirements.split(' '),
+    fields: fields(fieldSpec),
+    columns: table[0],
+    rows: table[1],
+    actions: actions.split('|'),
+    layout,
+  };
+}
+const schedule: [string[], string[][]] = [
+  ['Fecha', 'Concepto', 'Estado', 'Importe'],
+  [
+    ['01/10/2026', 'Mantenimiento', 'Por revisar', '120,00 €'],
+    ['01/11/2026', 'Mantenimiento', 'Previsto', '120,00 €'],
+  ],
+];
+const documents: [string[], string[][]] = [
+  ['Documento', 'Concepto', 'Cantidad', 'Importe'],
+  [
+    ['Ejemplo 001', 'Servicio mensual', '1', '120,00 €'],
+    ['Ejemplo 002', 'Soporte adicional', '2', '80,00 €'],
+  ],
+];
+const review: [string[], string[][]] = [
+  ['Comprobación', 'Resultado', 'Revisión'],
+  [
+    ['Datos del documento', 'Pendiente', 'Revisar'],
+    ['Importes y relaciones', 'Pendiente', 'Revisar'],
+  ],
+];
+const permissions: [string[], string[][]] = [
+  ['Operación', 'Consultar', 'Preparar', 'Aprobar'],
+  [
+    ['Documentos', 'Sí', 'Sí', 'No'],
+    ['Pagos', 'Sí', 'No', 'No'],
+    ['Configuración', 'No', 'No', 'No'],
+  ],
+];
+const movements: [string[], string[][]] = [
+  ['Fecha', 'Concepto', 'Estado', 'Importe'],
+  [
+    ['15/09/2026', 'Transferencia de ejemplo', 'Por conciliar', '242,00 €'],
+    ['16/09/2026', 'Comisión de ejemplo', 'Por revisar', '−2,00 €'],
+  ],
+];
+const report: [string[], string[][]] = [
+  ['Periodo', 'Previsto', 'Real', 'Diferencia'],
+  [
+    ['Septiembre', '1.200,00 €', '1.100,00 €', '−100,00 €'],
+    ['Octubre', '1.400,00 €', '—', '—'],
+  ],
+];
+const mapping: [string[], string[][]] = [
+  ['Origen', 'Destino', 'Valor de ejemplo'],
+  [
+    ['fecha', 'Fecha del documento', '15/09/2026'],
+    ['cliente', 'Nombre fiscal', 'Empresa de ejemplo'],
+    ['importe', 'Importe total', '242,00'],
+  ],
+];
+
+export const featureDesigns: FeatureDesign[] = [
+  design(
+    'sales',
+    'document-tracking',
+    'Seguimiento completo del documento',
+    'DOC-009 UX-004',
+    'Documento;Vista:s:Entrega|Cobro|Fiscalidad|Contabilidad|Disputa;Desde:d;Hasta:d;Responsable',
+    [
+      ['Área', 'Situación', 'Referencia'],
+      [
+        ['Entrega', 'Por revisar', 'Albarán de ejemplo'],
+        ['Fiscalidad', 'Sin envío', 'Sin referencia'],
+        ['Disputa', 'Sin expediente', 'Sin referencia'],
+      ],
+    ],
+    'Consultar evidencia|Abrir relación',
+  ),
+  design(
+    'sales',
+    'recurring',
+    'Facturación recurrente',
+    'INV-009 DOC-007',
+    'Nombre;Cliente;Frecuencia:s:Mensual|Trimestral|Anual;Inicio:d:2026-10-01;Fin:d;Generar:s:Borrador para revisar|Factura tras aprobación;Concepto:t:Mantenimiento;Precio por periodo:n:120',
+    schedule,
+    'Crear recurrencia|Pausar|Reanudar',
+    'document',
+  ),
+  design(
+    'sales',
+    'usage',
+    'Consumos e hitos',
+    'INV-010 INV-015',
+    'Contrato;Cliente;Modalidad:s:Consumo|Hitos;Periodo desde:d;Periodo hasta:d;Unidad:s:Hora|Unidad|GB;Precio unitario:n;Requiere aceptación:b:true',
+    [
+      ['Origen', 'Disponible', 'A facturar', 'Precio'],
+      [
+        ['Horas de ejemplo', '12', '8', '40,00 €'],
+        ['Hito de ejemplo', '1', '1', '600,00 €'],
+      ],
+    ],
+    'Importar consumos|Añadir hito|Preparar factura',
+    'document',
+  ),
+  design(
+    'sales',
+    'duplicate',
+    'Duplicar documento',
+    'DOC-007',
+    'Documento de origen;Cliente;Fecha:d;Vencimiento:d;Copiar:s:Conceptos y condiciones|Solo conceptos;Conservar referencias:b:false',
+    documents,
+    'Crear copia en borrador',
+    'document',
+  ),
+  design(
+    'sales',
+    'proforma',
+    'Proformas',
+    'DOC-006',
+    'Cliente;Fecha:d;Válida hasta:d;Referencia;Concepto;Cantidad:n:1;Precio unitario:n',
+    documents,
+    'Guardar proforma|Convertir a factura',
+    'document',
+  ),
+  design(
+    'sales',
+    'sales-orders',
+    'Pedidos de venta',
+    'DOC-002',
+    'Cliente;Pedido del cliente;Fecha:d;Entrega prevista:d;Dirección de entrega;Condiciones:m',
+    documents,
+    'Crear pedido|Preparar entrega',
+    'document',
+  ),
+  design(
+    'sales',
+    'deliveries',
+    'Albaranes y devoluciones',
+    'DOC-003 DOC-008',
+    'Pedido de origen;Tipo:s:Entrega|Devolución;Fecha:d;Almacén;Persona receptora;Motivo:m',
+    [['Artículo', 'Pedido', 'Entregado', 'Pendiente'], [['Artículo de ejemplo', '10', '6', '4']]],
+    'Crear albarán|Registrar devolución',
+    'document',
+  ),
+  design(
+    'sales',
+    'partial-billing',
+    'Facturación parcial y agrupada',
+    'DOC-004 DOC-005',
+    'Cliente;Origen:s:Pedidos|Albaranes|Presupuestos;Agrupar por:s:Cliente|Pedido|Fecha de entrega;Fecha:d;Serie;Conservar referencias:b:true',
+    [
+      ['Origen', 'Cantidad original', 'Ya facturado', 'A facturar'],
+      [
+        ['Pedido de ejemplo', '10', '6', '4'],
+        ['Albarán de ejemplo', '5', '0', '5'],
+      ],
+    ],
+    'Seleccionar documentos|Preparar factura',
+    'document',
+  ),
+  design(
+    'sales',
+    'simplified',
+    'Facturas simplificadas',
+    'INV-002',
+    'Fecha:d;Serie;Concepto;Cantidad:n:1;Precio:n;Documento:s:Factura simplificada|Sustitución de ticket;Ticket de origen',
+    documents,
+    'Preparar simplificada|Sustituir por factura',
+    'document',
+  ),
+  design(
+    'sales',
+    'advance-invoice',
+    'Factura de anticipo',
+    'INV-006',
+    'Cliente;Anticipo de origen;Fecha:d;Importe:n;Impuesto:s:Por determinar;Aplicación:s:Factura final|Varios documentos;Referencia',
+    documents,
+    'Preparar factura de anticipo|Aplicar a factura final',
+    'document',
+  ),
+  design(
+    'sales',
+    'price-correction',
+    'Rectificar precio o importe',
+    'INV-007 INV-008',
+    'Documento de origen;Corrección:s:Precio unitario|Importe|Rectificativa anterior;Motivo:m;Fecha:d;Nuevo precio:n;Documento relacionado',
+    [
+      ['Concepto', 'Precio original', 'Precio corregido', 'Diferencia'],
+      [['Servicio de ejemplo', '120,00 €', '100,00 €', '−20,00 €']],
+    ],
+    'Preparar rectificativa',
+    'document',
+  ),
+  design(
+    'sales',
+    'self-billing',
+    'Autofacturación',
+    'INV-014',
+    'Proveedor;Acuerdo;Vigente desde:d;Vigente hasta:d;Serie;Responsable de aceptación;Adjuntar acuerdo:f',
+    documents,
+    'Preparar acuerdo|Preparar autofactura',
+    'document',
+  ),
+  design(
+    'sales',
+    'currencies',
+    'Documentos en otras monedas',
+    'INV-013 GL-012',
+    'Moneda:s:EUR|USD|GBP;Tipo de cambio:n;Fecha del cambio:d;Fuente del cambio;Redondeo:s:Por línea|Por documento;Cuenta de diferencias',
+    [
+      ['Concepto', 'Moneda', 'Importe', 'Equivalente EUR'],
+      [['Servicio de ejemplo', 'USD', '100,00 USD', 'Pendiente de cambio']],
+    ],
+    'Preparar documento|Revisar diferencias',
+    'document',
+  ),
+  design(
+    'sales',
+    'disbursements',
+    'Suplidos y retenciones',
+    'INV-012 AST-008',
+    'Cliente;Tipo:s:Suplido|Retención de garantía;Documento justificativo;Importe:n;Liberación prevista:d;Condiciones:m',
+    documents,
+    'Añadir suplido|Preparar liberación',
+    'document',
+  ),
+  design(
+    'sales',
+    'saved-views',
+    'Vistas guardadas',
+    'UX-005 DOC-012',
+    'Nombre de la vista;Ámbito:s:Personal|Compartida;Estado:s:Todos|Pendiente|Vencido;Orden:s:Fecha descendente|Cliente|Importe;Predeterminada:b:false',
+    [
+      ['Vista', 'Ámbito', 'Orden'],
+      [
+        ['Pendientes del mes', 'Personal', 'Vencimiento'],
+        ['Clientes habituales', 'Compartida', 'Cliente'],
+      ],
+    ],
+    'Guardar vista|Renombrar|Eliminar',
+  ),
+  design(
+    'sales',
+    'batch-actions',
+    'Acciones por lotes',
+    'UX-006 ADV-009 DOC-012',
+    'Operación:s:Preparar envío|Descargar documentos|Cambiar borradores;Seleccionar:s:Listado filtrado|Selección manual;Revisar cada resultado:b:true;Comentario:m',
+    documents,
+    'Seleccionar registros|Revisar lote|Confirmar lote',
+  ),
+  design(
+    'sales',
+    'conflicts',
+    'Comparar versiones del borrador',
+    'DOC-011',
+    'Documento;Versión local;Versión del servidor;Resolver:s:Revisar campo a campo|Conservar copia local|Conservar versión del servidor',
+    [
+      ['Campo', 'Tu copia', 'Servidor'],
+      [
+        ['Referencia', 'Pedido A', 'Pedido B'],
+        ['Cantidad', '2', '3'],
+      ],
+    ],
+    'Preparar combinación|Descargar copia',
+    'mapping',
+  ),
+
+  design(
+    'quotes',
+    'quote-revisions',
+    'Revisiones de presupuesto',
+    'DOC-001 ADV-001',
+    'Presupuesto de origen;Nombre de la revisión;Motivo:m;Válido hasta:d;Sustituye a;Solicitar nueva aceptación:b:true',
+    [
+      ['Versión', 'Fecha', 'Situación', 'Importe'],
+      [
+        ['V1 · ejemplo', '01/09/2026', 'Anterior', '1.000,00 €'],
+        ['V2 · ejemplo', '15/09/2026', 'Por revisar', '1.200,00 €'],
+      ],
+    ],
+    'Crear revisión|Comparar versiones',
+    'document',
+  ),
+  design(
+    'quotes',
+    'quote-renewal',
+    'Renovar presupuesto caducado',
+    'DOC-001 ADV-001',
+    'Presupuesto;Nueva fecha:d;Válido hasta:d;Precios:s:Conservar precios|Revisar tarifa vigente;Motivo:m',
+    documents,
+    'Preparar renovación',
+    'document',
+  ),
+  design(
+    'quotes',
+    'quote-partial',
+    'Convertir parte del presupuesto',
+    'DOC-004 DOC-005',
+    'Presupuesto;Destino:s:Factura|Pedido|Proforma;Fecha:d;Conservar conceptos pendientes:b:true',
+    [
+      ['Concepto', 'Aceptado', 'Convertido', 'Seleccionado'],
+      [['Servicio de ejemplo', '10', '6', '4']],
+    ],
+    'Seleccionar conceptos|Preparar conversión',
+    'document',
+  ),
+  design(
+    'quotes',
+    'signature',
+    'Firma del presupuesto',
+    'ADV-002',
+    'Versión a firmar;Firmante;Correo;Caducidad:d;Método:s:Proveedor por configurar|Firma con certificado;Mensaje:m',
+    [
+      ['Evidencia', 'Estado'],
+      [
+        ['Identidad del firmante', 'Por verificar'],
+        ['Versión y huella', 'Por preparar'],
+        ['Fecha de firma', 'Sin firma'],
+      ],
+    ],
+    'Preparar solicitud|Consultar expediente',
+  ),
+
+  design(
+    'purchases',
+    'ocr',
+    'Leer factura con OCR',
+    'PUR-005 PUR-006 IMP-009 IMP-004',
+    'Archivo:f;Tipo:s:Factura|Ticket|Abono;Proveedor;Fecha:d;Número de factura;Total:n;Revisar todos los campos:b:true',
+    [
+      ['Campo', 'Valor extraído', 'Confianza'],
+      [
+        ['Proveedor', 'Proveedor de ejemplo', 'Por revisar'],
+        ['Fecha', '15/09/2026', 'Por revisar'],
+        ['Total', '242,00 €', 'Por revisar'],
+      ],
+    ],
+    'Analizar archivo|Preparar compra',
+    'mapping',
+  ),
+  design(
+    'purchases',
+    'purchase-orders',
+    'Solicitudes y pedidos de compra',
+    'PUR-001',
+    'Proveedor;Solicitante;Fecha:d;Entrega prevista:d;Centro de coste;Motivo:m',
+    documents,
+    'Crear solicitud|Preparar pedido',
+    'document',
+  ),
+  design(
+    'purchases',
+    'purchase-receipts',
+    'Recepciones de compra',
+    'PUR-002',
+    'Pedido;Proveedor;Fecha:d;Almacén;Albarán del proveedor;Observaciones:m',
+    [['Artículo', 'Pedido', 'Recibido', 'Pendiente'], [['Material de ejemplo', '10', '6', '4']]],
+    'Registrar recepción|Preparar devolución',
+    'document',
+  ),
+  design(
+    'purchases',
+    'three-way',
+    'Cotejar pedido, recepción y factura',
+    'PUR-003',
+    'Pedido;Albarán;Factura;Tolerancia de importe:n:0;Tolerancia de cantidad:n:0;Responsable',
+    [['Concepto', 'Pedido', 'Recibido', 'Facturado'], [['Material de ejemplo', '10', '6', '8']]],
+    'Revisar diferencias|Aceptar cotejo',
+    'reconcile',
+  ),
+  design(
+    'purchases',
+    'expense-reports',
+    'Gastos de empleados',
+    'PUR-009 PUR-010',
+    'Empleado;Fecha:d;Tipo:s:Gasto con justificante|Dieta|Kilometraje;Proyecto;Importe:n;Kilómetros:n;Justificante:f',
+    documents,
+    'Preparar gasto|Enviar a revisión',
+  ),
+  design(
+    'purchases',
+    'accrued-purchases',
+    'Compras previstas y renovaciones',
+    'PUR-011 PUR-013',
+    'Proveedor;Contrato;Tipo:s:Factura pendiente|Renovación|Compra recurrente;Próxima fecha:d;Importe previsto:n;Preaviso en días:n:30',
+    schedule,
+    'Crear previsión|Revisar renovación',
+  ),
+  design(
+    'purchases',
+    'purchase-comparison',
+    'Comparar ofertas de proveedores',
+    'PUR-001 PUR-013',
+    'Necesidad de compra;Periodo desde:d;Periodo hasta:d;Cantidad:n;Coste de mantenimiento:n;Fecha de pago:d',
+    [
+      ['Oferta', 'Compra', 'Otros costes', 'Total'],
+      [
+        ['Proveedor A · ejemplo', '1.000,00 €', '150,00 €', '1.150,00 €'],
+        ['Proveedor B · ejemplo', '1.100,00 €', '0,00 €', '1.100,00 €'],
+      ],
+    ],
+    'Añadir oferta|Preparar decisión',
+    'report',
+  ),
+  design(
+    'purchases',
+    'purchase-coding',
+    'Propuesta contable de compra',
+    'PUR-007 PUR-012',
+    'Factura;Cuenta de gasto;Destino:s:Gasto|Inmovilizado|Existencias;Centro de coste;Deducibilidad:n;Motivo:m',
+    [
+      ['Concepto', 'Cuenta propuesta', 'Revisión'],
+      [
+        ['Equipo de ejemplo', 'Inmovilizado', 'Pendiente'],
+        ['Mantenimiento', 'Servicios exteriores', 'Pendiente'],
+      ],
+    ],
+    'Revisar propuesta|Preparar contabilización',
+    'mapping',
+  ),
+  design(
+    'purchases',
+    'payment-approval',
+    'Aprobar pagos de compras',
+    'PUR-014 PAY-015 ORG-005',
+    'Factura;Responsable;Fecha prevista:d;Importe:n;Nivel:s:Una aprobación|Dos aprobaciones;Motivo:m',
+    review,
+    'Solicitar aprobación|Aprobar|Rechazar',
+    'permissions',
+  ),
+
+  design(
+    'payments',
+    'bank-accounts',
+    'Cuentas bancarias',
+    'BNK-001 BNK-002 BNK-003 BNK-010 ADV-007',
+    'Nombre de la cuenta;Entidad;IBAN;Moneda:s:EUR|USD|GBP;Conexión:s:Manual|Proveedor por configurar;Desde:d',
+    [
+      ['Cuenta', 'Última actualización', 'Saldo observado'],
+      [['Cuenta de ejemplo', 'Sin conexión', '—']],
+    ],
+    'Añadir cuenta|Conectar banco|Actualizar movimientos',
+  ),
+  design(
+    'payments',
+    'bank-import',
+    'Importar extracto bancario',
+    'BNK-004',
+    'Cuenta;Archivo:f;Formato:s:CSV|Excel|Norma 43|CAMT;Fecha desde:d;Fecha hasta:d;Saldo inicial:n',
+    movements,
+    'Relacionar columnas|Revisar extracto|Importar',
+    'mapping',
+  ),
+  design(
+    'payments',
+    'reconciliation',
+    'Conciliación bancaria',
+    'BNK-005 BNK-006 BNK-007 BNK-009 ADV-008',
+    'Cuenta;Desde:d;Hasta:d;Situación:s:Sin conciliar|Propuestas|Conciliados;Diferencia:s:Sin ajuste|Comisión|Diferencia de cambio;Importe del ajuste:n',
+    movements,
+    'Proponer coincidencias|Conciliar selección|Deshacer conciliación',
+    'reconcile',
+  ),
+  design(
+    'payments',
+    'internal-transfer',
+    'Transferencias entre cuentas',
+    'BNK-008',
+    'Cuenta de origen;Cuenta de destino;Fecha:d;Importe:n;Comisión:n;Referencia',
+    movements,
+    'Relacionar movimientos|Preparar transferencia',
+    'reconcile',
+  ),
+  design(
+    'payments',
+    'bank-rules',
+    'Reglas de conciliación',
+    'BNK-011 AUT-008',
+    'Nombre;Cuenta;Texto del movimiento;Coincidencia:s:Contiene|Empieza por|Exacta;Cuenta contable;Límite de importe:n;Exigir revisión:b:true',
+    review,
+    'Simular regla|Guardar regla|Pausar',
+  ),
+  design(
+    'payments',
+    'bank-incidents',
+    'Incidencias bancarias',
+    'BNK-012 BNK-002 BNK-003',
+    'Cuenta;Estado:s:Todos|Conexión caducada|Movimiento ambiguo|Sincronización fallida;Desde:d;Referencia externa',
+    [
+      ['Incidencia', 'Cuenta', 'Situación'],
+      [
+        ['Consentimiento de ejemplo', 'Cuenta de ejemplo', 'Por renovar'],
+        ['Movimiento de ejemplo', 'Cuenta de ejemplo', 'Por revisar'],
+      ],
+    ],
+    'Renovar conexión|Reintentar|Resolver',
+  ),
+  design(
+    'payments',
+    'sepa-mandates',
+    'Mandatos SEPA',
+    'PAY-006',
+    'Cliente;Referencia del mandato;IBAN;Modalidad:s:CORE|B2B;Fecha de firma:d;Acreedor;Mandato firmado:f',
+    [
+      ['Mandato', 'Cliente', 'Situación'],
+      [['Mandato de ejemplo', 'Cliente de ejemplo', 'Pendiente de firma']],
+    ],
+    'Preparar mandato|Revocar',
+  ),
+  design(
+    'payments',
+    'sepa-batches',
+    'Remesas de cobro',
+    'PAY-004',
+    'Cuenta de abono;Fecha de cobro:d;Esquema:s:CORE|B2B;Referencia del lote;Selección:s:Vencimientos pendientes|Selección manual',
+    documents,
+    'Seleccionar vencimientos|Preparar remesa|Descargar fichero',
+    'reconcile',
+  ),
+  design(
+    'payments',
+    'payment-orders',
+    'Órdenes de pago por lote',
+    'PAY-005 PAY-007',
+    'Cuenta de cargo;Fecha de ejecución:d;Canal:s:Fichero bancario|Proveedor por configurar;Referencia del lote;Requiere doble aprobación:b:true',
+    documents,
+    'Seleccionar pagos|Revisar orden|Autorizar envío',
+    'reconcile',
+  ),
+  design(
+    'payments',
+    'online-payments',
+    'Enlaces de pago',
+    'DES-009 PAY-007',
+    'Documento;Proveedor:s:Por configurar;Importe:n;Caducidad:d;Medios:s:Tarjeta|Transferencia|Ambos;Permitir pago parcial:b:false',
+    [['Enlace', 'Situación', 'Importe'], [['Enlace de ejemplo', 'Sin crear', '242,00 €']]],
+    'Preparar enlace|Desactivar enlace',
+  ),
+  design(
+    'payments',
+    'settlements',
+    'Liquidaciones de pasarela',
+    'PAY-009',
+    'Proveedor;Periodo desde:d;Periodo hasta:d;Cuenta de abono;Referencia de liquidación',
+    [
+      ['Concepto', 'Bruto', 'Comisión', 'Neto'],
+      [['Liquidación de ejemplo', '242,00 €', '2,00 €', '240,00 €']],
+    ],
+    'Importar liquidación|Conciliar',
+    'reconcile',
+  ),
+  design(
+    'payments',
+    'payment-returns',
+    'Rechazos, devoluciones y contracargos',
+    'PAY-003 PAY-008 PAY-010',
+    'Operación;Tipo:s:Rechazo|Devolución bancaria|Contracargo|Reembolso online;Fecha:d;Importe:n;Motivo:m;Evidencia:f',
+    [
+      ['Evento', 'Referencia', 'Situación'],
+      [['Rechazo de ejemplo', 'Operación de ejemplo', 'Por revisar']],
+    ],
+    'Preparar respuesta|Preparar reembolso|Reintentar cobro',
+  ),
+  design(
+    'payments',
+    'disputes',
+    'Disputas de cobro',
+    'INV-016',
+    'Cliente;Factura;Importe discutido:n;Motivo:s:Precio|Entrega|Calidad|Otros;Fecha límite:d;Responsable;Evidencia:f;Notas:m',
+    [
+      ['Evidencia', 'Documento', 'Estado'],
+      [
+        ['Entrega', 'Albarán de ejemplo', 'Por aportar'],
+        ['Acuerdo', 'Presupuesto de ejemplo', 'Por revisar'],
+      ],
+    ],
+    'Abrir expediente|Preparar respuesta|Resolver',
+  ),
+  design(
+    'payments',
+    'offsetting',
+    'Compensar saldos entre documentos',
+    'PAY-013',
+    'Tercero;Fecha:d;Documento a cobrar;Documento a pagar;Importe a compensar:n;Motivo:m',
+    documents,
+    'Preparar compensación',
+    'reconcile',
+  ),
+  design(
+    'payments',
+    'financing',
+    'Préstamos, factoring y cesiones',
+    'PAY-012 PAY-014',
+    'Modalidad:s:Préstamo|Factoring|Cesión;Entidad;Capital:n;Interés anual:n;Inicio:d;Fin:d;Con recurso:b:false',
+    schedule,
+    'Preparar financiación|Seleccionar facturas|Revisar calendario',
+  ),
+  design(
+    'payments',
+    'payment-history',
+    'Histórico y exportación de movimientos',
+    'ADV-006 RPT-008',
+    'Desde:d;Hasta:d;Tipo:s:Todos|Cobros|Pagos|Reversiones;Contacto;Formato:s:CSV|Excel|PDF;Incluir todas las páginas:b:true',
+    movements,
+    'Consultar histórico completo|Exportar selección',
+  ),
+
+  design(
+    'contacts',
+    'fiscal-identity',
+    'Comprobar identidad fiscal e IBAN',
+    'ORG-001 INV-001',
+    'País:s:España|Otro país de la UE|Fuera de la UE;Identificador fiscal;IBAN;Comprobación:s:Formato y dígito de control|Registro externo;Titular',
+    [
+      ['Dato', 'Comprobación', 'Resultado'],
+      [
+        ['NIF de ejemplo', 'Identidad fiscal', 'Sin comprobar'],
+        ['IBAN de ejemplo', 'Titularidad', 'Sin comprobar'],
+      ],
+    ],
+    'Comprobar datos|Solicitar verificación',
+  ),
+  design(
+    'contacts',
+    'buyer-formats',
+    'Formatos y anexos del comprador',
+    'DOC-010',
+    'Cliente;Formato requerido:s:PDF|Facturae|Otro formato;Referencia obligatoria;Tipo de anexo;Política:s:Avisar|Bloquear emisión;Validación del contenido:b:true',
+    [
+      ['Requisito', 'Evidencia', 'Situación'],
+      [
+        ['Pedido', 'Referencia de ejemplo', 'Por validar'],
+        ['Anexo', 'Certificado de ejemplo', 'Por revisar'],
+      ],
+    ],
+    'Preparar requisito|Revisar anexos',
+  ),
+
+  design(
+    'catalog',
+    'price-lists',
+    'Tarifas y acuerdos de precios',
+    'CAT-003',
+    'Nombre;Cliente o grupo;Vigente desde:d;Vigente hasta:d;Moneda:s:EUR|USD|GBP;Prioridad:n:1',
+    [
+      ['Artículo', 'Tarifa general', 'Tarifa acordada'],
+      [['Servicio de ejemplo', '120,00 €', '100,00 €']],
+    ],
+    'Crear tarifa|Asignar clientes|Añadir precio',
+  ),
+  design(
+    'catalog',
+    'price-tiers',
+    'Precios por cantidad e IVA incluido',
+    'CAT-004 CAT-005',
+    'Artículo;Precio:s:Sin IVA|IVA incluido;Cantidad desde:n:1;Cantidad hasta:n;Precio unitario:n;Descuento por línea:n',
+    [
+      ['Cantidad desde', 'Cantidad hasta', 'Precio unitario'],
+      [
+        ['1', '9', '20,00 €'],
+        ['10', '49', '18,00 €'],
+      ],
+    ],
+    'Añadir tramo|Guardar precios',
+  ),
+  design(
+    'catalog',
+    'units',
+    'Unidades y conversiones',
+    'CAT-002',
+    'Artículo;Unidad base:s:Unidad|Hora|Kilogramo|Litro|Metro;Unidad de compra;Factor:n:1;Decimales:n:2',
+    [
+      ['Origen', 'Destino', 'Factor'],
+      [
+        ['Caja', 'Unidad', '12'],
+        ['Hora', 'Minuto', '60'],
+      ],
+    ],
+    'Añadir conversión|Guardar unidades',
+  ),
+  design(
+    'catalog',
+    'variants',
+    'Variantes, lotes y números de serie',
+    'CAT-006',
+    'Artículo;Atributo:s:Talla|Color|Formato|Otro;Valor;Código de barras;Seguimiento:s:Sin seguimiento|Lote|Número de serie;Caducidad:d',
+    [
+      ['Variante', 'Código', 'Seguimiento'],
+      [
+        ['Azul · ejemplo', 'ART-AZUL', 'Lote'],
+        ['Negro · ejemplo', 'ART-NEGRO', 'Número de serie'],
+      ],
+    ],
+    'Añadir variante|Registrar lote|Asignar serie',
+  ),
+  design(
+    'catalog',
+    'bundles',
+    'Paquetes y conceptos compuestos',
+    'CAT-007',
+    'Nombre;Código;Precio del paquete:n;Desglosar componentes:b:true;Tipo:s:Paquete fijo|Componentes opcionales',
+    [
+      ['Componente', 'Cantidad', 'Precio'],
+      [
+        ['Servicio de ejemplo', '1', '120,00 €'],
+        ['Material de ejemplo', '2', '20,00 €'],
+      ],
+    ],
+    'Añadir componente|Guardar paquete',
+  ),
+  design(
+    'catalog',
+    'cost-margin',
+    'Costes y márgenes',
+    'CAT-009',
+    'Artículo;Coste de compra:n;Costes adicionales:n;Precio de venta:n;Vigente desde:d;Origen del coste:s:Manual|Última compra|Coste medio',
+    [
+      ['Artículo', 'Coste', 'Venta', 'Margen'],
+      [['Servicio de ejemplo', '80,00 €', '120,00 €', '40,00 €']],
+    ],
+    'Revisar costes|Preparar precios',
+    'report',
+  ),
+  design(
+    'catalog',
+    'categories',
+    'Familias y clasificación',
+    'CAT-001 CAT-010',
+    'Nombre;Código;Familia superior;Tipo:s:Producto|Servicio;Cuenta de ingreso;Cuenta de gasto',
+    [
+      ['Familia', 'Código', 'Artículos'],
+      [
+        ['Servicios · ejemplo', 'SER', '—'],
+        ['Material · ejemplo', 'MAT', '—'],
+      ],
+    ],
+    'Crear familia|Asignar artículos',
+  ),
+
+  design(
+    'accounting',
+    'accounting-templates',
+    'Plantillas de asientos',
+    'GL-003 GL-004',
+    'Nombre;Diario;Tipo de documento:s:Venta|Compra|Movimiento|Manual;Cuenta al debe;Cuenta al haber;Concepto;Revisar antes de contabilizar:b:true',
+    [
+      ['Cuenta', 'Debe', 'Haber'],
+      [
+        ['Cuenta de ejemplo A', '242,00 €', '—'],
+        ['Cuenta de ejemplo B', '—', '242,00 €'],
+      ],
+    ],
+    'Añadir línea|Guardar plantilla|Preparar asiento',
+    'document',
+  ),
+  design(
+    'accounting',
+    'subledgers',
+    'Auxiliares y subcuentas por tercero',
+    'GL-001 GL-008 GL-013',
+    'Tercero;Cuenta de control;Subcuenta;Desde:d;Hasta:d;Estado:s:Todos|Con diferencias|Conciliados',
+    [
+      ['Auxiliar', 'Saldo', 'Mayor', 'Diferencia'],
+      [['Tercero de ejemplo', '242,00 €', '242,00 €', '0,00 €']],
+    ],
+    'Crear subcuenta|Revisar conciliación',
+    'reconcile',
+  ),
+  design(
+    'accounting',
+    'accruals',
+    'Periodificaciones y provisiones',
+    'GL-010 GL-011 PUR-011',
+    'Tipo:s:Periodificación|Provisión|Deterioro;Concepto;Importe:n;Inicio:d;Fin:d;Cuenta de origen;Cuenta de destino;Frecuencia:s:Mensual|Trimestral|Anual',
+    schedule,
+    'Preparar calendario|Preparar asiento|Revertir',
+  ),
+  design(
+    'accounting',
+    'financial-year',
+    'Ejercicios y cierre anual',
+    'ORG-003 GL-007 GL-016 GL-017',
+    'Ejercicio;Desde:d;Hasta:d;Cuenta de resultado;Fecha de apertura:d;Incluir periodos de ajuste:b:true',
+    [
+      ['Fase', 'Situación'],
+      [
+        ['Revisión del ejercicio', 'Pendiente'],
+        ['Regularización', 'Pendiente'],
+        ['Cierre', 'Pendiente'],
+        ['Apertura', 'Pendiente'],
+      ],
+    ],
+    'Crear ejercicio|Revisar cierre|Preparar apertura',
+  ),
+  design(
+    'accounting',
+    'journals',
+    'Diarios y secuencias contables',
+    'GL-006 INV-003',
+    'Nombre del diario;Código;Ejercicio;Secuencia inicial:n:1;Clase:s:General|Ventas|Compras|Bancos;Cuenta predeterminada',
+    [['Diario', 'Ejercicio', 'Secuencia'], [['Diario de ejemplo', '2026', 'Por definir']]],
+    'Crear diario|Preparar secuencia',
+  ),
+  design(
+    'accounting',
+    'dimensions',
+    'Analítica y presupuestos contables',
+    'GL-014 GL-015 RPT-007',
+    'Dimensión:s:Centro de coste|Proyecto|Departamento;Nombre;Periodo desde:d;Periodo hasta:d;Presupuesto:n;Criterio de reparto:s:Porcentaje|Importe|Unidades',
+    report,
+    'Crear dimensión|Añadir presupuesto|Revisar desviaciones',
+    'report',
+  ),
+  design(
+    'accounting',
+    'annual-reports',
+    'Informes reglados y comparativas',
+    'GL-009 GL-017 GL-018 RPT-008',
+    'Informe:s:Balance|Pérdidas y ganancias|Memoria|Cuentas anuales|Libro diario;Ejercicio;Comparar con;Formato:s:PDF|Excel;Incluir detalle:b:false',
+    report,
+    'Preparar informe|Exportar',
+    'report',
+  ),
+  design(
+    'accounting',
+    'continuous-close',
+    'Expediente de cierre',
+    'GL-007 GL-013 UX-002',
+    'Periodo;Responsable;Estado:s:Abierto|En revisión|Resuelto;Fecha límite:d;Evidencia:f',
+    [
+      ['Comprobación', 'Responsable', 'Situación'],
+      [
+        ['Auxiliares', 'Por asignar', 'Pendiente'],
+        ['Bancos', 'Por asignar', 'Pendiente'],
+        ['Impuestos', 'Por asignar', 'Pendiente'],
+      ],
+    ],
+    'Asignar revisión|Añadir evidencia|Preparar cierre',
+  ),
+
+  design(
+    'tax',
+    'tax-profile',
+    'Perfil fiscal y territorial',
+    'ORG-001 TAX-003 TAX-004 TAX-005 TAX-006',
+    'Territorio:s:Por determinar|Península y Baleares|Canarias|Ceuta y Melilla|Territorios forales;Régimen;Operación:s:Interior|Intracomunitaria|Importación|Exportación;Desde:d;Hasta:d;Inversión del sujeto pasivo:b:false',
+    review,
+    'Preparar perfil|Revisar requisitos',
+  ),
+  design(
+    'tax',
+    'tax-rules',
+    'Impuestos y reglas con vigencia',
+    'TAX-001 TAX-002 TAX-017 INV-005',
+    'Nombre;Tipo:s:IVA|Recargo|IGIC|IPSI|Retención|Otro;Porcentaje:n;Vigente desde:d;Vigente hasta:d;Motivo de exención;Referencia normativa',
+    [
+      ['Regla', 'Desde', 'Hasta', 'Estado'],
+      [['Regla de ejemplo', 'Por determinar', 'Por determinar', 'Por revisar']],
+    ],
+    'Añadir regla|Preparar cambio',
+  ),
+  design(
+    'tax',
+    'deductibility',
+    'Deducibilidad y prorrata',
+    'TAX-007 PUR-004',
+    'Ejercicio;Tipo de gasto;Deducibilidad:n;Prorrata provisional:n;Prorrata definitiva:n;Criterio:m',
+    [
+      ['Compra', 'Cuota', 'Deducible', 'Revisión'],
+      [['Compra de ejemplo', '42,00 €', 'Por determinar', 'Pendiente']],
+    ],
+    'Revisar cuotas|Preparar regularización',
+  ),
+  design(
+    'tax',
+    'fiscal-connectors',
+    'Conexiones fiscales',
+    'TAX-008 TAX-009 TAX-010 TAX-011 TAX-012 TAX-014',
+    'Canal:s:VERI*FACTU|SIF no VERI*FACTU|SII|TicketBAI / Batuz|Facturae / FACe|B2B estructurada;Entorno:s:Pruebas|Producción;Perfil fiscal;Representante;Certificado:s:Sin certificado;Vigente hasta:d',
+    [
+      ['Canal', 'Conexión', 'Verificación'],
+      [['Canal seleccionado', 'Sin configurar', 'Sin verificar']],
+    ],
+    'Preparar conexión|Ver requisitos|Ver formato',
+  ),
+  design(
+    'tax',
+    'fiscal-submissions',
+    'Envíos y respuestas fiscales',
+    'TAX-008 TAX-010 TAX-011 TAX-013 TAX-014',
+    'Canal:s:Por configurar;Desde:d;Hasta:d;Estado:s:Todos|Preparado|Pendiente de respuesta|Rechazado;Referencia del envío',
+    [
+      ['Documento', 'Canal', 'Situación'],
+      [['Documento de ejemplo', 'Por configurar', 'Sin envío']],
+    ],
+    'Revisar envío|Consultar respuesta|Preparar subsanación',
+  ),
+  design(
+    'tax',
+    'tax-books',
+    'Libros y declaraciones',
+    'TAX-015 TAX-016',
+    'Ejercicio;Periodo:s:Mes|Trimestre|Año;Libro:s:Facturas expedidas|Facturas recibidas|Bienes de inversión|Operaciones intracomunitarias;Declaración;Estado:s:Preparación|Revisión',
+    [
+      ['Origen', 'Base', 'Cuota', 'Diferencia'],
+      [['Documentos de ejemplo', '200,00 €', '42,00 €', 'Por contrastar']],
+    ],
+    'Preparar libro|Conciliar|Preparar declaración',
+    'reconcile',
+  ),
+
+  design(
+    'templates',
+    'template-layout',
+    'Diseño libre del documento',
+    'DES-001 DES-003 DES-010',
+    'Plantilla;Bloque:s:Cabecera|Datos del cliente|Conceptos|Totales|Pie;Columnas:s:Descripción y total|Cantidad y precio|Descuento por línea|Referencia de artículo;Alineación:s:Izquierda|Centro|Derecha;Mostrar referencias:b:true',
+    documents,
+    'Añadir bloque|Mover bloque|Guardar diseño',
+    'document',
+  ),
+  design(
+    'templates',
+    'template-locales',
+    'Idiomas y marca por canal',
+    'DES-004 DES-006',
+    'Sociedad;Canal:s:PDF|Correo|Portal;Idioma:s:Español|Inglés|Francés|Portugués;Formato de fecha:s:DD/MM/AAAA|AAAA-MM-DD;Logo:f;Texto del pie:m',
+    [
+      ['Canal', 'Idioma', 'Plantilla'],
+      [
+        ['PDF · ejemplo', 'Español', 'Plantilla de ejemplo'],
+        ['Correo · ejemplo', 'Inglés', 'Plantilla de ejemplo'],
+      ],
+    ],
+    'Asignar diseño|Añadir traducción',
+  ),
+  design(
+    'templates',
+    'accessible-pdf',
+    'Revisión de accesibilidad del PDF',
+    'DES-007 DES-002',
+    'Plantilla;Idioma del documento;Texto alternativo del logo;Orden de lectura:s:Automático|Revisión manual;Conservar campos obligatorios:b:true',
+    [
+      ['Elemento', 'Revisión'],
+      [
+        ['Títulos y tablas', 'Por revisar'],
+        ['Orden de lectura', 'Por revisar'],
+        ['Contenido obligatorio', 'Por revisar'],
+      ],
+    ],
+    'Revisar documento|Preparar PDF accesible',
+  ),
+  design(
+    'templates',
+    'sender-permissions',
+    'Remitentes autorizados',
+    'ADV-003',
+    'Usuario;Nombre del remitente;Dirección de correo;Responder a;Canales:s:Documentos|Recordatorios|Ambos;Verificación:s:Pendiente',
+    permissions,
+    'Solicitar verificación|Asignar remitente',
+    'permissions',
+  ),
+  design(
+    'templates',
+    'document-conversation',
+    'Conversación y expediente compartido',
+    'ADV-005',
+    'Documento;Participantes;Visibilidad:s:Equipo interno|Cliente|Proveedor;Mensaje:m;Adjunto:f;Solicitar respuesta:b:false',
+    [
+      ['Mensaje', 'Visibilidad', 'Situación'],
+      [['Mensaje de ejemplo', 'Equipo interno', 'Sin enviar']],
+    ],
+    'Preparar mensaje|Invitar participante|Revisar permisos',
+  ),
+
+  design(
+    'imports',
+    'spreadsheet-options',
+    'Hojas, fórmulas y fechas de Excel',
+    'IMP-007 IMP-008 CAT-008',
+    'Archivo:f;Hoja;Fila de encabezados:n:1;Formato de fecha:s:DD/MM/AAAA|MM/DD/AAAA|AAAA-MM-DD;Fórmulas:s:Revisar antes de importar|Usar valores conservados;Separador decimal:s:Coma|Punto',
+    mapping,
+    'Seleccionar hojas|Revisar columnas',
+    'mapping',
+  ),
+  design(
+    'imports',
+    'master-updates',
+    'Actualizar maestros e identidades externas',
+    'MIG-001 MIG-003 IMP-005 IMP-011 CAT-008',
+    'Origen;Conexión;Destino:s:Contactos fiscales|Catálogo;Identificador externo;Coincidencia:s:Identificador externo|Código interno|Revisión manual;Operación:s:Crear nuevos|Actualizar existentes|Revisar ambos',
+    mapping,
+    'Relacionar identidades|Revisar cambios|Preparar actualización',
+    'mapping',
+  ),
+  design(
+    'imports',
+    'historical-import',
+    'Migrar histórico y saldos iniciales',
+    'MIG-002 MIG-004 MIG-005 MIG-006 IMP-015',
+    'Sistema de origen;Fecha de corte:d;Contenido:s:Documentos históricos|Saldos iniciales|Relaciones y pagos;Archivo:f;Conservar numeración de origen:b:true;Responsable',
+    [
+      ['Control', 'Origen', 'Destino', 'Diferencia'],
+      [
+        ['Saldo de clientes', '1.200,00 €', 'Por importar', 'Por conciliar'],
+        ['Saldo de proveedores', '600,00 €', 'Por importar', 'Por conciliar'],
+      ],
+    ],
+    'Revisar histórico|Conciliar corte|Preparar migración',
+    'reconcile',
+  ),
+  design(
+    'imports',
+    'file-quarantine',
+    'Revisión de archivos y duplicados',
+    'IMP-006 IMP-010 IMP-002 IMP-003 SEC-005',
+    'Archivo:f;Procedencia;Tipo:s:PDF|Imagen|Hoja de cálculo|XML;Revisión:s:Integridad|Contenido|Duplicados;Motivo:m',
+    [
+      ['Archivo', 'Integridad', 'Duplicado', 'Situación'],
+      [['Factura de ejemplo.pdf', 'Sin analizar', 'Sin comprobar', 'Por revisar']],
+    ],
+    'Revisar archivo|Separar documentos|Resolver duplicado',
+    'mapping',
+  ),
+  design(
+    'imports',
+    'import-resolution',
+    'Resolver y reanudar importaciones',
+    'IMP-012 IMP-013 IMP-014',
+    'Lote;Estado:s:Con errores|Por revisar|Importados;Campo a corregir;Nuevo valor;Aplicar:s:Fila seleccionada|Filas seleccionadas',
+    mapping,
+    'Corregir selección|Revisar resultados|Reanudar lote',
+    'mapping',
+  ),
+  design(
+    'imports',
+    'document-export',
+    'Exportación documental completa',
+    'MIG-007 INV-018 TAX-018 RPT-008',
+    'Desde:d;Hasta:d;Contenido:s:Documentos y originales|Documentos y relaciones|Archivo completo;Formato:s:ZIP con índice|Carpetas por ejercicio;Incluir historial:b:true',
+    [
+      ['Contenido', 'Formato', 'Situación'],
+      [
+        ['Documentos y originales', 'PDF y adjuntos', 'Por preparar'],
+        ['Relaciones e historial', 'Índice', 'Por preparar'],
+      ],
+    ],
+    'Preparar exportación|Revisar índice',
+  ),
+
+  design(
+    'automation',
+    'automation-rules',
+    'Reglas y simulación',
+    'AUT-001 AUT-002',
+    'Nombre;Cuando:s:Vence un documento|Llega una compra|Se registra un movimiento;Condición;Acción:s:Preparar borrador|Proponer clasificación|Preparar recordatorio;Límite por ejecución:n;Requiere aprobación:b:true',
+    [
+      ['Caso de ejemplo', 'Coincidencia', 'Acción propuesta'],
+      [['Documento de ejemplo', 'Por evaluar', 'Por determinar']],
+    ],
+    'Añadir condición|Simular|Activar regla',
+  ),
+  design(
+    'automation',
+    'reminders',
+    'Recordatorios de cobro',
+    'AUT-007 DES-008',
+    'Nombre;Enviar:s:Antes del vencimiento|Al vencer|Después del vencimiento;Días:n:7;Destinatario:s:Correo del cliente|Destinatario específico;Plantilla de correo;Excluir disputas:b:true;Detener al cobrarse:b:true',
+    schedule,
+    'Añadir recordatorio|Revisar mensaje|Activar',
+  ),
+  design(
+    'automation',
+    'job-supervision',
+    'Ejecuciones y supervisión',
+    'AUT-003 AUT-004 AUT-012 COL-010',
+    'Regla;Situación:s:Todas|Pendientes|Con errores|Pausadas;Desde:d;Hasta:d;Responsable',
+    [
+      ['Ejecución', 'Resultado', 'Revisión'],
+      [['Ejecución de ejemplo', 'Sin ejecutar', 'Pendiente']],
+    ],
+    'Ver detalle|Reintentar|Pausar ejecuciones',
+  ),
+  design(
+    'automation',
+    'assistance-policy',
+    'Límites de la asistencia automática',
+    'AUT-005 AUT-009 AUT-010 AUT-011',
+    'Asistencia:s:Clasificación de gastos|Detección de anomalías|Propuestas de conciliación;Proveedor:s:Sin configurar;Datos autorizados:s:Datos mínimos|Selección por campo;Retención en días:n;Confianza mínima:n;Revisión humana:b:true',
+    review,
+    'Definir límites|Revisar ejemplos|Preparar evaluación',
+  ),
+
+  design(
+    'overview',
+    'work-inbox',
+    'Bandeja de trabajo e incidencias',
+    'UX-002 AUT-006',
+    'Vista:s:Mis pendientes|Sin responsable|Todos;Tipo:s:Todos|Documentos|Cobros|Compras|Contabilidad;Responsable;Fecha límite:d',
+    [
+      ['Incidencia', 'Origen', 'Situación'],
+      [
+        ['Importe por revisar · ejemplo', 'Compra', 'Sin asignar'],
+        ['Entrega pendiente de facturar · ejemplo', 'Albarán', 'Por revisar'],
+      ],
+    ],
+    'Ver evidencia|Asignar responsable|Resolver',
+  ),
+  design(
+    'overview',
+    'unbilled-work',
+    'Trabajo pendiente de facturar',
+    'INV-015 AST-007',
+    'Cliente;Origen:s:Contratos|Horas|Entregas|Hitos;Desde:d;Hasta:d;Responsable',
+    [
+      ['Origen', 'Realizado', 'Facturado', 'Pendiente'],
+      [['Servicio de ejemplo', '12 horas', '8 horas', '4 horas']],
+    ],
+    'Revisar origen|Preparar facturación',
+    'report',
+  ),
+  design(
+    'overview',
+    'aging',
+    'Antigüedad de saldos',
+    'RPT-002',
+    'Fecha de corte:d;Tipo:s:Clientes|Proveedores;Contacto;Tramos:s:30 / 60 / 90 días|Personalizados;Incluir disputas:b:true',
+    [
+      ['Contacto', 'Sin vencer', '1–30 días', 'Más de 30 días'],
+      [['Cliente de ejemplo', '120,00 €', '242,00 €', '0,00 €']],
+    ],
+    'Consultar al corte|Exportar informe',
+    'report',
+  ),
+  design(
+    'overview',
+    'cash-forecast',
+    'Previsión y escenarios de tesorería',
+    'PAY-011 RPT-006',
+    'Escenario;Desde:d;Hasta:d;Saldo inicial:n;Retraso de cobro en días:n;Variación de ingresos:n;Variación de gastos:n',
+    report,
+    'Añadir hipótesis|Comparar escenarios|Preparar plan',
+    'report',
+  ),
+  design(
+    'overview',
+    'custom-reports',
+    'Informes personalizados y programados',
+    'RPT-001 RPT-003 RPT-004 RPT-007',
+    'Nombre;Datos:s:Ventas|Compras|Cobros|Contabilidad;Agrupar por:s:Mes|Cliente|Proyecto|Centro;Frecuencia:s:Sin programación|Semanal|Mensual;Destinatarios;Formato:s:PDF|Excel|CSV',
+    report,
+    'Elegir columnas|Guardar informe|Programar envío',
+    'report',
+  ),
+  design(
+    'overview',
+    'global-document-search',
+    'Buscar documentos y adjuntos',
+    'DOC-012 UX-007',
+    'Buscar;Ámbito:s:Documentos|Adjuntos|Todos;Contacto;Desde:d;Hasta:d;Incluir contenido de adjuntos:b:false',
+    [
+      ['Resultado', 'Tipo', 'Origen'],
+      [
+        ['Documento de ejemplo', 'Factura', 'Ventas'],
+        ['Anexo de ejemplo', 'PDF', 'Compra'],
+      ],
+    ],
+    'Buscar en el archivo|Abrir resultado',
+  ),
+
+  design(
+    'business',
+    'assets',
+    'Activos y amortizaciones',
+    'AST-001 AST-002 AST-003 PUR-012',
+    'Activo;Fecha de adquisición:d;Valor:n;Valor residual:n;Vida útil en meses:n;Método:s:Lineal|Otro;Cuenta de activo;Cuenta de amortización',
+    schedule,
+    'Crear activo|Preparar amortización|Preparar baja',
+  ),
+  design(
+    'business',
+    'inventory',
+    'Almacenes y valoración de existencias',
+    'AST-004 AST-005',
+    'Artículo;Almacén;Movimiento:s:Entrada|Salida|Traspaso|Regularización;Cantidad:n;Coste unitario:n;Valoración:s:Coste medio|FIFO;Fecha:d',
+    [
+      ['Artículo', 'Almacén', 'Existencias', 'Valor'],
+      [['Artículo de ejemplo', 'Almacén de ejemplo', '10', '200,00 €']],
+    ],
+    'Crear almacén|Preparar movimiento|Revisar inventario',
+  ),
+  design(
+    'business',
+    'projects-time',
+    'Proyectos y horas facturables',
+    'AST-006 AST-007 INV-015',
+    'Proyecto;Cliente;Responsable;Inicio:d;Fin:d;Presupuesto:n;Fecha del trabajo:d;Horas:n;Facturable:b:true',
+    [
+      ['Trabajo', 'Horas', 'Facturables', 'Situación'],
+      [['Tarea de ejemplo', '8', '6', 'Por revisar']],
+    ],
+    'Crear proyecto|Añadir horas|Preparar factura',
+  ),
+  design(
+    'business',
+    'commissions',
+    'Comisiones comerciales',
+    'ADV-004',
+    'Acuerdo;Beneficiario;Vigente desde:d;Vigente hasta:d;Base:s:Facturado|Cobrado|Margen;Porcentaje:n;Liquidación:s:Mensual|Trimestral',
+    schedule,
+    'Preparar acuerdo|Revisar liquidación',
+  ),
+  design(
+    'business',
+    'group-companies',
+    'Grupos, delegaciones y consolidación',
+    'ORG-008 GRP-001 GRP-004 GRP-005',
+    'Nombre;Tipo:s:Grupo|División|Establecimiento;Sociedad;Vigente desde:d;Vigente hasta:d;Porcentaje de participación:n;Moneda:s:EUR|USD|GBP',
+    [['Sociedad', 'Participación', 'Situación'], [['Sociedad de ejemplo', '100 %', 'Por revisar']]],
+    'Añadir sociedad|Crear delegación|Preparar consolidación',
+  ),
+  design(
+    'business',
+    'intercompany',
+    'Operaciones y tesorería de grupo',
+    'GRP-002 GRP-003 GRP-006',
+    'Sociedad de origen;Sociedad de destino;Tipo:s:Venta interna|Transferencia|Préstamo;Fecha:d;Importe:n;Moneda:s:EUR|USD|GBP;Referencia común',
+    [
+      ['Sociedad', 'Documento', 'Saldo'],
+      [
+        ['Sociedad A · ejemplo', 'Venta interna', '242,00 €'],
+        ['Sociedad B · ejemplo', 'Compra interna', '−242,00 €'],
+      ],
+    ],
+    'Preparar operación|Conciliar saldos|Preparar eliminación',
+    'reconcile',
+  ),
+  design(
+    'business',
+    'pos-terminal',
+    'TPV, tienda y terminal',
+    'POS-001 POS-002 POS-011 POS-012',
+    'Tienda;Terminal;Serie;Almacén;Tarifa;Impresora:s:Sin configurar;Lector:s:Sin configurar;Canal externo:s:Sin conexión',
+    review,
+    'Crear terminal|Asignar catálogo|Configurar periféricos',
+  ),
+  design(
+    'business',
+    'pos-sale',
+    'Venta en TPV',
+    'POS-004 POS-005 POS-006 POS-008',
+    'Terminal;Artículo;Cantidad:n:1;Cliente;Pago:s:Efectivo|Tarjeta|Mixto;Entregado:n;Ticket de origen',
+    documents,
+    'Añadir artículo|Suspender venta|Preparar cobro|Preparar devolución',
+    'document',
+  ),
+  design(
+    'business',
+    'pos-cash',
+    'Apertura y cierre de caja',
+    'POS-003 POS-007',
+    'Terminal;Turno;Fondo inicial:n;Efectivo contado:n;Tarjetas:n;Diferencia:n;Motivo de diferencia:m',
+    [
+      ['Medio', 'Previsto', 'Contado', 'Diferencia'],
+      [['Efectivo', '120,00 €', '118,00 €', '−2,00 €']],
+    ],
+    'Preparar apertura|Registrar entrada o salida|Revisar cierre',
+  ),
+  design(
+    'business',
+    'offline',
+    'Trabajo sin conexión',
+    'POS-009 POS-010 DOC-011 UX-008',
+    'Dispositivo;Modo:s:Captura de borradores|Cola pendiente de revisión;Límite de almacenamiento:n;Revisar al recuperar conexión:b:true',
+    [
+      ['Elemento', 'Copia local', 'Servidor'],
+      [['Borrador de ejemplo', 'Por sincronizar', 'Sin confirmar']],
+    ],
+    'Revisar cola|Comparar versiones|Preparar sincronización',
+  ),
+
+  design(
+    'settings',
+    'invitations',
+    'Invitaciones verificadas',
+    'ORG-009',
+    'Nombre;Correo;Negocio;Rol:s:Consulta|Gestión|Administración;Caducidad:d',
+    [['Invitación', 'Rol', 'Situación'], [['persona@example.com', 'Consulta', 'Sin enviar']]],
+    'Preparar invitación|Reenviar|Revocar',
+  ),
+  design(
+    'settings',
+    'account-recovery',
+    'Recuperación de acceso y doble factor',
+    'ORG-009',
+    'Correo de recuperación;Método:s:Aplicación de autenticación|Llave de seguridad;Nombre del dispositivo;Código de verificación',
+    [
+      ['Protección', 'Situación'],
+      [
+        ['Doble factor', 'Sin configurar'],
+        ['Códigos de recuperación', 'Sin generar'],
+      ],
+    ],
+    'Preparar recuperación|Configurar doble factor|Generar códigos',
+  ),
+  design(
+    'settings',
+    'fine-permissions',
+    'Permisos y aprobaciones por importe',
+    'ORG-005 ORG-006 COL-009',
+    'Rol;Operación:s:Emitir documentos|Contabilizar|Preparar pagos|Aprobar pagos;Campo;Límite de importe:n;Ámbito:s:Todo el negocio|Centro|Documentos asignados;Doble aprobación:b:true',
+    permissions,
+    'Editar permisos|Añadir regla|Revisar acceso',
+    'permissions',
+  ),
+  design(
+    'settings',
+    'configuration-history',
+    'Historial y vigencia de ajustes',
+    'ORG-007 ORG-012 SEC-003',
+    'Sección:s:Empresa|Facturación|Permisos|Reglas fiscales;Desde:d;Hasta:d;Autor;Versión',
+    [['Cambio', 'Autor', 'Vigencia'], [['Cambio de ejemplo', 'Usuario de ejemplo', 'Por revisar']]],
+    'Comparar versiones|Preparar cambio',
+  ),
+  design(
+    'settings',
+    'capabilities',
+    'Funciones y capacidades del negocio',
+    'ORG-010 ADV-010',
+    'Área:s:Facturación|Bancos|TPV|Proyectos|Inventario;Responsable;Disponibilidad:s:En diseño|Por verificar;Condiciones:m',
+    [
+      ['Capacidad', 'Configuración', 'Verificación'],
+      [['Capacidad de ejemplo', 'Sin configurar', 'Sin verificar']],
+    ],
+    'Revisar requisitos|Preparar configuración',
+  ),
+  design(
+    'settings',
+    'representation',
+    'Representaciones y certificados',
+    'ORG-011 COL-008',
+    'Representante;Titular;Alcance:s:Consulta|Presentación fiscal|Firma;Desde:d;Hasta:d;Referencia del certificado;Documento acreditativo:f',
+    review,
+    'Preparar representación|Registrar certificado|Revocar',
+  ),
+  design(
+    'settings',
+    'advisors',
+    'Asesorías y delegación temporal',
+    'ORG-004 COL-003 COL-004 COL-005 COL-006 COL-007',
+    'Asesoría;Responsable;Negocio;Desde:d;Hasta:d;Alcance:s:Contabilidad|Impuestos|Documentación;Requiere validación del titular:b:true',
+    permissions,
+    'Preparar encargo|Asignar cartera|Cambiar asesoría|Revocar acceso',
+    'permissions',
+  ),
+  design(
+    'settings',
+    'ownership',
+    'Titularidad y pagador del servicio',
+    'COL-001 COL-002 COL-011',
+    'Titular del negocio;Pagador del servicio;Correo de contacto;Responsable autorizado;Fecha efectiva:d;Motivo:m',
+    review,
+    'Preparar cambio de titular|Cambiar pagador',
+  ),
+  design(
+    'settings',
+    'retention',
+    'Conservación y privacidad',
+    'SEC-004 TAX-018',
+    'Tipo de dato:s:Documentos|Adjuntos|Auditoría|Datos personales;Finalidad;Plazo de conservación;Base aplicable;Bloqueo por expediente:b:false;Responsable',
+    [['Conjunto', 'Política', 'Revisión'], [['Documentos de ejemplo', 'Por definir', 'Pendiente']]],
+    'Preparar política|Revisar solicitudes|Preparar exportación',
+  ),
+  design(
+    'settings',
+    'support-access',
+    'Acceso temporal de soporte',
+    'SEC-006',
+    'Solicitante;Negocio;Motivo:m;Caduca:d;Permisos:s:Consulta limitada|Diagnóstico;Ocultar datos sensibles:b:true',
+    permissions,
+    'Preparar acceso|Revocar acceso',
+    'permissions',
+  ),
+  design(
+    'settings',
+    'security-incidents',
+    'Incidentes de seguridad',
+    'SEC-007',
+    'Asunto;Fecha:d;Responsable;Situación:s:Abierto|En investigación|Contenido|Resuelto;Alcance:m;Evidencia:f',
+    [
+      ['Actuación', 'Responsable', 'Situación'],
+      [['Revisión de ejemplo', 'Por asignar', 'Pendiente']],
+    ],
+    'Abrir expediente|Añadir actuación|Preparar cierre',
+  ),
+
+  design(
+    'integrations',
+    'public-api',
+    'API pública y webhooks',
+    'OPS-008',
+    'Integración;Tipo:s:API|Webhook;Destino;Permisos:s:Lectura|Preparación|Selección por operación;Evento:s:Documento emitido|Movimiento registrado|Error de envío;Caducidad:d',
+    [
+      ['Conexión', 'Permisos', 'Situación'],
+      [['Integración de ejemplo', 'Lectura', 'Sin configurar']],
+    ],
+    'Preparar credencial|Preparar webhook|Revisar eventos',
+  ),
+  design(
+    'integrations',
+    'connectors',
+    'Conectores y fuentes de datos',
+    'MIG-001 RPT-005 OPS-008',
+    'Nombre;Tipo:s:Origen de importación|Contabilidad|Comercio electrónico|Análisis;Proveedor;Negocio;Frecuencia:s:Manual|Diaria|Semanal;Datos autorizados:m',
+    review,
+    'Preparar conexión|Relacionar datos|Revisar estado',
+  ),
+  design(
+    'integrations',
+    'backup-recovery',
+    'Copias y recuperación',
+    'OPS-005 MIG-007',
+    'Frecuencia:s:Diaria|Semanal|Mensual;Hora;Conservación;Destino;Punto de recuperación;Entorno:s:Pruebas;Verificar restauración:b:true',
+    [
+      ['Copia de ejemplo', 'Contenido', 'Verificación'],
+      [['Punto de recuperación', 'Código, datos y archivos', 'Sin ejecutar']],
+    ],
+    'Programar copia|Preparar restauración|Revisar verificación',
+  ),
+  design(
+    'integrations',
+    'operations',
+    'Estado, alertas y conexiones',
+    'OPS-004 OPS-007 OPS-008 SEC-002',
+    'Servicio:s:Aplicación|Base de datos|Correo|Conector;Responsable;Umbral;Canal de aviso;Desde:d;Hasta:d',
+    [
+      ['Servicio', 'Estado de ejemplo', 'Última revisión'],
+      [
+        ['Aplicación', 'Sin comprobar', '—'],
+        ['Conector', 'Sin configurar', '—'],
+      ],
+    ],
+    'Preparar alerta|Revisar incidencias|Preparar rotación',
+  ),
+];
+
+// Each host surface exposes only the functions that belong in that part of the product.
+// Secondary areas have no first-level route yet, so they live under the closest module.
+export const featureAreasBySurface: Record<string, string[]> = {
+  overview: ['overview', 'automation'],
+  sales: ['sales'],
+  quotes: ['quotes'],
+  purchases: ['purchases'],
+  payments: ['payments'],
+  contacts: ['contacts'],
+  catalog: ['catalog'],
+  accounting: ['accounting', 'tax'],
+  templates: ['templates'],
+  imports: ['imports'],
+  settings: ['settings', 'business', 'integrations'],
+};
+
+export function featureAreasForSurface(area: string): string[] {
+  return featureAreasBySurface[area] || [area];
+}
+
+export function featuresForSurface(area: string): FeatureDesign[] {
+  const allowed = featureAreasForSurface(area);
+  return featureDesigns.filter((feature) => allowed.includes(feature.area));
+}
+
+export function areaForRoute(route: string, documentSection = ''): string {
+  const [page, id] = route.split('?')[0].split('/');
+  if (page === 'document' || page === 'edit') return documentSection || 'sales';
+  if (page === 'new') return id === 'quote' ? 'quotes' : id === 'purchase' ? 'purchases' : 'sales';
+  if (page === 'settings') {
+    if (id === 'imports') return 'imports';
+    if (['templates', 'mail', 'portal'].includes(id)) return 'templates';
+    return 'settings';
+  }
+  if (page === 'audit') return 'settings';
+  return designAreas.some((a) => a.value === page) ? page : 'overview';
+}

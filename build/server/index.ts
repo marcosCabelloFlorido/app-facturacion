@@ -1,0 +1,22 @@
+import 'dotenv/config';
+import { migrate } from './migrate.ts';
+import { buildApp } from './app.ts';
+import { pool } from './db.ts';
+import { initializeSecrets } from './secrets.ts';
+import { startMailWorker } from './mail-worker.ts';
+process.env.APP_ENCRYPTION_KEY_FILE ||= '.local/encryption.key';
+initializeSecrets();
+await migrate();
+const app = await buildApp();
+await app.listen({ port: Number(process.env.PORT || 3000), host: process.env.HOST || '127.0.0.1' });
+const stopMail = startMailWorker(app.log);
+let stopping = false;
+const shutdown = async () => {
+  if (stopping) return;
+  stopping = true;
+  await stopMail();
+  await app.close();
+  await pool.end();
+};
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);

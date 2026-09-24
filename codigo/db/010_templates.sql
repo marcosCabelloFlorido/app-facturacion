@@ -1,0 +1,6 @@
+CREATE TABLE document_templates(id uuid PRIMARY KEY DEFAULT gen_random_uuid(),name text NOT NULL,kind text NOT NULL CHECK(kind IN ('invoice','quote','purchase','credit')),settings jsonb NOT NULL,version integer NOT NULL DEFAULT 1,active boolean NOT NULL DEFAULT false,created_by uuid NOT NULL REFERENCES public.users(id),created_at timestamptz NOT NULL DEFAULT now());
+CREATE UNIQUE INDEX one_active_template ON document_templates(kind) WHERE active;
+CREATE TABLE template_versions(template_id uuid NOT NULL REFERENCES document_templates(id),version integer NOT NULL,data jsonb NOT NULL,created_by uuid NOT NULL REFERENCES public.users(id),created_at timestamptz NOT NULL DEFAULT now(),PRIMARY KEY(template_id,version));
+CREATE TRIGGER immutable_template_versions BEFORE UPDATE OR DELETE ON template_versions FOR EACH ROW EXECUTE FUNCTION guard_immutable();
+CREATE TABLE document_renderings(document_id uuid PRIMARY KEY REFERENCES documents(id),template_id uuid REFERENCES document_templates(id),template_version integer,settings jsonb NOT NULL,created_at timestamptz NOT NULL DEFAULT now());
+CREATE TRIGGER immutable_document_renderings BEFORE UPDATE OR DELETE ON document_renderings FOR EACH ROW EXECUTE FUNCTION guard_immutable();
