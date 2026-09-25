@@ -9,6 +9,19 @@
   margin: 0;
   min-width: 0;
 }
+.modal.product-modal.product-modal .field input:not([type='checkbox']):not([type='radio']),
+.modal.product-modal.product-modal .field textarea,
+.modal.product-modal.product-modal .field .app-select-trigger {
+  border-color: var(--border-strong) !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+.modal.product-modal.product-modal .field input:focus,
+.modal.product-modal.product-modal .field textarea:focus,
+.modal.product-modal.product-modal .field .app-select-trigger[data-focus-visible] {
+  background: #fff !important;
+  border-color: var(--text) !important;
+}
 .product-modal .modal-title {
   min-width: 0;
   overflow-wrap: anywhere;

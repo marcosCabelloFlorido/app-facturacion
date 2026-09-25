@@ -69,11 +69,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-4);
 }
 .document-detail-toolbar-group {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--space-3);
   min-width: 0;
 }

@@ -122,7 +122,7 @@ export function ProductForm({
         }}
       >
         {error && <ErrorBox>{error}</ErrorBox>}
-        <fieldset className="product-fieldset" disabled={busy}>
+        <fieldset className="product-fieldset fields-filled" disabled={busy}>
           <div className="form-grid">
             <Field label="Código / SKU" error={errors.sku}>
               <input

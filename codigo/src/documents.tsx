@@ -53,6 +53,7 @@ import {
   getPurchaseWorkflowAction,
   getDocumentStatus,
 } from './document-status';
+import { quoteActions } from './quote-workflow';
 import './document-detail-modal.css';
 type Props = { notify: Notify; readonly: boolean };
 export function PaymentForm({
@@ -333,6 +334,30 @@ export function DocumentDetail({
         : doc.kind === 'credit'
           ? 'Rectificativa en borrador'
           : 'Factura en borrador');
+  // Facturas y compras pendientes de cobro/pago muestran la acción siguiente
+  // visible en la cabecera ("Registrar cobro" / "Registrar pago"); las
+  // rectificativas/abonos (doc.kind === 'credit') conservan la acción dentro
+  // del menú "...", igual que antes.
+  const showRegisterPayment = !readonly && doc.kind !== 'credit' && paymentAction?.type === 'payment';
+  // Presupuestos: solo se muestra un botón visible cuando hay un único siguiente
+  // paso inequívoco (p. ej. estado "accepted" → ['convert']). Con varias
+  // opciones (p. ej. ['accept', 'reject']) no hay un CTA principal claro, así
+  // que se deja la decisión en el menú "...".
+  const quoteNextActions = doc.kind === 'quote' ? quoteActions(doc, today()) : [];
+  const showConvertQuote =
+    !readonly && quoteNextActions.length === 1 && quoteNextActions[0] === 'convert';
+  // Borradores (factura/presupuesto/compra, no rectificativa): el siguiente paso
+  // ("emitir"/"confirmar"/"contabilizar") queda visible, junto con navegar a
+  // editar y descartar. Las rectificativas conservan las 3 acciones en el menú.
+  const showDraftActions = !readonly && !confirmed && doc.kind !== 'credit';
+  const issueLabel =
+    doc.kind === 'quote'
+      ? 'Confirmar presupuesto'
+      : doc.kind === 'purchase'
+        ? 'Contabilizar compra'
+        : doc.kind === 'credit'
+          ? 'Emitir rectificativa'
+          : 'Emitir factura';
   const tabs: DetailTab[] = [
     { value: 'summary', label: 'Resumen', icon: FileText },
     ...(confirmed && doc.kind !== 'quote'
@@ -364,6 +389,46 @@ export function DocumentDetail({
             </div>
             <div className="document-detail-toolbar-group">
               <div className="document-detail-nav">{recordNavigation}</div>
+              {showRegisterPayment && (
+                <button
+                  type="button"
+                  className="button light"
+                  disabled={busy}
+                  onClick={() => setModal('payment')}
+                >
+                  <Wallet size={16} aria-hidden="true" />
+                  {paymentAction!.label}
+                </button>
+              )}
+              {showConvertQuote && (
+                <button
+                  type="button"
+                  className="button light"
+                  disabled={busy}
+                  onClick={() =>
+                    void action(
+                      'quote',
+                      { action: 'convert', date: today() },
+                      'Borrador de factura creado.',
+                      'returned',
+                    )
+                  }
+                >
+                  <ArrowRight size={16} aria-hidden="true" />
+                  Convertir en factura
+                </button>
+              )}
+              {showDraftActions && (
+                <button
+                  type="button"
+                  className="button light"
+                  disabled={busy}
+                  onClick={() => setModal('issue')}
+                >
+                  <Send size={16} aria-hidden="true" />
+                  {issueLabel}
+                </button>
+              )}
               <ActionsMenu
                 light
                 label={`Acciones de ${titleText}`}
@@ -377,6 +442,7 @@ export function DocumentDetail({
                     onAction: () => setModal('reverse'),
                   },
                 !readonly &&
+                  !showRegisterPayment &&
                   paymentAction?.type === 'payment' &&
                   doc.kind !== 'credit' && {
                     label: paymentAction.label,
@@ -386,15 +452,9 @@ export function DocumentDetail({
                     onAction: () => setModal('payment'),
                   },
                 !readonly &&
-                  !confirmed && {
-                    label:
-                      doc.kind === 'quote'
-                        ? 'Confirmar presupuesto'
-                        : doc.kind === 'purchase'
-                          ? 'Contabilizar compra'
-                          : doc.kind === 'credit'
-                            ? 'Emitir rectificativa'
-                            : 'Emitir factura',
+                  !confirmed &&
+                  !showDraftActions && {
+                    label: issueLabel,
                     group: 'Documento',
                     icon: Send,
                     disabled: busy,
@@ -421,6 +481,7 @@ export function DocumentDetail({
                       void action('quote', { action: 'reject' }, 'Presupuesto rechazado.'),
                   },
                 !readonly &&
+                  !showConvertQuote &&
                   doc.kind === 'quote' &&
                   doc.status === 'accepted' && {
                     label: 'Convertir en factura',

@@ -69,6 +69,7 @@ export function DocumentListContext({
         total_desc: 'Mayor total primero',
         total_asc: 'Menor total primero',
         balance_desc: 'Mayor pendiente primero',
+        balance_asc: 'Menor pendiente primero',
       }[query.sort],
     );
   if (!criteria.length) return null;

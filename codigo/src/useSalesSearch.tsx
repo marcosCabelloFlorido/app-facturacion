@@ -160,6 +160,7 @@ export function useSalesSearch({
               due_asc: 'vencimiento más cercano',
               due_desc: 'vencimiento más lejano',
               balance_desc: 'mayor saldo pendiente',
+              balance_asc: 'menor saldo pendiente',
             }[applied.sort] || applied.sort),
       ].filter(Boolean)
     : [];

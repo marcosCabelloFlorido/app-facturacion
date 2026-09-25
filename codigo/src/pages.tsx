@@ -467,13 +467,19 @@ function DocumentSummary(props: Props & { section: string }) {
             workspaceId={props.workspaceId}
           />
         }
-        primaryAction={
-          !props.readonly && {
-            label: quote ? 'Nuevo presupuesto' : purchase ? 'Nueva compra' : 'Nueva factura',
-            icon: Plus,
-            onAction: () =>
-              navigate(quote ? 'new/quote' : purchase ? 'new/purchase' : 'new/invoice'),
-          }
+        actions={
+          !props.readonly && (
+            <button
+              type="button"
+              className="button light"
+              onClick={() =>
+                navigate(quote ? 'new/quote' : purchase ? 'new/purchase' : 'new/invoice')
+              }
+            >
+              <Plus size={16} />
+              {quote ? 'Nuevo presupuesto' : purchase ? 'Nueva compra' : 'Nueva factura'}
+            </button>
+          )
         }
       />
       <div className="page-content documents-page sales-summary-page">
@@ -796,7 +802,22 @@ function DocumentListPage({
             workspaceId={workspaceId}
           />
         }
-        primaryAction={!readonly && { label: createLabel, icon: Plus, onAction: create }}
+        actions={
+          // En los listados comerciales (facturas, presupuestos, compras) la acción
+          // siguiente más probable ("crear documento") queda visible en la cabecera
+          // en vez de quedar escondida en el menú de "...".
+          commercial && !readonly ? (
+            <button type="button" className="button light" onClick={create}>
+              <Plus size={16} aria-hidden="true" />
+              {createLabel}
+            </button>
+          ) : undefined
+        }
+        primaryAction={
+          // La acción ya es visible en `actions` para sales/quote/purchase; se evita
+          // duplicarla dentro del menú "...".
+          !readonly && !commercial && { label: createLabel, icon: Plus, onAction: create }
+        }
         menu={
           commercial
             ? [
@@ -1258,6 +1279,17 @@ function PaymentsWorkspace({ notify, readonly, summary }: Props & { summary: boo
             }
           />
         }
+        actions={
+          // En pendientes y anticipos, "registrar cobro o pago" es la acción
+          // siguiente más probable y queda visible; en el historial es un log de
+          // consulta, sin acción de creación.
+          !readonly && tab !== 'history' ? (
+            <button type="button" className="button light" onClick={() => setBatch(true)}>
+              <Plus size={16} aria-hidden="true" />
+              Registrar cobro o pago
+            </button>
+          ) : undefined
+        }
         menu={[
           !readonly &&
             tab === 'funds' && {
@@ -1266,12 +1298,13 @@ function PaymentsWorkspace({ notify, readonly, summary }: Props & { summary: boo
               icon: Wallet,
               onAction: () => setCreatingFund(true),
             },
-          !readonly && {
-            label: 'Registrar cobro o pago',
-            group: 'Registrar movimientos',
-            icon: Plus,
-            onAction: () => setBatch(true),
-          },
+          !readonly &&
+            tab === 'history' && {
+              label: 'Registrar cobro o pago',
+              group: 'Registrar movimientos',
+              icon: Plus,
+              onAction: () => setBatch(true),
+            },
           {
             label: 'Movimientos registrados',
             group: 'Consultar y exportar',
@@ -1601,12 +1634,13 @@ export function Catalog({ notify, readonly }: Props) {
             }
           />
         }
-        primaryAction={
-          !readonly && {
-            label: 'Nuevo artículo',
-            icon: Plus,
-            onAction: () => setEditing('new'),
-          }
+        actions={
+          !readonly ? (
+            <button type="button" className="button light" onClick={() => setEditing('new')}>
+              <Plus size={16} aria-hidden="true" />
+              Nuevo artículo
+            </button>
+          ) : undefined
         }
       />
       <div className={`page-content${showList ? ' catalog-list-page' : ' catalog-summary-page'}`}>
