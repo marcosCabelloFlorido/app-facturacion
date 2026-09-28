@@ -1,3 +1,10 @@
 node_modules/
 **/node_modules/
 imagenes/docker.tar
+.claude/settings.local.json
+.local/mcp-tls/
+.env
+codigo/.env
+codigo/.local/
+dump_supabase.custom
+restore.log
