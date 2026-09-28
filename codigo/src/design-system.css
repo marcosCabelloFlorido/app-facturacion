@@ -42,7 +42,7 @@
   --bg-muted: #f4f4f5;
   --bg-table-head: #ececed;
   --text: #0a0a0a;
-  --border-strong: rgba(0, 0, 0, 0.16);
+  --border-strong: rgba(0, 0, 0, 0.28);
   --module-width: 1280px;
   --module-background: #000;
   --on-dark: #fff;
@@ -814,6 +814,47 @@ textarea:focus {
   border-color: var(--text);
   outline: none;
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 22%, transparent);
+}
+/* Clase explícita para todo control de formulario (input/select), añadida a mano en cada
+   componente para que la uniformidad no dependa solo del selector de etiqueta. */
+.form-control {
+  min-height: var(--control-height);
+  padding-inline: var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--control-text);
+  line-height: var(--leading-body);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--text) 4%, transparent);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+.form-control:focus {
+  border-color: var(--text);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-ring) 22%, transparent);
+}
+.form-control:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.form-control[type='checkbox'],
+.form-control[type='radio'] {
+  min-height: auto;
+  padding-inline: 0;
+  border: none;
+  box-shadow: none;
+  background: none;
+}
+.form-control[type='file'] {
+  padding: 8px 12px;
+  min-width: 0;
 }
 button:focus-visible,
 a:focus-visible,
@@ -1858,11 +1899,15 @@ input[type='file']::file-selector-button {
 @container billing-content (max-width: 760px) {
   .document-list-filtered > thead {
     display: block;
+    background: var(--bg-table-head);
+    border-bottom: 1px solid var(--border);
   }
   .document-list-filtered > thead > tr {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
-    padding: 0 var(--space-4) var(--space-2);
+    gap: var(--space-4);
+    padding: var(--space-2) var(--space-4);
   }
   .document-list-filtered > thead > tr > th {
     display: none;
@@ -1872,6 +1917,7 @@ input[type='file']::file-selector-button {
     display: block;
     padding: 0;
     border: 0;
+    background: transparent;
   }
   .table-filter-select .app-select-trigger {
     min-height: var(--control-height);
@@ -4118,12 +4164,8 @@ input[type='file']::file-selector-button {
   outline: none !important;
 }
 
-/* Mi seguridad: los dos campos de contraseña se reconocen por su fondo gris. */
-.settings-password-form {
-  --field-focus-background: var(--bg-muted);
-}
+/* Mi seguridad: campos de contraseña con caja de borde redondeado, sin relleno gris. */
 .settings-section-content .settings-password-form .field input[type='password'] {
-  background: var(--bg-muted) !important;
   padding-inline: var(--space-3);
   min-height: 44px;
 }
@@ -4362,7 +4404,7 @@ input[type='file']::file-selector-button {
   }
 }
 
-/* Clientes, catálogo y cobros: campos contextuales como en el documento. */
+/* Clientes, catálogo y cobros: misma caja con borde que el resto de formularios. */
 :is(.contact-modal, .contact-creation-dialog, .product-modal, .creation-dialog)
   .field
   :is(
@@ -4371,7 +4413,7 @@ input[type='file']::file-selector-button {
     .app-select-trigger
   ) {
   background: var(--bg);
-  border: 1px solid transparent;
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius-control);
 }
 :is(.contact-modal, .contact-creation-dialog, .product-modal, .creation-dialog)
@@ -4512,7 +4554,9 @@ dialog::backdrop {
   min-width: 0;
 }
 .attachment-preview .modal-head h2 {
-  overflow-wrap: anywhere;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .attachment-image {
   flex: 1;
@@ -4644,15 +4688,9 @@ dialog::backdrop {
   width: calc(100% - 32px);
 }
 
-/* Nueva plantilla: superficies de los campos de escritura. */
+/* Nueva plantilla: caja de borde redondeado, sin relleno gris. */
 .modal.template-wizard .field :is(input:not([type]), input[type='text'], textarea) {
-  --field-focus-background: var(--bg-muted);
-  background: var(--bg-muted) !important;
   padding: var(--space-3);
-}
-.modal.template-wizard .field :is(input:not([type]), input[type='text'], textarea) {
-  border-color: var(--border-strong) !important;
-  box-shadow: none !important;
 }
 
 /* Recorrido de estado exclusivo del listado de facturas de venta. */
@@ -4776,15 +4814,6 @@ dialog::backdrop {
 
 
 
-/* Datos de empresa: sin líneas antes, durante ni después de editar. */
-.settings-form[data-settings-section='company'] .field :is(input, textarea),
-.settings-form[data-settings-section='billing'] .field textarea {
-  --field-focus-border: 0;
-  --field-focus-shadow: none;
-  --field-focus-background: var(--bg-muted);
-  border: 0 !important;
-  box-shadow: none !important;
-}
 
 /* El recorrido de cabecera contrasta sobre la superficie oscura. */
 .invoice-pipeline-header {
@@ -4801,30 +4830,18 @@ dialog::backdrop {
   border-top: 1px solid var(--border);
 }
 
-/* Perfil: campos de identidad con fondo gris fijo y sin subrayado. */
+/* Perfil: caja de borde redondeado, sin relleno gris. */
 .modal.profile-edit-modal .field input {
-  --field-focus-background: var(--bg-muted);
-  background: var(--bg-muted) !important;
-  border: 1px solid var(--border-strong) !important;
-  box-shadow: none !important;
   padding: var(--space-3);
 }
 
-/* Identidad del cliente en requisitos: campos grises como Cambiar contraseña. */
+/* Identidad del cliente en requisitos: caja de borde redondeado, sin relleno gris. */
 .buyer-policies-modal .buyer-client-fields .field :is(input, .app-select-trigger) {
-  --field-focus-background: var(--bg-muted);
-  background: var(--bg-muted) !important;
   padding-inline: var(--space-3);
 }
 
-/* Campos de escritura con superficie gris persistente. */
+/* Campos de escritura: caja de borde redondeado, sin relleno gris. */
 .field.field-filled :is(input, textarea) {
-  --field-focus-background: var(--bg-muted);
-  --field-focus-border: 0;
-  --field-focus-shadow: none;
-  background: var(--bg-muted) !important;
-  border: 0 !important;
-  box-shadow: none !important;
   padding: var(--space-3);
 }
 
@@ -4856,21 +4873,13 @@ dialog::backdrop {
 }
 
 
-/* Selectores con la misma superficie rectangular que los campos grises. */
+/* Selectores: misma caja de borde redondeado que los demás campos. */
 .field.field-filled .app-select-trigger {
-  --field-focus-background: var(--bg-muted);
-  background: var(--bg-muted) !important;
   padding: var(--space-3);
 }
 
-/* Ficha de cliente o proveedor: todos los controles sobre fondo gris fijo. */
+/* Ficha de cliente o proveedor: caja de borde redondeado, sin relleno gris. */
 .modal.contact-modal .field :is(input, textarea, .app-select-trigger) {
-  --field-focus-background: var(--bg-muted);
-  --field-focus-border: 0;
-  --field-focus-shadow: none;
-  background: var(--bg-muted) !important;
-  border: 0 !important;
-  box-shadow: none !important;
   padding: var(--space-3);
 }
 

@@ -149,7 +149,7 @@ export function Modal({
       <div className="modal-head">
         {headerLeading && <div className="modal-header-leading">{headerLeading}</div>}
         <div className="modal-title">
-          <h2 id={titleId}>{title}</h2>
+          <h2 id={titleId} title={title}>{title}</h2>
           {description && <p id={descriptionId}>{description}</p>}
         </div>
         {headerActions && <div className="modal-header-actions">{headerActions}</div>}
