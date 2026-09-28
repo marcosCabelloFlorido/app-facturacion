@@ -16,7 +16,7 @@ import {
   quoteAction,
   createCredit,
 } from './services.ts';
-import { dashboardSummary } from './dashboard.ts';
+import { dashboardSummary, monthlyComparison } from './dashboard.ts';
 import { listDocuments } from './document-list.ts';
 import { contactAddressSchema } from '../shared/contacts.ts';
 import { productSchema } from '../shared/domain.ts';
@@ -630,6 +630,23 @@ function buildMcpServer(userId: string) {
       inputSchema: {},
     },
     async () => text(await dashboardSummary()),
+  );
+
+  server.registerTool(
+    'get_monthly_comparison',
+    {
+      title: 'Facturación de un mes con comparativa',
+      description:
+        'Devuelve lo facturado (ventas) y lo gastado en un mes y año concretos, junto con la ' +
+        'comparativa frente al mes anterior y frente al mismo mes del año anterior. Úsalo para ' +
+        'preguntas como "cuánto facturé en mayo de 2025", incluyendo comparación con abril de 2025 ' +
+        'y con mayo de 2024.',
+      inputSchema: {
+        year: z.number().int().min(2000).max(2100),
+        month: z.number().int().min(1).max(12),
+      },
+    },
+    async ({ year, month }) => text(await monthlyComparison(year, month)),
   );
 
   server.registerTool(

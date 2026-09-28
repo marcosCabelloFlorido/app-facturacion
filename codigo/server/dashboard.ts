@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { dateSchema } from '../shared/domain.ts';
 import type { DashboardMetric } from '../shared/dashboard.ts';
 import { pool, transaction } from './db.ts';
-import { comparisonPeriods } from '../shared/kpi-comparisons.ts';
+import { comparisonPeriods, comparisonPercent } from '../shared/kpi-comparisons.ts';
 import { financialHistory, quoteHistory, previousMonthComparison, yearComparison } from './kpi-history.ts';
 
 // Summary and drilldown share exactly the same scope and amount expression.
@@ -109,4 +109,53 @@ export async function dashboardSummary() {
       ),
     };
   }, true);
+}
+
+// Cifras de un mes natural completo (no "mes en curso hasta hoy"), para consultar meses ya
+// cerrados: p.ej. "cuánto facturé en mayo de 2025", con su comparativa al mes anterior y al
+// mismo mes del año anterior.
+function monthRange(year: number, month: number) {
+  const pad = (n: number) => String(n).padStart(2, '0');
+  const from = `${year}-${pad(month)}-01`;
+  const nextMonth = month === 12 ? 1 : month + 1;
+  const nextYear = month === 12 ? year + 1 : year;
+  const to = `${nextYear}-${pad(nextMonth)}-01`;
+  return { from, to };
+}
+
+const periodStatsSql = `SELECT
+    coalesce(sum(${definitions.revenue.amount}) FILTER (WHERE ${definitions.revenue.where}),0)::text AS revenue,
+    coalesce(sum(${definitions.expenses.amount}) FILTER (WHERE ${definitions.expenses.where}),0)::text AS expenses
+  FROM document_balances WHERE date>=$1::date AND date<$2::date`;
+
+async function periodStats(year: number, month: number) {
+  const { from, to } = monthRange(year, month);
+  const row = (await pool.query(periodStatsSql, [from, to])).rows[0] as {
+    revenue: string;
+    expenses: string;
+  };
+  return { year, month, from, to, revenue: row.revenue, expenses: row.expenses };
+}
+
+export async function monthlyComparison(year: number, month: number) {
+  const prevMonth = month === 1 ? 12 : month - 1;
+  const prevMonthYear = month === 1 ? year - 1 : year;
+  const [current, previousMonth, previousYear] = await Promise.all([
+    periodStats(year, month),
+    periodStats(prevMonthYear, prevMonth),
+    periodStats(year - 1, month),
+  ]);
+  return {
+    period: current,
+    previousMonth: {
+      ...previousMonth,
+      revenuePercent: comparisonPercent(current.revenue, previousMonth.revenue),
+      expensesPercent: comparisonPercent(current.expenses, previousMonth.expenses),
+    },
+    previousYear: {
+      ...previousYear,
+      revenuePercent: comparisonPercent(current.revenue, previousYear.revenue),
+      expensesPercent: comparisonPercent(current.expenses, previousYear.expenses),
+    },
+  };
 }
