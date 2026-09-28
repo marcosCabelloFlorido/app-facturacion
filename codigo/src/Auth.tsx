@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from 'react';
-import { ArrowRight, FileText, Sparkles, Store, Wallet } from 'lucide-react';
+import { ArrowRight, FileText, KeyRound, Sparkles, Store, Wallet, X } from 'lucide-react';
 import { api } from './api';
 import { SpiralAnimation } from './components/ui/spiral-animation';
 import { ErrorBox, Field, Submit } from './components';
@@ -17,6 +17,7 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => vo
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [demo, setDemo] = useState(false);
+  const [showDemoCredentials, setShowDemoCredentials] = useState(true);
   const [company, setCompany] = useState<Company>({
     name: '',
     taxId: '',
@@ -86,6 +87,40 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => vo
           </div>
           <h1>{setup ? 'Configura tu empresa' : 'Iniciar sesión'}</h1>
           {error && <ErrorBox>{error}</ErrorBox>}
+          {!setup &&
+            (showDemoCredentials ? (
+              <div className="demo-credentials">
+                <button
+                  type="button"
+                  className="demo-credentials-close"
+                  aria-label="Ocultar credenciales de prueba"
+                  onClick={() => setShowDemoCredentials(false)}
+                >
+                  <X size={14} />
+                </button>
+                <strong>Cuenta de prueba</strong>
+                <p>Usa estos datos para probar la app sin registrarte.</p>
+                <dl>
+                  <div>
+                    <dt>Correo</dt>
+                    <dd>mcf0038@alu.medac.es</dd>
+                  </div>
+                  <div>
+                    <dt>Contraseña</dt>
+                    <dd>Prueba_233</dd>
+                  </div>
+                </dl>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="demo-credentials-tooltip"
+                onClick={() => setShowDemoCredentials(true)}
+              >
+                <KeyRound size={13} />
+                Credenciales de prueba
+              </button>
+            ))}
           {setup && (
             <>
               <button
@@ -115,7 +150,7 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => vo
               </button>
               <div className="form-grid">
                 <Field label="Tu nombre">
-                  <input
+                  <input className="form-control"
                     autoComplete="name"
                     required
                     value={name}
@@ -123,21 +158,21 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => vo
                   />
                 </Field>
                 <Field label="Razón social">
-                  <input
+                  <input className="form-control"
                     required
                     value={company.name}
                     onChange={(e) => setCompany({ ...company, name: e.target.value })}
                   />
                 </Field>
                 <Field label="NIF / identificador fiscal">
-                  <input
+                  <input className="form-control"
                     required
                     value={company.taxId}
                     onChange={(e) => setCompany({ ...company, taxId: e.target.value })}
                   />
                 </Field>
                 <Field label="Dirección fiscal">
-                  <input
+                  <input className="form-control"
                     required
                     value={company.address}
                     onChange={(e) => setCompany({ ...company, address: e.target.value })}
@@ -147,7 +182,7 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => vo
             </>
           )}
           <Field label="Correo electrónico">
-            <input
+            <input className="form-control"
               type="email"
               autoComplete="username"
               required
@@ -157,7 +192,7 @@ export function Auth({ setup, onSuccess }: { setup: boolean; onSuccess: () => vo
             />
           </Field>
           <Field label="Contraseña" hint={setup ? 'Utiliza al menos 10 caracteres.' : undefined}>
-            <input
+            <input className="form-control"
               type="password"
               autoComplete={setup ? 'new-password' : 'current-password'}
               minLength={10}
