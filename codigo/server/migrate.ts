@@ -68,6 +68,8 @@ export async function migrate() {
       [19, '019_profile.sql'],
       [20, '020_profile_surname.sql'],
       [21, '021_profile_second_surname.sql'],
+      [22, '022_mcp_tokens.sql'],
+      [23, '023_oauth.sql'],
     ] as const) {
       if ((await client.query('SELECT 1 FROM migrations WHERE version=$1', [version])).rowCount)
         continue;

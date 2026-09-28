@@ -32,6 +32,69 @@ const contact = (row: any): Contact => {
   const { data, ...metadata } = row;
   return { ...data, ...metadata };
 };
+export async function findContactByTaxId(taxId: string): Promise<Contact | null> {
+  const normalized = normalizeTaxId(taxId);
+  const row = (await pool.query(`SELECT ${fields} FROM contacts WHERE tax_key=$1`, [normalized]))
+    .rows[0];
+  return row ? contact(row) : null;
+}
+export async function createContact(c: PoolClient, userId: string, input: unknown) {
+  const data = contactSchema.parse(input);
+  await uniqueTaxId(c, data);
+  const row = (
+    await c.query(`INSERT INTO contacts(data) VALUES($1) RETURNING ${fields}`, [data])
+  ).rows[0];
+  await audit(c, userId, row.id, 'Cliente o proveedor añadido');
+  return contact(row);
+}
+export async function updateContact(
+  c: PoolClient,
+  userId: string,
+  id: string,
+  input: unknown,
+  version: number,
+) {
+  const data = contactSchema.parse(input);
+  const current = (await c.query('SELECT version FROM contacts WHERE id=$1 FOR UPDATE', [id]))
+    .rows[0];
+  assert(current, 'No se encuentra la ficha.', 404);
+  assert(
+    current.version === version,
+    'Otra sesión ha modificado esta ficha. Vuelve a leerla antes de guardar.',
+  );
+  await uniqueTaxId(c, data, id);
+  const row = (
+    await c.query(`UPDATE contacts SET data=$2,version=version+1,updated_at=now() WHERE id=$1 RETURNING ${fields}`, [
+      id,
+      data,
+    ])
+  ).rows[0];
+  await audit(c, userId, id, 'Ficha de cliente o proveedor actualizada');
+  return contact(row);
+}
+export async function setContactStatus(
+  c: PoolClient,
+  userId: string,
+  id: string,
+  active: boolean,
+  version: number,
+) {
+  const current = (await c.query('SELECT version FROM contacts WHERE id=$1 FOR UPDATE', [id]))
+    .rows[0];
+  assert(current, 'No se encuentra la ficha.', 404);
+  assert(
+    current.version === version,
+    'Otra sesión ha modificado esta ficha. Vuelve a leerla antes de continuar.',
+  );
+  const row = (
+    await c.query(
+      `UPDATE contacts SET active=$2,version=version+1,updated_at=now() WHERE id=$1 RETURNING ${fields}`,
+      [id, active],
+    )
+  ).rows[0];
+  await audit(c, userId, id, active ? 'Ficha recuperada' : 'Ficha archivada');
+  return contact(row);
+}
 async function uniqueTaxId(c: PoolClient, data: ContactInput, id?: string) {
   await c.query('SELECT pg_advisory_xact_lock(hashtextextended($1,0))', ['contact:' + data.taxId]);
   const existing = (await c.query('SELECT id,active FROM contacts WHERE tax_key=$1', [data.taxId]))
@@ -330,17 +393,7 @@ export function contactsRoutes(api: FastifyInstance) {
       return result;
     }, true);
   });
-  api.post('/contacts', async (req) => {
-    const data = contactSchema.parse(req.body);
-    return run(req, async (c) => {
-      await uniqueTaxId(c, data);
-      const row = (
-        await c.query(`INSERT INTO contacts(data) VALUES($1) RETURNING ${fields}`, [data])
-      ).rows[0];
-      await audit(c, req.user!.id, row.id, 'Cliente o proveedor añadido');
-      return contact(row);
-    });
-  });
+  api.post('/contacts', async (req) => run(req, (c) => createContact(c, req.user!.id, req.body)));
   api.put('/contacts/:id', async (req) => {
     const id = entityId(req.params);
     const body = z
