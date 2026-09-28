@@ -22,11 +22,15 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  Copy,
   Download,
   FileText,
+  KeyRound,
+  LoaderCircle,
   LockKeyhole,
   Plus,
   Save,
+  Trash2,
   Undo2,
   Users,
   X,
@@ -876,10 +880,10 @@ function EntryForm({
         {error && <ErrorBox>{error}</ErrorBox>}
         <div className="form-grid">
           <Field label="Fecha">
-            <input type="date" required value={date} onChange={(e) => setDate(e.target.value)} />
+            <input className="form-control" type="date" required value={date} onChange={(e) => setDate(e.target.value)} />
           </Field>
           <Field label="Descripción">
-            <input
+            <input className="form-control"
               required
               minLength={5}
               value={description}
@@ -901,14 +905,14 @@ function EntryForm({
               </Select>
             </Field>
             <Field label="Debe">
-              <input
+              <input className="form-control"
                 inputMode="decimal"
                 value={l.debit}
                 onChange={(e) => update(i, { debit: e.target.value.replace(',', '.') })}
               />
             </Field>
             <Field label="Haber">
-              <input
+              <input className="form-control"
                 inputMode="decimal"
                 value={l.credit}
                 onChange={(e) => update(i, { credit: e.target.value.replace(',', '.') })}
@@ -960,6 +964,10 @@ export function Settings({
   const [error, setError] = useState('');
   const [revision, setRevision] = useState(0);
   const [userForm, setUserForm] = useState(false);
+  const [mcpTokenForm, setMcpTokenForm] = useState(false);
+  const [mcpTokenReveal, setMcpTokenReveal] = useState<{ name: string; token: string } | null>(
+    null,
+  );
   const [seriesForm, setSeriesForm] = useState(false);
   const [workspaceForm, setWorkspaceForm] = useState(false);
   const [templateForm, setTemplateForm] = useState(false);
@@ -1017,6 +1025,12 @@ export function Settings({
               label: 'Nuevo usuario',
               icon: Users,
               onAction: () => setUserForm(true),
+            },
+          admin &&
+            tab === 'mcp' && {
+              label: 'Nuevo token',
+              icon: KeyRound,
+              onAction: () => setMcpTokenForm(true),
             },
           admin &&
             tab === 'series' && {
@@ -1127,7 +1141,7 @@ export function Settings({
                       <h3 id="company-fiscal-heading">Datos fiscales</h3>
                       <div className="form-grid">
                         <Field label="Razón social">
-                          <input
+                          <input className="form-control"
                             required
                             disabled={!admin}
                             value={data.name}
@@ -1135,7 +1149,7 @@ export function Settings({
                           />
                         </Field>
                         <Field label="NIF / identificador fiscal">
-                          <input
+                          <input className="form-control"
                             required
                             disabled={!admin}
                             value={data.taxId}
@@ -1143,7 +1157,7 @@ export function Settings({
                           />
                         </Field>
                         <Field label="Dirección fiscal" className="span-2">
-                          <input
+                          <input className="form-control"
                             required
                             disabled={!admin}
                             value={data.address}
@@ -1159,7 +1173,7 @@ export function Settings({
                       <h3 id="company-contact-heading">Contacto</h3>
                       <div className="form-grid">
                         <Field label="Correo de facturación">
-                          <input
+                          <input className="form-control"
                             type="email"
                             disabled={!admin}
                             value={data.email}
@@ -1167,14 +1181,14 @@ export function Settings({
                           />
                         </Field>
                         <Field label="Teléfono">
-                          <input
+                          <input className="form-control"
                             disabled={!admin}
                             value={data.phone}
                             onChange={(e) => change('phone', e.target.value)}
                           />
                         </Field>
                         <Field label="Sitio web">
-                          <input
+                          <input className="form-control"
                             disabled={!admin}
                             value={data.website}
                             onChange={(e) => change('website', e.target.value)}
@@ -1187,10 +1201,10 @@ export function Settings({
                   <>
                     <div className="form-grid">
                       <Field label="Moneda">
-                        <input disabled value="EUR · Euro" />
+                        <input className="form-control" disabled value="EUR · Euro" />
                       </Field>
                       <Field label="IBAN para el documento">
-                        <input
+                        <input className="form-control"
                           disabled={!admin}
                           value={data.iban}
                           autoCapitalize="characters"
@@ -1245,6 +1259,15 @@ export function Settings({
                 <AccessMembers revision={revision} onRefresh={() => void onRefresh()} />
               </section>
             )}
+            {tab === 'mcp' && admin && (
+              <section className="panel table-panel">
+                <PanelHeading
+                  title="Integraciones (MCP)"
+                  description="Los tokens permiten que un asistente de IA (por ejemplo Claude) consulte y opere esta facturación a través de MCP."
+                />
+                <McpTokenList revision={revision} onRefresh={() => setRevision((v) => v + 1)} />
+              </section>
+            )}
             {tab === 'profile' && <Profile user={me.user} onRefresh={onRefresh} notify={notify} />}
           </div>
         </div>
@@ -1258,6 +1281,19 @@ export function Settings({
             notify('Cuenta local creada.');
           }}
         />
+      )}
+      {mcpTokenForm && (
+        <McpTokenForm
+          onClose={() => setMcpTokenForm(false)}
+          onCreated={(name, token) => {
+            setMcpTokenForm(false);
+            setMcpTokenReveal({ name, token });
+            setRevision((v) => v + 1);
+          }}
+        />
+      )}
+      {mcpTokenReveal && (
+        <McpTokenReveal reveal={mcpTokenReveal} onClose={() => setMcpTokenReveal(null)} />
       )}
     </>
   );
@@ -1322,14 +1358,14 @@ function UserForm({ onClose, onSaved }: { onClose: () => void; onSaved: () => vo
       >
         {error && <ErrorBox>{error}</ErrorBox>}
         <Field label="Nombre">
-          <input
+          <input className="form-control"
             required
             value={data.name}
             onChange={(e) => setData({ ...data, name: e.target.value })}
           />
         </Field>
         <Field label="Correo electrónico">
-          <input
+          <input className="form-control"
             type="email"
             required
             value={data.email}
@@ -1337,7 +1373,7 @@ function UserForm({ onClose, onSaved }: { onClose: () => void; onSaved: () => vo
           />
         </Field>
         <Field label="Contraseña inicial">
-          <input
+          <input className="form-control"
             type="password"
             autoComplete="new-password"
             required
@@ -1355,6 +1391,237 @@ function UserForm({ onClose, onSaved }: { onClose: () => void; onSaved: () => vo
         </Field>
         <div className="modal-actions">
           <Submit busy={busy}>Crear cuenta local</Submit>
+        </div>
+      </form>
+    </Modal>
+  );
+}
+type McpToken = {
+  id: string;
+  name: string;
+  created_at: string;
+  last_used_at: string | null;
+  revoked_at: string | null;
+};
+function McpTokenList({
+  revision,
+  onRefresh,
+}: {
+  revision: number;
+  onRefresh: () => void;
+}) {
+  const { data, error, loading } = useRemote<McpToken[]>('/mcp/tokens', revision);
+  const [revoking, setRevoking] = useState<McpToken | null>(null);
+  return (
+    <>
+      {error ? (
+        <ErrorBox>{error}</ErrorBox>
+      ) : loading ? (
+        <Loading />
+      ) : !data?.length ? (
+        <Empty
+          showMessage
+          compact
+          title="Sin tokens todavía"
+          description="Crea uno para conectar un asistente de IA a esta facturación."
+        />
+      ) : (
+        <div className="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Creado</th>
+                <th>Último uso</th>
+                <th>Estado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((t) => (
+                <tr key={t.id}>
+                  <td>
+                    <strong>{t.name}</strong>
+                  </td>
+                  <td>{tableDate(t.created_at)}</td>
+                  <td>{t.last_used_at ? tableDate(t.last_used_at) : 'Nunca'}</td>
+                  <td>{t.revoked_at ? 'Revocado' : 'Activo'}</td>
+                  <td>
+                    {!t.revoked_at && (
+                      <button
+                        type="button"
+                        className="icon-button icon-button-plain"
+                        aria-label={`Revocar token "${t.name}"`}
+                        title="Revocar token"
+                        onClick={() => setRevoking(t)}
+                      >
+                        <Trash2 size={16} strokeWidth={1.6} aria-hidden="true" />
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      {revoking && (
+        <McpTokenRevoke
+          token={revoking}
+          onClose={() => setRevoking(null)}
+          onRevoked={() => {
+            setRevoking(null);
+            onRefresh();
+          }}
+        />
+      )}
+    </>
+  );
+}
+function McpTokenForm({
+  onClose,
+  onCreated,
+}: {
+  onClose: () => void;
+  onCreated: (name: string, token: string) => void;
+}) {
+  const [name, setName] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  return (
+    <Modal
+      title="Crear token MCP"
+      onClose={() => {
+        if (!busy) onClose();
+      }}
+    >
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setBusy(true);
+          setError('');
+          try {
+            const created = await api<{ token: string }>('/mcp/tokens', {
+              method: 'POST',
+              body: { name },
+            });
+            onCreated(name, created.token);
+          } catch (e) {
+            setError((e as Error).message);
+            setBusy(false);
+          }
+        }}
+      >
+        {error && <ErrorBox>{error}</ErrorBox>}
+        <p className="modal-copy">
+          Da nombre al asistente o integración que va a usar este token, por ejemplo «Claude
+          Desktop».
+        </p>
+        <Field label="Nombre">
+          <input
+            className="form-control"
+            required
+            minLength={2}
+            maxLength={100}
+            autoFocus
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </Field>
+        <div className="modal-actions">
+          <Submit busy={busy}>Crear token</Submit>
+        </div>
+      </form>
+    </Modal>
+  );
+}
+function McpTokenReveal({
+  reveal,
+  onClose,
+}: {
+  reveal: { name: string; token: string };
+  onClose: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  return (
+    <Modal title="Token creado" onClose={onClose}>
+      <p className="modal-copy">
+        Copia el token de <strong>{reveal.name}</strong> ahora: por seguridad no volverá a
+        mostrarse. Configura el cliente MCP con la cabecera{' '}
+        <code>Authorization: Bearer &lt;token&gt;</code>.
+      </p>
+      <Field label="Token">
+        <input
+          className="form-control"
+          readOnly
+          value={reveal.token}
+          onFocus={(e) => e.currentTarget.select()}
+        />
+      </Field>
+      <div className="modal-actions">
+        <button
+          type="button"
+          className="button"
+          onClick={async () => {
+            try {
+              await navigator.clipboard.writeText(reveal.token);
+              setCopied(true);
+            } catch {
+              /* El usuario puede copiarlo seleccionando el campo. */
+            }
+          }}
+        >
+          <Copy size={16} aria-hidden="true" /> {copied ? 'Copiado' : 'Copiar'}
+        </button>
+        <button type="button" className="button primary" onClick={onClose}>
+          Hecho
+        </button>
+      </div>
+    </Modal>
+  );
+}
+function McpTokenRevoke({
+  token,
+  onClose,
+  onRevoked,
+}: {
+  token: McpToken;
+  onClose: () => void;
+  onRevoked: () => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  return (
+    <Modal
+      title="Revocar token"
+      onClose={() => {
+        if (!busy) onClose();
+      }}
+    >
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          setBusy(true);
+          setError('');
+          try {
+            await api('/mcp/tokens/' + token.id, { method: 'DELETE' });
+            onRevoked();
+          } catch (e) {
+            setError((e as Error).message);
+            setBusy(false);
+          }
+        }}
+      >
+        <p className="modal-copy">
+          El asistente que use <strong>{token.name}</strong> dejará de tener acceso de inmediato.
+          Esta acción no se puede deshacer.
+        </p>
+        {error && <ErrorBox>{error}</ErrorBox>}
+        <div className="modal-actions">
+          <button type="submit" className="button primary" disabled={busy}>
+            {busy && <LoaderCircle className="spin" size={16} aria-hidden="true" />}
+            {busy ? 'Revocando…' : 'Revocar token'}
+          </button>
         </div>
       </form>
     </Modal>

@@ -57,6 +57,10 @@ import { templateRoutes } from './templates.ts';
 import { activeTemplate, templateLogo } from './template-assets.ts';
 import { mailRoutes } from './mail.ts';
 import { portalRoutes, publicPortalRoutes } from './portal.ts';
+import { mcpTokenRoutes } from './mcp-tokens.ts';
+import { mcpRoutes } from './mcp.ts';
+import { requireMcpToken } from './mcp-auth.ts';
+import { oauthRoutes } from './oauth.ts';
 
 const uuid = z.uuid();
 const credentials = z.object({
@@ -104,6 +108,19 @@ export async function buildApp(logging = true) {
   });
   await app.register(cookie);
   await app.register(rateLimit, { max: 240, timeWindow: '1 minute' });
+  // Los formularios HTML del flujo OAuth (/oauth/authorize) y el intercambio de token
+  // (RFC 6749, application/x-www-form-urlencoded) no envían JSON.
+  app.addContentTypeParser(
+    'application/x-www-form-urlencoded',
+    { parseAs: 'string' },
+    (_req, body, done) => {
+      try {
+        done(null, Object.fromEntries(new URLSearchParams(body as string)));
+      } catch (err) {
+        done(err as Error, undefined);
+      }
+    },
+  );
   app.decorateRequest('user', null);
   app.decorateRequest('workspace', null);
   app.addHook('onRequest', async (request, reply) => {
@@ -121,7 +138,13 @@ export async function buildApp(logging = true) {
       "default-src 'self'; frame-src 'self' blob:; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",
     );
     if (request.url.startsWith('/api/')) reply.header('Cache-Control', 'no-store');
-    if (!['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
+    // El MCP se autentica con un token Bearer propio, no con la cookie de sesión del navegador:
+    // no hay credencial ambiente que un tercero pueda hacer disparar, así que no necesita protección CSRF.
+    // El flujo OAuth (/oauth/*) se sirve como HTML normal (no XHR de la SPA) y su propia protección
+    // frente a CSRF es la cookie de sesión con SameSite=strict, más el intercambio de código con PKCE.
+    const isMcp = request.url.startsWith('/api/mcp');
+    const isOAuth = request.url.startsWith('/oauth/') || request.url.startsWith('/.well-known/');
+    if (!isMcp && !isOAuth && !['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
       assert(request.headers['x-requested-with'] === 'kronjop', 'Petición no autorizada.', 403);
       const origin = request.headers.origin;
       if (origin)
@@ -222,6 +245,7 @@ export async function buildApp(logging = true) {
     },
   );
   await publicPortalRoutes(app);
+  oauthRoutes(app);
   await app.register(
     async (api) => {
       api.addHook('preHandler', requireUser);
@@ -243,6 +267,7 @@ export async function buildApp(logging = true) {
       await mailRoutes(api);
       await portalRoutes(api);
       profileRoutes(api);
+      mcpTokenRoutes(api);
       api.get('/me', async (req) => ({
         user: req.user,
         workspaceId: req.workspace!.id,
@@ -826,6 +851,16 @@ export async function buildApp(logging = true) {
           .header('Content-Disposition', `attachment; filename="${type}.csv"`)
           .send(output);
       });
+    },
+    { prefix: '/api' },
+  );
+  await app.register(
+    async (api) => {
+      api.addHook('preHandler', requireMcpToken);
+      api.addHook('preHandler', (req, _reply, done) => {
+        workspaceContext.run(req.workspace!.schema, done);
+      });
+      mcpRoutes(api);
     },
     { prefix: '/api' },
   );

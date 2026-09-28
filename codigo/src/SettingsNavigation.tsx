@@ -10,7 +10,7 @@ export const settingsGroups = [
   {
     value: 'account',
     label: 'Cuenta y seguridad',
-    items: ['profile', 'users', 'audit'],
+    items: ['profile', 'users', 'mcp', 'audit'],
   },
 ];
 export function settingsSections(admin: boolean) {
@@ -28,6 +28,7 @@ export function settingsSections(admin: boolean) {
     ...(admin ? [['portal', 'Portal del cliente']] : []),
     ['imports', 'Importaciones'],
     ...(admin ? [['users', 'Usuarios y permisos']] : []),
+    ...(admin ? [['mcp', 'Integraciones (MCP)']] : []),
     ['profile', 'Perfil'],
     ...(admin ? [['audit', 'Registro de auditoría']] : []),
   ].map(([value, label]) => ({ value, label }));
