@@ -69,9 +69,3 @@
   color: var(--text-muted);
   background: var(--bg-subtle);
 }
-@media (max-width: 640px) {
-  .kpi-comparison-columns {
-    grid-template-columns: minmax(0, 1fr);
-    justify-items: center;
-  }
-}

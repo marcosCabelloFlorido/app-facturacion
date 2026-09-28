@@ -192,15 +192,6 @@
   width: auto;
   min-width: 0;
 }
-@media (max-width: 760px), (pointer: coarse) {
-  :root {
-    --select-height: var(--control-height);
-    --select-font-size: var(--control-text);
-  }
-  .app-select-option {
-    min-height: 44px;
-  }
-}
 @media (forced-colors: active) {
   .app-select-option[data-selected] {
     forced-color-adjust: none;

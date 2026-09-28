@@ -51,11 +51,6 @@ body .app-shell > .main-shell {
 .module-subtitle-link > svg {
   flex-shrink: 0;
 }
-@container billing-content (max-width: 760px) {
-  .module-subtitle-link {
-    min-height: var(--control-height);
-  }
-}
 .main-shell .page-heading .eyebrow {
   display: none;
 }
@@ -83,26 +78,4 @@ body .app-shell > .main-shell {
 body .app-shell.is-embedded > .main-shell {
   margin-left: 0;
   padding: 34px 40px 0;
-}
-@media (max-width: 760px) {
-  body .app-shell > .main-shell {
-    padding: 68px 16px 0;
-  }
-  .main-shell .page-heading {
-    min-height: 140px;
-    padding: 20px;
-  }
-  .module-title-row {
-    gap: 12px;
-  }
-  .main-shell .page-content {
-    padding: 20px 0 32px;
-  }
-  .main-shell .greeting-heading {
-    min-height: 180px;
-    padding: 24px 20px;
-  }
-  body .app-shell.is-embedded > .main-shell {
-    padding: 16px;
-  }
 }

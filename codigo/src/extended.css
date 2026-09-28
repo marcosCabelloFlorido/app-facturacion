@@ -56,15 +56,6 @@
 .schedule-edit-row .field {
   min-width: 0;
 }
-@media (max-width: 600px) {
-  .schedule-edit-row {
-    grid-template-columns: 1fr 1fr;
-  }
-  .schedule-edit-row > button {
-    grid-column: 1/-1;
-    justify-self: end;
-  }
-}
 .import-mapping {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
@@ -174,16 +165,4 @@
 }
 .schedule-edit-action {
   flex: 0 0 var(--control-height);
-}
-@media (max-width: 600px) {
-  .schedule-row {
-    gap: var(--space-3);
-  }
-  .schedule-data {
-    column-gap: var(--space-4);
-  }
-  .schedule-status {
-    flex-basis: 100%;
-    margin-inline-start: 0;
-  }
 }

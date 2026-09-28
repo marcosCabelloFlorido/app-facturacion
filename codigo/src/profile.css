@@ -58,15 +58,12 @@
 }
 .profile-password-control {
   position: relative;
-  background: var(--bg-muted);
 }
 .profile-password-modal .profile-password-control input {
   width: 100%;
   min-height: 44px;
   padding: var(--space-3);
   padding-right: 48px;
-  background: var(--bg-muted) !important;
-  border-color: transparent;
 }
 .profile-password-control .icon-button {
   position: absolute;
@@ -89,13 +86,6 @@
 .profile-password-rules li > :first-child {
   flex: 0 0 14px;
   text-align: center;
-}
-@media (max-width: 760px) {
-  .modal.profile-password-modal {
-    width: calc(100vw - 32px);
-    min-height: 0;
-    margin: auto;
-  }
 }
 
 .profile-section > .panel-heading {

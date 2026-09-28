@@ -26,17 +26,6 @@ html:has(.document-composer) {
   scroll-margin-top: var(--space-8);
   scroll-margin-bottom: var(--space-4);
 }
-@media (max-width: 760px) {
-  .app-shell:has(.document-composer) .sidebar-reopen {
-    position: fixed;
-  }
-  html:has(.document-composer) {
-    --document-editor-heading-top: 68px;
-  }
-  html:has(.app-shell.is-embedded .document-composer) {
-    --document-editor-heading-top: 0px;
-  }
-}
 .main-shell .page-content.document-composer {
   isolation: isolate;
   padding-block: var(--space-6) var(--space-8);
@@ -243,70 +232,6 @@ html:has(.document-composer) {
   white-space: pre-wrap;
   margin: 0;
 }
-@container billing-content (max-width: 960px) {
-  .document-composer.editor-page .editor-layout {
-    grid-template-columns: minmax(0, 1fr);
-    padding: var(--space-4);
-  }
-  .composer-sidebar {
-    position: static;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6);
-  }
-  .composer-sidebar .sales-creation-assist {
-    grid-column: 1 / -1;
-  }
-}
-@container document-summary (max-width: 540px) {
-  .document-composer .document-sheet-overview {
-    padding: var(--space-4);
-    gap: var(--space-6) var(--space-4);
-  }
-  .document-composer .document-sheet-overview .document-sheet-header,
-  .document-composer .document-sheet-overview .document-sheet-recipient {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
-  .document-composer .document-sheet-overview .document-sheet-recipient {
-    width: 100%;
-  }
-  .document-composer.editor-page .invoice-sheet-fields .line-numbers {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .document-composer .invoice-date-fields {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .document-composer .composer-paper-heading {
-    flex-wrap: wrap;
-  }
-  .composer-heading-dates {
-    display: grid;
-    grid-template-columns: max-content minmax(0, 1fr);
-    gap: var(--space-4);
-    width: 100%;
-  }
-  .document-composer .composer-heading-dates .invoice-date-fields {
-    width: 100%;
-  }
-  .document-composer .document-sheet-overview .document-sheet-totals {
-    grid-column: 1 / -1;
-    width: 100%;
-  }
-}
-@container billing-content (max-width: 540px) {
-  .document-composer.editor-page .editor-layout {
-    padding: var(--space-2);
-    gap: var(--space-6);
-  }
-  .composer-sidebar {
-    grid-template-columns: minmax(0, 1fr);
-    padding: var(--space-2);
-    gap: var(--space-6);
-  }
-  .composer-preview .document-sheet {
-    padding: var(--space-4);
-  }
-}
 
 /* Una fila por concepto cuando la hoja dispone de espacio; etiquetas siempre visibles. */
 @container document-summary (min-width: 701px) {
@@ -378,11 +303,4 @@ html:has(.document-composer) {
 .document-composer .composer-heading-dates .document-date-fields-purchase {
   width: min(100%, 384px);
   grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-@container document-summary (max-width: 540px) {
-  .document-composer .composer-heading-dates .document-date-fields-quote,
-  .document-composer .composer-heading-dates .document-date-fields-purchase {
-    width: 100%;
-    grid-template-columns: minmax(0, 1fr);
-  }
 }

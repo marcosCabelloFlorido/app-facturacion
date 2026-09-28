@@ -57,25 +57,6 @@
   cursor: pointer;
 }
 
-@media (max-width: 760px) {
-  .page-content:has(> .accounting-controls) .journal-number {
-    min-width: 28px;
-  }
-
-  .accounting-controls .date-range {
-    gap: 12px;
-  }
-
-  .accounting-controls .date-range .field {
-    width: auto;
-    flex: 1;
-  }
-
-  .accounting-controls .date-range input {
-    padding-inline: 10px;
-  }
-}
-
 /* FUENTE: toolbar y tablas del kit, adaptación vigente de Facturas de venta. */
 .list-scope {
   margin: 0 0 var(--space-4);
@@ -114,87 +95,12 @@
 .accounting-list-tools {
   margin-bottom: var(--space-4);
 }
-@media (max-width: 760px) {
-  .payments-page .module-list-toolbar > .list-selector,
-  .accounting-list-tools .module-list-toolbar > .list-selector {
-    flex-basis: 100%;
-  }
-  .payments-page .module-list-toolbar,
-  .accounting-list-tools .module-list-toolbar {
-    flex-wrap: wrap;
-  }
-  .accounting-page .table-scroll > table {
-    min-width: 600px;
-  }
-}
 
 .accounting-page .text-link:hover {
   text-decoration: underline;
 }
 .accounting-journal-table td:nth-child(3) {
   white-space: nowrap;
-}
-@media (max-width: 760px) {
-  .accounting-page .table-scroll > .accounting-journal-table {
-    display: block;
-    min-width: 0;
-    width: 100%;
-  }
-  .accounting-journal-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-  }
-  .accounting-journal-table tbody,
-  .accounting-journal-table tr {
-    display: block;
-  }
-  .accounting-journal-table tbody {
-    width: 100%;
-  }
-  .accounting-journal-table tbody tr {
-    width: 100%;
-    min-width: 0;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    padding: var(--space-3) var(--space-4);
-    margin-bottom: var(--space-2);
-  }
-  .accounting-page .accounting-journal-table tbody tr td {
-    height: auto;
-    min-height: 0;
-    min-width: 0;
-    width: auto;
-    padding: var(--space-2) 0;
-    border: 0;
-  }
-  .accounting-journal-table td:nth-child(1) {
-    grid-area: 1 / 1;
-    align-self: center;
-  }
-  .accounting-journal-table td:nth-child(6) {
-    grid-area: 1 / 2;
-  }
-  .accounting-journal-table td:nth-child(2) {
-    grid-area: 2 / 1 / auto / -1;
-  }
-  .accounting-journal-table td:nth-child(3) {
-    grid-area: 3 / 1;
-    color: var(--text-muted);
-  }
-  .accounting-journal-table td:nth-child(4) {
-    grid-area: 3 / 2;
-    color: var(--text-muted);
-  }
-  .accounting-journal-table td:nth-child(5) {
-    grid-area: 4 / 1 / auto / -1;
-  }
-  .accounting-journal-table td:nth-child(5)::before {
-    content: 'Importe · ';
-    font-weight: var(--weight-regular);
-  }
 }
 
 /* Cierre de periodo: conciliación completa dentro del modal, sin ancho mínimo heredado. */
@@ -209,42 +115,6 @@
 }
 .close-review-table .close-review-label {
   display: none;
-}
-@media (max-width: 760px) {
-  .period-close-modal .close-review-table,
-  .period-close-modal .close-review-table tbody {
-    display: block;
-  }
-  .period-close-modal .close-review-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
-    clip-path: inset(50%);
-  }
-  .period-close-modal .close-review-table tbody tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-2);
-    padding: var(--space-3) var(--space-4);
-  }
-  .period-close-modal .table-scroll > .close-review-table > tbody > tr > td {
-    min-width: 0;
-    height: auto;
-    padding: 0;
-  }
-  .period-close-modal .close-review-table td.numeric {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: var(--space-3);
-    align-items: start;
-  }
-  .period-close-modal .close-review-table .close-review-label {
-    display: block;
-    color: var(--text-muted);
-    text-align: left;
-  }
 }
 
 .period-close-modal .period-close-actions {

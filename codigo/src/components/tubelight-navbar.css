@@ -119,14 +119,6 @@
     transform: translateX(-50%) translateY(0);
   }
 }
-@media (max-width: 640px) {
-  .tubelight-navbar-label {
-    display: none;
-  }
-  .tubelight-navbar-item {
-    padding: 10px 14px;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
   .tubelight-navbar-pill,
   .tubelight-lamp-bar,

@@ -161,19 +161,3 @@
   background: #ededed;
   color: #171717;
 }
-@media (max-width: 760px) {
-  .auth-layout .auth-brand {
-    padding: 22px 24px;
-    gap: 0;
-  }
-  .auth-layout .auth-main {
-    padding: 26px 24px 40px;
-  }
-  .auth-welcome {
-    margin-bottom: 22px;
-    padding-bottom: 22px;
-  }
-  .auth-clock {
-    margin-bottom: 18px;
-  }
-}

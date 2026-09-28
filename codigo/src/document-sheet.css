@@ -49,15 +49,6 @@
   margin: 0;
   color: var(--text-muted);
 }
-@container document-activity (max-width: 540px) {
-  .document-history-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .document-history-meta {
-    max-width: 100%;
-  }
-}
 .document-summary {
   container: document-summary / inline-size;
   min-width: 0;
@@ -198,44 +189,6 @@
   margin: 0 0 var(--space-4);
 }
 
-@container document-summary (max-width: 700px) {
-  .document-sheet-stage {
-    padding: var(--space-4);
-  }
-  .document-sheet {
-    padding: var(--space-8);
-  }
-  .document-sheet-parties {
-    gap: var(--space-6);
-  }
-}
-@container document-summary (max-width: 540px) {
-  .document-management-actions {
-    width: 100%;
-  }
-  .document-management-actions .button {
-    flex: 1 1 auto;
-  }
-  .document-sheet-stage {
-    padding: var(--space-2);
-  }
-  .document-sheet {
-    padding: var(--space-8) var(--space-4);
-  }
-  .document-sheet-parties {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .document-sheet-meta {
-    max-width: 100%;
-  }
-  .document-sheet-lines {
-    margin-top: var(--space-8);
-  }
-  .document-sheet-totals .totals .grand-total {
-    padding: var(--space-4);
-  }
-}
-
 /* Fechas de pago junto al cliente en la factura guardada. */
 .document-summary
   .document-sheet-invoice
@@ -283,14 +236,5 @@
     .document-sheet-meta {
     grid-column: 3;
     grid-row: 2;
-  }
-}
-@container document-summary (max-width: 540px) {
-  .document-summary
-    .document-sheet-invoice
-    .document-sheet-overview:has(.document-sheet-payment-terms)
-    .document-sheet-meta {
-    grid-column: 1 / -1;
-    grid-row: auto;
   }
 }

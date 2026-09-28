@@ -237,37 +237,6 @@
 .imports-page > .button {
   margin-bottom: var(--space-6);
 }
-@container billing-content (max-width: 680px) {
-  .metric-links {
-    gap: var(--space-3);
-  }
-  .metric-detail-summary {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-}
-@container billing-content (max-width: 540px) {
-  .metric-links {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-2);
-    margin-block: var(--space-3);
-  }
-  .metric-link {
-    border-left: 0;
-    align-items: flex-start;
-    text-align: left;
-    min-height: 0;
-    padding: 16px 4px;
-    gap: var(--space-2);
-  }
-  .main-shell .page-content.overview-focus {
-    padding-top: var(--space-6);
-  }
-  .overview-period {
-    padding-inline: var(--space-3);
-  }
-}
 .command-trigger {
   display: inline-flex;
   align-items: center;
@@ -328,18 +297,6 @@
 .sidebar .sidebar-footer {
   border: 0;
 }
-@container billing-content (max-width: 540px) {
-  .command-trigger {
-    min-width: 44px;
-    min-height: 44px;
-    justify-content: center;
-    padding: 0;
-  }
-  .command-trigger > span,
-  .command-trigger > kbd {
-    display: none;
-  }
-}
 .contacts-table {
   min-width: 570px;
 }
@@ -388,16 +345,6 @@
   cursor: pointer;
   color: var(--text);
 }
-@container billing-content (max-width: 540px) {
-  .recipient-summary {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-2);
-  }
-  .contacts-toolbar {
-    flex-wrap: wrap;
-  }
-}
 .filter-summary {
   display: flex;
   gap: var(--space-3);
@@ -422,92 +369,6 @@
 .contacts-toolbar .filter-trigger {
   min-width: max-content;
 }
-@container billing-content (max-width: 540px) {
-  .contacts-toolbar {
-    padding-inline: 0;
-  }
-  .contacts-toolbar > .search-field {
-    width: 100%;
-    max-width: none;
-  }
-  .metric-table,
-  .contacts-table {
-    min-width: 0;
-    width: 100%;
-  }
-  .metric-table thead,
-  .contacts-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-  .metric-table tbody,
-  .contacts-table tbody {
-    display: block;
-  }
-  .metric-table tbody tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 6px 16px;
-    padding: var(--space-4);
-  }
-  .metric-table tbody td,
-  .contacts-table tbody td {
-    padding: 0;
-    border: 0;
-    min-width: 0;
-    width: auto;
-    height: auto;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-  .metric-table tbody td:first-child {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .metric-table tbody td:nth-child(2) {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-  .metric-table tbody td:nth-child(3) {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    color: var(--text-muted);
-  }
-  .metric-table tbody td:nth-child(4) {
-    grid-column: 2;
-    grid-row: 1;
-    white-space: nowrap;
-  }
-  .contacts-table tbody tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto 44px;
-    gap: 8px 12px;
-    padding: var(--space-4);
-  }
-  .contacts-table tbody td:first-child {
-    grid-column: 1 / 3;
-    grid-row: 1;
-  }
-  .contacts-table tbody td:nth-child(2) {
-    grid-column: 1;
-    grid-row: 2;
-    color: var(--text-muted);
-  }
-  .contacts-table tbody td:nth-child(3) {
-    grid-column: 2;
-    grid-row: 2;
-    color: var(--text-muted);
-  }
-  .contacts-table tbody td:nth-child(4) {
-    grid-column: 3;
-    grid-row: 1 / 3;
-    align-self: center;
-  }
-}
 .page-content .list-controls,
 .page-content .panel-heading,
 .page-content .documents-toolbar,
@@ -516,117 +377,6 @@
 }
 .table-panel > .panel {
   padding-top: var(--space-4);
-}
-@container billing-content (max-width: 540px) {
-  .funds-table,
-  .payments-history {
-    width: 100%;
-    min-width: 0;
-  }
-  .funds-table thead,
-  .payments-history thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-  .funds-table tbody,
-  .payments-history tbody {
-    display: block;
-  }
-  .funds-table tbody tr,
-  .payments-history tbody tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 8px 16px;
-    padding: var(--space-4);
-  }
-  .funds-table tbody td,
-  .payments-history tbody td {
-    padding: 0;
-    border: 0;
-    min-width: 0;
-    width: auto;
-    height: auto;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-  .funds-table tbody td:first-child {
-    grid-column: 1 / -1;
-    grid-row: 1;
-  }
-  .funds-table tbody td:nth-child(2) {
-    grid-column: 1;
-    grid-row: 3;
-    color: var(--text-muted);
-  }
-  .funds-table tbody td:nth-child(3) {
-    grid-column: 2;
-    grid-row: 3;
-    text-align: right;
-    color: var(--text-muted);
-  }
-  .funds-table tbody td:nth-child(4) {
-    grid-column: 1;
-    grid-row: 2;
-    text-align: left;
-  }
-  .funds-table tbody td:nth-child(5) {
-    grid-column: 2;
-    grid-row: 2;
-  }
-  .funds-table tbody td:nth-child(4)::before {
-    content: 'Importe';
-    display: block;
-    color: var(--text-muted);
-  }
-  .funds-table tbody td:nth-child(5)::before {
-    content: 'Disponible';
-    display: block;
-    color: var(--text-muted);
-  }
-  .funds-table tbody td:nth-child(6) {
-    grid-column: 1 / -1;
-    grid-row: 4;
-  }
-  .funds-table tbody td:nth-child(6):empty {
-    display: none;
-  }
-  .payments-history tbody td:first-child {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .payments-history tbody td:nth-child(2) {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-  .payments-history tbody td:nth-child(3) {
-    grid-column: 1;
-    grid-row: 3;
-    color: var(--text-muted);
-  }
-  .payments-history tbody td:nth-child(4) {
-    grid-column: 2;
-    grid-row: 3;
-    text-align: right;
-    color: var(--text-muted);
-  }
-  .payments-history tbody td:nth-child(5) {
-    grid-column: 1;
-    grid-row: 4;
-  }
-  .payments-history tbody td:nth-child(6) {
-    grid-column: 2;
-    grid-row: 1;
-    white-space: nowrap;
-  }
-  .payments-history tbody td:nth-child(7) {
-    grid-column: 2;
-    grid-row: 4;
-    text-align: right;
-  }
 }
 .compact-sidebar .nav-section + .nav-section {
   border-top: 0;
@@ -645,18 +395,6 @@
 }
 .editor-page .review-edit {
   align-self: start;
-}
-@container billing-content (max-width: 540px) {
-  .page-content .table-scroll > table.metric-table,
-  .page-content .table-scroll > table.contacts-table,
-  .page-content .table-scroll > table.payments-history,
-  .page-content .table-scroll > table.funds-table {
-    width: 100%;
-    min-width: 0;
-  }
-  .contacts-table tbody td:last-child {
-    width: auto;
-  }
 }
 /* Settings use the label/value rows of AdminModule SettingRow / FieldCell. */
 .settings-form > .form-grid {
@@ -684,24 +422,6 @@
 .settings-form .form-footer {
   justify-content: flex-end;
 }
-@container billing-content (max-width: 900px) {
-  .settings-form .field {
-    padding: 14px 0;
-  }
-  .settings-form .field > label {
-    grid-template-columns: minmax(130px, 1fr) minmax(0, 1.4fr);
-    gap: 16px;
-  }
-}
-@container billing-content (max-width: 600px) {
-  .settings-form .field > label {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 4px;
-  }
-  .settings-form .field > small {
-    margin-left: 0;
-  }
-}
 /* Secondary header tools follow the compact icon pattern. */
 .module-title-row .command-trigger {
   width: 32px;
@@ -716,33 +436,6 @@
 .module-title-row .actions-trigger {
   width: 32px;
   height: 32px;
-}
-@container billing-content (max-width: 680px) {
-  .metric-links {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .metric-link:nth-child(3) {
-    border-left: 0;
-  }
-}
-@container billing-content (max-width: 540px) {
-  .metric-links {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .metric-link + .metric-link {
-    border-left: 0;
-  }
-  .metric-label {
-    order: 1;
-  }
-  .metric-link strong {
-    order: 2;
-  }
-  .module-title-row .command-trigger,
-  .module-title-row .actions-trigger {
-    width: 44px;
-    height: 44px;
-  }
 }
 .header-primary {
   display: inline-flex;
@@ -764,179 +457,7 @@
   outline: 2px solid var(--on-dark);
   outline-offset: 4px;
 }
-@container billing-content (max-width: 540px) {
-  .header-primary {
-    width: 44px;
-    height: 44px;
-  }
-}
 /* Narrow list views retain identity, amount and actions without a horizontal hunt. */
-@container billing-content (max-width: 540px) {
-  .page-content .table-scroll > table.catalog-table,
-  .page-content .table-scroll > table.members-table,
-  .page-content .table-scroll > table.audit-table {
-    min-width: 0;
-    width: 100%;
-  }
-  .catalog-table thead,
-  .members-table thead,
-  .audit-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    clip-path: inset(50%);
-    overflow: hidden;
-  }
-  .catalog-table tbody,
-  .members-table tbody,
-  .audit-table tbody {
-    display: block;
-  }
-  .catalog-table tbody tr,
-  .members-table tbody tr,
-  .audit-table tbody tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 8px 16px;
-    padding: 16px 12px;
-  }
-  .page-content .table-scroll > table.catalog-table > tbody > tr > td,
-  .page-content .table-scroll > table.members-table > tbody > tr > td,
-  .page-content .table-scroll > table.audit-table > tbody > tr > td {
-    padding: 0;
-    border: 0;
-    height: auto;
-    min-width: 0;
-    width: auto;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    text-align: left;
-  }
-  .catalog-table .catalog-name {
-    grid-column: 1 / -1;
-    grid-row: 1;
-  }
-
-  .catalog-table .catalog-code {
-    grid-column: 1;
-    grid-row: 2;
-    color: var(--text-muted);
-  }
-  .catalog-table .catalog-price {
-    grid-column: 2;
-    grid-row: 2;
-  }
-  .catalog-table .catalog-unit {
-    grid-column: 1;
-    grid-row: 3;
-    color: var(--text-muted);
-  }
-  .catalog-table .catalog-tax {
-    grid-column: 2;
-    grid-row: 3;
-    color: var(--text-muted);
-  }
-  .catalog-tax::before {
-    content: 'IVA ';
-  }
-  .catalog-table .catalog-actions-cell {
-    grid-column: 2;
-    justify-self: end;
-  }
-  .catalog-table .catalog-status {
-    grid-column: 1;
-    align-self: center;
-  }
-  .members-table td:first-child,
-  .members-table td:nth-child(2),
-  .members-table td:last-child {
-    grid-column: 1 / -1;
-  }
-  .members-table td:nth-child(2) {
-    color: var(--text-muted);
-  }
-  .members-table td:last-child {
-    margin-top: 8px;
-  }
-  .audit-table td:first-child {
-    grid-column: 1 / -1;
-  }
-  .audit-table td:not(:first-child) {
-    color: var(--text-muted);
-  }
-}
-@container billing-content (max-width: 540px) {
-  .page-content .table-scroll > table.periods-table,
-  .page-content .table-scroll > table.accounts-table {
-    width: 100%;
-    min-width: 0;
-  }
-  .periods-table thead,
-  .accounts-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    clip-path: inset(50%);
-    overflow: hidden;
-  }
-  .periods-table tbody,
-  .accounts-table tbody {
-    display: block;
-  }
-  .periods-table tbody tr,
-  .accounts-table tbody tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    padding: 16px 12px;
-    gap: 12px 16px;
-  }
-  .page-content .table-scroll > table.periods-table > tbody > tr > td,
-  .page-content .table-scroll > table.accounts-table > tbody > tr > td {
-    height: auto;
-    min-width: 0;
-    width: auto;
-    padding: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-  .periods-table td:nth-child(3) {
-    align-self: center;
-    color: var(--text-muted);
-  }
-  .periods-table td:nth-child(3)::before {
-    content: 'Cierre: ';
-  }
-  .periods-table td:nth-child(4) {
-    justify-self: end;
-  }
-  .accounts-table tbody tr {
-    grid-template-columns: 52px minmax(0, 1fr);
-  }
-  .accounts-table td:first-child {
-    white-space: nowrap;
-  }
-  .accounts-table td:nth-child(3),
-  .accounts-table td:nth-child(4) {
-    grid-column: 2;
-    color: var(--text-muted);
-  }
-}
-@container billing-content (max-width: 540px) {
-  .module-title-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-  .module-title-row .heading-actions {
-    align-self: flex-end;
-  }
-  .greeting-heading .module-title-row {
-    flex: 1;
-    flex-direction: column-reverse;
-    align-items: stretch;
-    justify-content: flex-end;
-  }
-}
 /* Document detail uses the kit's section aside. Financial summary spans the content
    so the document never becomes a third, cramped column. */
 .document-section-content .detail-layout {
@@ -1007,24 +528,6 @@
 .document-section-content > .panel {
   padding: 0;
 }
-@container billing-content (max-width: 540px) {
-  .document-section-content .detail-aside > .panel {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .document-section-content .settlement {
-    align-self: stretch;
-    padding-block: 12px;
-  }
-  .document-section-content .action-stack {
-    align-self: stretch;
-  }
-  .document-section-content .paper-header {
-    flex-wrap: wrap;
-    gap: 24px;
-  }
-}
 .document-section-content .detail-layout {
   align-items: stretch;
 }
@@ -1032,138 +535,4 @@
 .document-section-content .detail-aside {
   width: 100%;
   min-width: 0;
-}
-@container billing-content (max-width: 540px) {
-  .paper .table-scroll > table.document-table {
-    width: 100%;
-    min-width: 0;
-  }
-  .document-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    clip-path: inset(50%);
-    overflow: hidden;
-  }
-  .document-table tbody {
-    display: block;
-  }
-  .document-table tbody tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 12px 16px;
-    padding: 16px 0;
-  }
-  .paper .table-scroll > table.document-table > tbody > tr > td {
-    min-width: 0;
-    width: auto;
-    padding: 0;
-    height: auto;
-    border: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
-    text-align: left;
-  }
-  .document-table td:first-child {
-    grid-column: 1 / -1;
-  }
-  .document-table td:nth-child(2)::before {
-    content: 'Cantidad · ';
-  }
-  .document-table td:nth-child(3)::before {
-    content: 'Precio · ';
-  }
-  .document-table td:nth-child(4)::before {
-    content: 'IVA · ';
-  }
-  .document-table td:nth-child(5)::before {
-    content: 'Base · ';
-  }
-  .page-content .table-scroll > table.document-payments-table {
-    width: 100%;
-    min-width: 0;
-  }
-  .document-payments-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    clip-path: inset(50%);
-    overflow: hidden;
-  }
-  .document-payments-table tbody {
-    display: block;
-  }
-  .document-payments-table tbody tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    padding: 16px 12px;
-    gap: 8px 16px;
-  }
-  .page-content .table-scroll > table.document-payments-table > tbody > tr > td {
-    min-width: 0;
-    height: auto;
-    padding: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-  .document-payments-table td:nth-child(2) {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  .document-payments-table td:nth-child(4) {
-    grid-column: 2;
-    grid-row: 1;
-  }
-  .document-payments-table td:nth-child(1) {
-    grid-column: 1;
-    grid-row: 2;
-    color: var(--text-muted);
-  }
-  .document-payments-table td:nth-child(3) {
-    grid-column: 2;
-    grid-row: 2;
-    color: var(--text-muted);
-  }
-  .page-content .table-scroll > table.import-results-table {
-    min-width: 0;
-    width: 100%;
-  }
-  .import-results-table thead {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    clip-path: inset(50%);
-    overflow: hidden;
-  }
-  .import-results-table tbody {
-    display: block;
-  }
-  .import-results-table tbody tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 8px 16px;
-    padding: 16px 12px;
-  }
-  .page-content .table-scroll > table.import-results-table > tbody > tr > td {
-    padding: 0;
-    height: auto;
-    min-width: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-  .import-results-table td:first-child {
-    grid-column: 1;
-    color: var(--text-muted);
-  }
-  .import-results-table td:first-child::before {
-    content: 'Fila ';
-  }
-  .import-results-table td:nth-child(2),
-  .import-results-table td:nth-child(4) {
-    grid-column: 1 / -1;
-  }
-  .import-results-table td:nth-child(3) {
-    grid-column: 2;
-    grid-row: 1;
-  }
 }

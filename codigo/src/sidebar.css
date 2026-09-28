@@ -299,49 +299,6 @@
   color: #666;
   margin-top: 3px;
 }
-@media (max-width: 760px) {
-  body .app-shell > div.main-shell {
-    padding-top: 68px;
-  }
-  .sidebar-reopen {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-  }
-  .app-shell > .compact-sidebar {
-    width: min(280px, calc(100vw - 48px));
-    padding: var(--sidebar-inset) 12px max(var(--sidebar-inset), env(safe-area-inset-bottom));
-    height: 100dvh;
-    transform: translateX(-100%);
-  }
-  .app-shell > .compact-sidebar.is-open {
-    transform: translateX(0);
-  }
-  .app-shell > .main-shell {
-    margin-left: 0;
-  }
-  .compact-sidebar .sidebar-hide {
-    width: 44px;
-    height: 44px;
-  }
-  .compact-sidebar .sidebar-row,
-  .compact-sidebar .sidebar-icon {
-    min-height: 44px;
-  }
-  .compact-sidebar .sidebar-row {
-    grid-template-columns: 40px minmax(0, 1fr);
-  }
-  .compact-sidebar .user-profile {
-    grid-template-columns: 40px minmax(0, 1fr) 44px 44px;
-  }
-  .compact-sidebar .sidebar-account-action {
-    width: 44px;
-    height: 44px;
-  }
-  .compact-sidebar .sidebar-label {
-    display: block;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
   .app-shell > .compact-sidebar,
   .app-shell > .main-shell {

@@ -67,12 +67,6 @@
   grid-row: 1 / span 2;
   flex-shrink: 0;
 }
-@container billing-content (max-width: 760px) {
-  .document-files > .panel-heading {
-    flex-wrap: nowrap;
-    gap: var(--space-3);
-  }
-}
 
 .document-files-dropzone {
   display: flex;
@@ -105,11 +99,6 @@
 .document-files-dropzone > .button {
   max-width: 100%;
   white-space: normal;
-}
-@container billing-content (max-width: 760px) {
-  .document-files-dropzone {
-    padding: var(--space-6) var(--space-4);
-  }
 }
 
 .document-upload-list {

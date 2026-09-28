@@ -229,36 +229,6 @@
 .editor-page .totals > div > :last-child {
   margin-left: auto;
 }
-@container billing-content (max-width: 540px) {
-  .editor-page-invoice .line-numbers .line-amount {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: baseline;
-    gap: var(--space-2);
-  }
-  .editor-page-invoice .line-numbers .line-amount small {
-    margin-bottom: 0;
-  }
-  .editor-page .editor-steps {
-    gap: var(--space-1);
-    margin-bottom: var(--space-6);
-  }
-  .editor-page .editor-steps button {
-    flex-direction: column;
-    padding: var(--space-2) 0;
-    gap: var(--space-1);
-  }
-  .editor-page-intro .wizard-panel {
-    min-height: 240px;
-  }
-  .editor-page-intro .wizard-actions {
-    padding-inline: 0;
-  }
-  .editor-page .review-concepts > div:not(.panel-heading) {
-    flex-wrap: wrap;
-  }
-}
 
 /* Invoice canvas: the same paper as DocumentSheet, with the kit's editable fields. */
 .editor-page-invoice .editor-steps {
@@ -373,31 +343,6 @@
 .invoice-editor .optional-details {
   margin-top: var(--space-6);
   margin-bottom: 0;
-}
-@container document-summary (max-width: 700px) {
-  .editor-page .invoice-sheet-fields .line-numbers {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@container document-summary (max-width: 540px) {
-  .invoice-editor .document-sheet-caption,
-  .invoice-editor .document-sheet-dates dt {
-    min-height: var(--control-height);
-  }
-  .invoice-editor .document-sheet-caption .icon-button {
-    width: var(--control-height);
-    height: var(--control-height);
-    min-height: var(--control-height);
-  }
-  .editor-page-invoice .invoice-editor .totals .grand-total {
-    padding: var(--space-4);
-  }
-  .invoice-sheet-fields .line-amount {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: var(--space-2);
-  }
 }
 
 /* All invoice steps use one sheet. Only the current block contains fields. */

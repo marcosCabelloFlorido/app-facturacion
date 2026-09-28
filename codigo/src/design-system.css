@@ -352,14 +352,6 @@ pre,
   font-size: var(--text-subtitle);
   font-weight: var(--weight-semibold);
 }
-@container editor-totals (max-width: 360px) {
-  .totals .grand-total > .amount-long:last-child {
-    font-size: var(--text-subtitle);
-  }
-  .totals .grand-total > .amount-extra-long:last-child {
-    font-size: var(--text-body);
-  }
-}
 /* Documento: referencia del usuario del 14/09/2026. La identidad abre la
    jerarquía; solo el total vuelve a destacar al terminar la lectura. */
 .document-sheet-issuer h2 {
@@ -411,17 +403,6 @@ pre,
 .document-sheet-totals .grand-total > strong:first-child {
   font-size: var(--text-body);
   font-weight: var(--weight-medium);
-}
-@container document-summary (max-width: 540px) {
-  .document-sheet-issuer h2 {
-    font-size: var(--text-metric);
-  }
-  .document-sheet-totals .grand-total > .amount-long:last-child {
-    font-size: var(--text-subtitle);
-  }
-  .document-sheet-totals .grand-total > .amount-extra-long:last-child {
-    font-size: var(--text-body);
-  }
 }
 .brand {
   font-size: var(--text-brand);
@@ -488,16 +469,6 @@ pre,
 .module-subtitle-link:focus-visible {
   outline: 2px solid var(--on-dark);
   outline-offset: 4px;
-}
-@container billing-content (max-width: 760px) {
-  .module-title-link::after {
-    content: '';
-    position: absolute;
-    inset-inline: 0;
-    top: 50%;
-    height: var(--control-height);
-    transform: translateY(-50%);
-  }
 }
 .main-shell .page-heading p {
   color: var(--on-dark-muted);
@@ -713,59 +684,6 @@ select,
 .accounting-controls .date-range input {
   min-height: var(--control-height);
   padding: 10px 12px;
-}
-
-@media (max-width: 760px) {
-  :root {
-    --text-page: 1.0625rem;
-    --text-metric: 1.375rem;
-    --text-display: 1.875rem;
-    --panel-inset: var(--space-4);
-    --control-text: var(--text-subtitle);
-  }
-  .panel-heading {
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-  .kpi-grid,
-  .kpi-grid.three {
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  }
-  .document-list td {
-    padding: 0;
-    height: auto;
-  }
-  .document-list tr {
-    padding: var(--space-4);
-  }
-  .due-entry-link {
-    min-height: calc(var(--table-row-height) * 2);
-    align-content: center;
-  }
-  .table-footer .button,
-  .contact-pagination .button {
-    min-height: var(--control-height);
-  }
-  .table-footer .icon-button {
-    width: var(--control-height);
-    min-width: var(--control-height);
-    height: var(--control-height);
-  }
-}
-
-@media (max-width: 540px) {
-  .form-grid,
-  .form-grid.three,
-  .modal .form-grid.three,
-  .editor-main .form-grid.three,
-  .contacts-filters,
-  .contact-search-fields,
-  .import-mapping {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .form-grid > .span-2 {
-    grid-column: 1 / -1;
-  }
 }
 /* FUENTE: kit-design-v2/tokens/index.css — src/index.css reset;
    components/05-button.md — button.tsx:7–31, TimeTrackingConfig.tsx:1828–1841;
@@ -1036,20 +954,6 @@ tbody tr:hover {
 .journal-entry summary:hover {
   background: var(--bg-muted);
 }
-@container billing-content (max-width: 540px) {
-  .kpi {
-    align-items: flex-start;
-    text-align: left;
-  }
-  .kpi > strong {
-    order: 2;
-    font-size: var(--text-metric);
-  }
-  .kpi > span,
-  .kpi > div {
-    order: 1;
-  }
-}
 
 /* FUENTE: components/04-section-layout.md — AdminModule.tsx:3854–3950,
    EmployeeModuleLayout.tsx:277–446. Aside de 200px + selector en móvil. */
@@ -1213,63 +1117,6 @@ tbody tr:hover {
   min-width: var(--control-height);
   min-height: var(--control-height);
 }
-@media (max-width: 1100px) and (min-width: 761px) {
-  .kpi-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .kpi-grid:not(.three) .kpi:nth-child(3) {
-    border-left: 0;
-  }
-  .kpi-grid:not(.three) .kpi:nth-child(n + 3) {
-    border-top: 1px solid var(--border);
-  }
-}
-@media (max-width: 760px) {
-  .kpi-grid,
-  .kpi-grid.three {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .kpi {
-    min-height: 0;
-    padding: var(--space-4) 0;
-  }
-  .kpi + .kpi {
-    border-left: 0;
-    border-top: 1px solid var(--border);
-  }
-  .settings-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-  .section-navigation {
-    border: 0;
-    padding: 0 0 var(--space-4);
-  }
-  .section-navigation-desktop {
-    display: none;
-  }
-  .section-navigation-mobile {
-    display: block;
-  }
-  .section-navigation-mobile .app-select-trigger {
-    background: var(--bg-muted);
-  }
-  .settings-main {
-    padding: var(--space-4) 0 0;
-  }
-  .settings-main > .panel > .form-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .settings-main .span-2 {
-    grid-column: 1 / -1;
-  }
-  .modal {
-    max-height: calc(100dvh - 32px);
-  }
-  .modal-actions .button {
-    white-space: normal;
-  }
-}
 @media (forced-colors: active) {
   .section-navigation-desktop button[aria-current='page'] {
     outline: 2px solid CanvasText;
@@ -1315,55 +1162,6 @@ input[type='file']::file-selector-button {
 .main-shell {
   container-name: billing-content;
   container-type: inline-size;
-}
-@container billing-content (max-width: 760px) {
-  .settings-layout {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-  }
-  .section-navigation {
-    border: 0;
-    padding: 0 0 var(--space-4);
-  }
-  .section-navigation-desktop {
-    display: none;
-  }
-  .section-navigation-mobile {
-    display: block;
-  }
-  .section-navigation-mobile .app-select-trigger {
-    background: var(--bg-muted);
-  }
-  .settings-main {
-    padding: var(--space-4) 0 0;
-  }
-}
-@container billing-content (max-width: 540px) {
-  .kpi-grid,
-  .kpi-grid.three {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .kpi {
-    min-height: 0;
-    padding: var(--space-4) 0;
-  }
-  .kpi + .kpi {
-    border-left: 0;
-    border-top: 1px solid var(--border);
-  }
-  .form-grid,
-  .form-grid.three {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .form-grid > .span-2 {
-    grid-column: 1 / -1;
-  }
-  .settings-main > .panel > .form-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .settings-main .span-2 {
-    grid-column: 1 / -1;
-  }
 }
 
 /* Detalle bajo demanda: los nuevos componentes usan la misma escala. */
@@ -1524,32 +1322,9 @@ input[type='file']::file-selector-button {
 .modal-head h2 {
   font-size: var(--text-subtitle);
 }
-@media (max-width: 760px) {
-  .modal {
-    width: 100%;
-    max-width: 100%;
-    height: 100dvh;
-    max-height: 100dvh;
-    margin: 0;
-    padding: 24px 20px;
-  }
-  .modal.wide {
-    width: 100%;
-    max-width: 100%;
-  }
-  .greeting-heading h1 {
-    font-size: var(--text-display);
-  }
-}
 .overview-period h2 {
   font-size: var(--text-subtitle);
   font-weight: var(--weight-medium);
-}
-@container billing-content (max-width: 680px) {
-  .metric-link > strong,
-  .metric-detail-summary > div > strong {
-    font-size: var(--text-metric);
-  }
 }
 .command-trigger,
 .command-results > button {
@@ -1568,23 +1343,6 @@ input[type='file']::file-selector-button {
 }
 .contacts-table .contact-name {
   font-weight: var(--weight-medium);
-}
-@container billing-content (max-width: 540px) {
-  .metric-table tbody td:nth-child(3),
-  .contacts-table tbody td:nth-child(2),
-  .contacts-table tbody td:nth-child(3) {
-    font-size: var(--text-caption);
-  }
-}
-@container billing-content (max-width: 540px) {
-  .funds-table tbody td:nth-child(2),
-  .funds-table tbody td:nth-child(3),
-  .funds-table td::before,
-  .payments-history tbody td:nth-child(3),
-  .payments-history tbody td:nth-child(4) {
-    font-size: var(--text-caption);
-    font-weight: var(--weight-regular);
-  }
 }
 /* Status labels describe state; they are never shaped like editable controls. */
 .subtle-tag,
@@ -1611,11 +1369,6 @@ input[type='file']::file-selector-button {
   border: 0;
   background: transparent;
   padding: 0;
-}
-@container billing-content (max-width: 540px) {
-  .kpi + .kpi {
-    border: 0;
-  }
 }
 .table-doc-icon {
   border: 0;
@@ -1644,76 +1397,6 @@ input[type='file']::file-selector-button {
 }
 .document-list .doc-party .text-link {
   text-decoration: none;
-}
-@container billing-content (max-width: 760px) {
-  .table-scroll > table.document-list {
-    --table-cell-inset: 0px;
-    --table-edge-inset: 0px;
-  }
-  .table-scroll > table.document-list > tbody > tr {
-    gap: var(--space-2) var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    border: 0;
-  }
-  .table-scroll > table.document-list > tbody > tr > td {
-    height: auto;
-    min-width: 0;
-    padding-block: 0;
-    white-space: normal;
-    overflow-wrap: anywhere;
-  }
-}
-@container billing-content (max-width: 540px) {
-  .table-scroll
-    > table:is(
-      .metric-table,
-      .contacts-table,
-      .payments-history,
-      .funds-table,
-      .catalog-table,
-      .members-table,
-      .audit-table,
-      .periods-table,
-      .accounts-table,
-      .document-table,
-      .document-payments-table,
-      .import-results-table
-    ) {
-    --table-cell-inset: 0px;
-    --table-edge-inset: 0px;
-  }
-  .table-scroll
-    > table:is(
-      .metric-table,
-      .contacts-table,
-      .payments-history,
-      .funds-table,
-      .catalog-table,
-      .members-table,
-      .audit-table,
-      .periods-table,
-      .accounts-table,
-      .document-table,
-      .document-payments-table,
-      .import-results-table
-    )
-    > tbody
-    > tr {
-    gap: var(--space-2) var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    border: 0;
-  }
-}
-@container contact-detail (max-width: 540px) {
-  .table-scroll > table.contact-activity-table {
-    --table-cell-inset: 0px;
-    --table-edge-inset: 0px;
-  }
-  .table-scroll > table.contact-activity-table > tbody > tr {
-    gap: var(--space-2) var(--space-3);
-    padding: var(--space-3) var(--space-4);
-    border: 0;
-  }
 }
 
 /* Directorio y ficha: roles de la escala común, sin tipografía local. */
@@ -1833,20 +1516,6 @@ input[type='file']::file-selector-button {
 .list-search-inline[data-open] .list-search-trigger {
   visibility: hidden;
 }
-@container billing-content (max-width: 760px) {
-  .list-search-inline {
-    width: var(--control-height);
-    max-width: calc(100% - var(--control-height) - var(--space-1));
-  }
-  .list-search-inline .list-search-field input {
-    height: var(--control-height);
-    min-height: var(--control-height);
-    padding-inline-end: calc(var(--control-height) + var(--space-2));
-  }
-  .list-search-inline .list-search-field > .icon-button {
-    width: var(--control-height);
-  }
-}
 @media (prefers-reduced-motion: reduce) {
   .list-search-inline,
   .list-search-inline .list-search-field {
@@ -1895,37 +1564,6 @@ input[type='file']::file-selector-button {
 }
 .table-scroll > table > tbody > tr.document-table-feedback > td {
   padding: 0;
-}
-@container billing-content (max-width: 760px) {
-  .document-list-filtered > thead {
-    display: block;
-    background: var(--bg-table-head);
-    border-bottom: 1px solid var(--border);
-  }
-  .document-list-filtered > thead > tr {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: var(--space-4);
-    padding: var(--space-2) var(--space-4);
-  }
-  .document-list-filtered > thead > tr > th {
-    display: none;
-  }
-  .document-list-filtered > thead > tr > th.document-status-heading,
-  .document-list-filtered > thead > tr > th.document-sort-heading {
-    display: block;
-    padding: 0;
-    border: 0;
-    background: transparent;
-  }
-  .table-filter-select .app-select-trigger {
-    min-height: var(--control-height);
-  }
-  .document-list-filtered > tbody > tr.document-table-feedback {
-    display: block;
-    padding: 0;
-  }
 }
 
 /* FUENTE: 11-stat-tile.md, DashboardModule.tsx:115–169.
@@ -2048,17 +1686,6 @@ input[type='file']::file-selector-button {
 .filter-dialog .modal-actions {
   gap: var(--space-4);
 }
-@media (max-width: 760px) {
-  .modal.side-panel {
-    width: 100%;
-  }
-}
-@container billing-content (max-width: 760px) {
-  .list-tool-button {
-    width: var(--control-height);
-    height: var(--control-height);
-  }
-}
 .kpi-filter .quiet-link {
   border: 0;
   background: transparent;
@@ -2081,37 +1708,6 @@ input[type='file']::file-selector-button {
   margin-bottom: var(--space-3);
   color: var(--text-muted);
   font-size: var(--text-caption);
-}
-@container billing-content (max-width: 760px) {
-  .module-kpis {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-2) 0;
-  }
-  .module-kpis .metric-link {
-    min-height: 112px;
-    padding: var(--space-4);
-  }
-  .module-kpis .metric-link:nth-child(3) {
-    border-left: 0;
-  }
-}
-@container billing-content (max-width: 540px) {
-  .module-kpis,
-  .module-kpis.three {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .module-kpis .metric-link {
-    align-items: flex-start;
-    text-align: left;
-    min-height: 0;
-    padding: var(--space-4) 4px;
-  }
-  .module-kpis .metric-link + .metric-link {
-    border-left: 0;
-  }
-  .module-kpis .metric-label {
-    order: 0;
-  }
 }
 
 /* Invoice concept text shares the printed sheet's typographic hierarchy. */
@@ -2182,11 +1778,6 @@ input[type='file']::file-selector-button {
   width: fit-content;
   max-width: 100%;
   text-align: left;
-}
-@container billing-content (max-width: 760px) {
-  .list-search-inline[data-open][data-extended] {
-    width: 100%;
-  }
 }
 .module-list-toolbar:has(.sales-search-preview) {
   align-items: flex-start;
@@ -2264,12 +1855,6 @@ input[type='file']::file-selector-button {
   margin: 0;
   overflow-wrap: anywhere;
 }
-@media (max-width: 540px) {
-  .catalog-record-data > div {
-    grid-template-columns: 1fr;
-    gap: var(--space-1);
-  }
-}
 
 /* Ordenación directa de encabezados; Estado se filtra desde el panel. */
 .table-sort-button {
@@ -2298,11 +1883,6 @@ input[type='file']::file-selector-button {
 }
 .table-sort-button:hover {
   color: var(--text);
-}
-@container billing-content (max-width: 760px) {
-  .document-list-filtered > thead > tr {
-    column-gap: var(--space-4);
-  }
 }
 
 /* A row opens its record; linked party names have their own destination. */
@@ -2342,31 +1922,6 @@ input[type='file']::file-selector-button {
 }
 .table-scroll > table > tbody > tr > td.table-actions-cell {
   text-align: right;
-}
-@container billing-content (max-width: 760px) {
-  .document-list .doc-actions {
-    grid-column: 2;
-    grid-row: 5;
-    justify-self: end;
-    align-self: center;
-  }
-  .document-list-priced.document-list-actions .doc-price {
-    grid-column: 1;
-    align-self: center;
-  }
-  .document-list-priced.document-list-actions .doc-actions {
-    grid-row: 4;
-  }
-}
-@media (max-width: 760px) {
-  .accounting-journal-table td.table-actions-cell {
-    grid-area: 4 / 2;
-    justify-self: end;
-  }
-  .accounting-journal-table td:nth-child(5) {
-    grid-area: 4 / 1;
-    align-self: center;
-  }
 }
 
 /* Cuatro mejoras aprobadas · 15/09/2026.
@@ -2514,35 +2069,6 @@ input[type='file']::file-selector-button {
 .app-shell {
   --sidebar-spacing: clamp(0px, calc((100dvh - 612px) / 24), var(--space-2));
 }
-@container billing-content (max-width: 760px) {
-  .header-primary {
-    min-height: var(--control-height);
-    min-width: var(--control-height);
-  }
-  .list-context {
-    flex-basis: 100%;
-  }
-  .list-context-clear.quiet-link {
-    min-height: var(--control-height);
-  }
-  .list-search-inline {
-    width: calc(var(--control-height) + var(--space-8) + var(--space-4));
-    max-width: calc(100% - var(--control-height) - var(--space-8) - var(--space-4));
-  }
-  .list-search-inline[data-open] {
-    width: 100%;
-  }
-  .document-list .doc-price:has(.document-list-balance) {
-    justify-content: flex-end;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0 var(--space-1);
-  }
-  .document-list .document-list-balance {
-    flex-basis: 100%;
-  }
-}
 
 /* Variante de Modal para leer documentos: visor con espacio propio, sin alterar el formulario. */
 .modal.document-preview {
@@ -2581,17 +2107,6 @@ input[type='file']::file-selector-button {
   min-height: 0;
   border: 0;
   background: var(--bg-muted);
-}
-@media (max-width: 760px) {
-  .modal.document-preview {
-    width: 100vw;
-    max-width: 100vw;
-    height: 100dvh;
-    max-height: 100dvh;
-    margin: 0;
-    border: 0;
-    padding: var(--space-3);
-  }
 }
 
 /* 04-section-layout.md + 05-button.md: icono contextual junto al título de sección. */
@@ -2905,11 +2420,6 @@ input[type='file']::file-selector-button {
   }
   to {
     opacity: 1;
-  }
-}
-@media (max-width: 760px) {
-  .modal.command-dialog {
-    padding: var(--space-4);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -3244,11 +2754,6 @@ input[type='file']::file-selector-button {
   width: 100%;
   height: auto;
 }
-@media (max-width: 760px) {
-  .pdf-pages {
-    padding: var(--space-2);
-  }
-}
 
 /* Estados vacíos de configuración: misma composición que Archivos adjuntos. */
 .section-empty {
@@ -3390,14 +2895,6 @@ input[type='file']::file-selector-button {
 }
 .settings-hierarchy .settings-form .field > small {
   margin-left: 0;
-}
-@container billing-content (max-width: 600px) {
-  .settings-hierarchy .settings-form .form-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .settings-hierarchy .settings-form .span-2 {
-    grid-column: auto;
-  }
 }
 
 /* Creación de facturas: campos blancos sin líneas y hover tenue. */
@@ -3594,11 +3091,6 @@ input[type='file']::file-selector-button {
 .document-lines-editable .product-concept-input {
   margin-bottom: 0;
 }
-@container billing-content (max-width: 760px) {
-  .document-composer:has(.document-lines-editable) .composer-sidebar {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
 
 /* Portada de Configuración: más aire bajo la cabecera, sin separar sus filas. */
 .settings-navigation-level:has(> .settings-study-heading) {
@@ -3632,15 +3124,6 @@ input[type='file']::file-selector-button {
   gap: var(--space-6);
   grid-column: 1 / -1;
   min-width: 0;
-}
-@container document-summary (max-width: 540px) {
-  .document-composer .composer-heading-dates .invoice-date-fields {
-    width: 100%;
-  }
-  .composer-payment-dates {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-3);
-  }
 }
 
 /* Categorías horizontales: la navegación ocurre al elegir un apartado. */
@@ -3694,15 +3177,6 @@ input[type='file']::file-selector-button {
 @media (prefers-reduced-motion: reduce) {
   .settings-navbar-trigger svg {
     transition: none;
-  }
-}
-@container billing-content (max-width: 600px) {
-  .settings-navbar-company {
-    width: 100%;
-    margin-left: 0;
-  }
-  .settings-navbar {
-    column-gap: var(--space-4);
   }
 }
 
@@ -3765,14 +3239,6 @@ input[type='file']::file-selector-button {
 }
 .document-options-fields .field {
   margin: 0;
-}
-@container document-summary (max-width: 540px) {
-  .composer-sheet-footer .composer-options-trigger {
-    order: 2;
-  }
-  .document-composer .document-sheet-overview .composer-sheet-footer .document-sheet-totals {
-    width: 100%;
-  }
 }
 
 .modal.document-options-modal {
@@ -3922,18 +3388,6 @@ input[type='file']::file-selector-button {
 .settings-side-mobile {
   display: none;
 }
-@container billing-content (max-width: 900px) {
-  .settings-two-level {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-4);
-  }
-  .settings-side-desktop {
-    display: none;
-  }
-  .settings-side-mobile {
-    display: block;
-  }
-}
 
 .document-composer.editor-invoice-document[data-document-kind] .quantity-control {
   border-bottom: 0;
@@ -3993,11 +3447,6 @@ input[type='file']::file-selector-button {
   margin-bottom: var(--space-3);
 }
 @media (pointer: coarse) {
-  .settings-section-content {
-    --control-height: 44px;
-  }
-}
-@container billing-content (max-width: 600px) {
   .settings-section-content {
     --control-height: 44px;
   }
@@ -4081,11 +3530,6 @@ input[type='file']::file-selector-button {
 .document-composer[data-document-kind] .composer-payment-dates > .field > label {
   min-width: 0;
 }
-@container document-summary (max-width: 540px) {
-  .document-composer[data-document-kind] .composer-heading-dates {
-    width: 100%;
-  }
-}
 
 /* Configuración: campos limpios con subrayado contextual. */
 :is(.settings-section-content, body:has(.settings-section-content) .modal)
@@ -4137,11 +3581,6 @@ input[type='file']::file-selector-button {
 }
 .settings-form[data-settings-section='company'] > .settings-field-group > .form-grid {
   padding-inline-start: var(--space-6);
-}
-@container billing-content (max-width: 600px) {
-  .settings-form[data-settings-section='company'] > .settings-field-group > .form-grid {
-    padding-inline-start: var(--space-4);
-  }
 }
 
 /* Formularios: foco mediante línea negra, sin relleno ni recuadro. */
@@ -4396,13 +3835,6 @@ input[type='file']::file-selector-button {
     justify-self: end;
   }
 }
-@container document-summary (max-width: 540px) {
-  .document-sheet-invoice .composer-heading-dates {
-    width: 100%;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-}
 
 /* Clientes, catálogo y cobros: misma caja con borde que el resto de formularios. */
 :is(.contact-modal, .contact-creation-dialog, .product-modal, .creation-dialog)
@@ -4457,12 +3889,6 @@ dialog::backdrop {
   padding: var(--space-4) 0;
   background: var(--bg);
 }
-@container document-summary (max-width: 540px) {
-  .document-sheet-invoice .composer-heading-dates {
-    display: flex;
-    flex-direction: column;
-  }
-}
 
 /* Datos de pago arriba, alineados con el margen del cliente y de la hoja. */
 .document-composer[data-document-kind] .composer-heading-dates,
@@ -4481,12 +3907,6 @@ dialog::backdrop {
   .composer-heading-dates
   > .composer-issue-date:first-child:nth-last-child(3) {
   grid-column: 1 / -1;
-}
-@container document-summary (max-width: 540px) {
-  .document-composer[data-document-kind] .composer-heading-dates,
-  .document-sheet-invoice .composer-heading-dates {
-    width: 100%;
-  }
 }
 
 @container document-summary (min-width: 541px) {
@@ -4617,15 +4037,6 @@ dialog::backdrop {
   height: min(840px, 84dvh);
   max-height: 84dvh;
   margin: auto;
-}
-@media (max-width: 760px) {
-  .modal.document-preview.attachment-preview {
-    width: calc(100vw - var(--space-3) * 2);
-    max-width: calc(100vw - var(--space-3) * 2);
-    height: 90dvh;
-    max-height: 90dvh;
-    margin: auto;
-  }
 }
 
 /* Configuración: al salir del campo no queda subrayado ni sombra de foco. */
@@ -4910,12 +4321,6 @@ dialog::backdrop {
 @media (prefers-reduced-motion: no-preference) {
   .chapter-tick-mark { transition: width 120ms ease-out, opacity 120ms ease-out !important; }
 }
-@media (max-width: 600px), (pointer: coarse) {
-  .contact-history-popover { padding: var(--space-3); }
-  .chapter-scrubber { gap: var(--space-3); }
-  .chapter-rail { max-height: 264px; overflow-y: auto; scrollbar-width: thin; }
-  .chapter-tick, .contact-history-trigger, .chapter-open { min-height: 44px; }
-}
 
 .document-preview-pdf { color: var(--text-primary, #000); }
 
@@ -4928,13 +4333,6 @@ dialog::backdrop {
 }
 .document-preview-creation > .document-preview-body {
   padding-top: var(--space-4);
-}
-@media (max-width: 760px) {
-  .modal.document-preview.document-preview-creation {
-    width: 100%;
-    max-width: 100%;
-    padding: var(--space-4);
-  }
 }
 
 /* Fechas de lectura: etiqueta y valor compactos, sin altura de campo editable. */
@@ -4970,9 +4368,6 @@ dialog::backdrop {
 .document-section-table td:last-child:has(.document-file-remove) { width: 64px; }
 .document-section-table .document-file-open { text-align: left; overflow-wrap: anywhere; }
 .document-dues-table .schedule-edit-action { position: static; margin: 0; }
-@media (max-width: 760px) {
-  .document-section-content .document-section-table :is(th, td) { padding: var(--space-3) var(--space-2); }
-}
 
 
 /* Lectura documental: encabezados y valores numéricos comparten centro de columna. */

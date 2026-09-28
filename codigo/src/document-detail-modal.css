@@ -168,17 +168,6 @@
 .document-detail-toolbar .document-navigation-plain .document-navigation-arrow:disabled {
   color: var(--on-dark-muted);
 }
-@media (max-width: 760px) {
-  .document-detail-toolbar-main {
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-  .document-detail-meta {
-    align-items: flex-start;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-}
 .document-detail-body {
   flex: 1;
   min-height: 0;
@@ -252,40 +241,6 @@
 .folio-side-panel table :is(th, td) {
   overflow-wrap: anywhere;
   white-space: normal;
-}
-@media (max-width: 900px) {
-  .folio-stage.has-panel {
-    position: relative;
-  }
-  .folio-side-panel-wrap {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    transform: translateY(24px);
-    z-index: 2;
-  }
-  .folio-side-panel-wrap.is-open {
-    width: 100%;
-    transform: translateY(0);
-  }
-  .folio-side-panel {
-    width: 100%;
-  }
-}
-@media (max-width: 640px) {
-  .modal.document-detail-modal {
-    padding: var(--space-3);
-  }
-  .document-detail-navbar {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: var(--space-4);
-    z-index: 3;
-  }
-  .document-detail-body {
-    padding-bottom: 88px;
-  }
 }
 @media (prefers-reduced-motion: reduce) {
   .document-detail-modal[open],

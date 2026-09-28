@@ -96,16 +96,3 @@
   flex-shrink: 0;
   font-variant-numeric: tabular-nums;
 }
-@container (max-width: 540px) {
-  .monthly-chart .bar-chart {
-    min-width: 680px;
-  }
-  .monthly-chart .chart-bar-action {
-    min-width: 44px;
-  }
-}
-@media (max-width: 380px) {
-  .chart-document {
-    flex-wrap: wrap;
-  }
-}

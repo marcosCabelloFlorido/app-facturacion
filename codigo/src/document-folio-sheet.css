@@ -101,6 +101,11 @@
 .folio-sheet .document-lines-table.document-lines-invoice {
   min-width: 0;
   width: 100%;
+  table-layout: fixed;
+}
+.folio-sheet .document-lines-table.document-lines-invoice .line-concept {
+  min-width: 0;
+  width: auto;
 }
 .folio-sheet .document-lines-invoice :is(th, td) {
   padding: var(--space-2) var(--space-2);
@@ -110,12 +115,12 @@
   padding: var(--space-1);
   font-size: var(--text-caption);
 }
-.folio-sheet .document-lines-invoice .line-quantity,
-.folio-sheet .document-lines-invoice .line-tax {
+.folio-sheet .document-lines-table.document-lines-invoice .line-quantity,
+.folio-sheet .document-lines-table.document-lines-invoice .line-tax {
   width: 64px;
   min-width: 64px;
 }
-.folio-sheet .document-lines-invoice .line-price {
+.folio-sheet .document-lines-table.document-lines-invoice .line-price {
   width: 84px;
   min-width: 84px;
   padding-inline-end: var(--space-2);
@@ -144,18 +149,4 @@
 .folio-totals {
   flex-shrink: 0;
   width: min(280px, 45%);
-}
-@media (max-width: 640px) {
-  .folio-client-row,
-  .folio-footer {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
-  }
-  .folio-grand-total {
-    text-align: left;
-  }
-  .folio-totals {
-    width: 100%;
-  }
 }
