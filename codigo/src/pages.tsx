@@ -499,7 +499,12 @@ function DocumentListPage({
   workspaceId,
   notify,
 }: Props & { section: string }) {
-  const params = new URLSearchParams(location.hash.split('?')[1]);
+  // Bajo la ruta `document/:id` esta tabla es solo el fondo del modal: el hash
+  // trae el `from` del documento (ruta de retorno), no filtros de esta lista.
+  const currentHashPage = location.hash.slice(1).split('?')[0].split('/')[0];
+  const params = new URLSearchParams(
+    ['document', 'edit'].includes(currentHashPage) ? '' : location.hash.split('?')[1],
+  );
   const [search, setSearch] = useState(params.get('phrase') || params.get('search') || '');
   const [naturalSearch, setNaturalSearch] = useState<{ text: string; key: string } | null>(() =>
     params.get('phrase')
@@ -700,7 +705,7 @@ function DocumentListPage({
     ...(sort !== 'default' ? { sort } : {}),
     ...(metric ? { metric } : {}),
     ...(asOf ? { asOf } : {}),
-  });
+  }, !['document', 'edit'].includes(currentHashPage));
   const hasAdvanced = Object.values(advanced).some(Boolean);
   const filtered =
     !!query || status !== 'all' || !!metric || !!from || !!to || !!customer || hasAdvanced;

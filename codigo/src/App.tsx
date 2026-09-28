@@ -200,8 +200,14 @@ export function App({ embedded = false }: { embedded?: boolean }) {
   }, [toast]);
   useEffect(() => {
     const [page, id] = route.split('?')[0].split('/');
-    setDocumentSection('');
-    if (!['document', 'edit'].includes(page) || !id || !me) return;
+    if (!['document', 'edit'].includes(page) || !id || !me) {
+      setDocumentSection('');
+      return;
+    }
+    // Adivina la sección con la ruta de origen (`from`) para no pintar la
+    // tabla equivocada mientras se confirma el tipo real con el servidor.
+    const from = new URLSearchParams(route.split('?')[1]).get('from');
+    if (from) setDocumentSection(areaForRoute(decodeURIComponent(from)));
     const controller = new AbortController();
     api<{ kind: string }>('/documents/' + id, { signal: controller.signal })
       .then((d) => {
