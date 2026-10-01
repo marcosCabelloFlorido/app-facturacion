@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import type { PoolClient } from 'pg';
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { pool, assert, audit, transaction, workspaceContext } from './db.ts';
@@ -76,6 +77,57 @@ export async function mailOptions(m: any) {
     disableFileAccess: true,
     disableUrlAccess: true,
   };
+}
+export async function prepareDocumentMessage(
+  c: PoolClient,
+  userId: string,
+  d: Awaited<ReturnType<typeof getDocument>>,
+  b: { recipient: string; subject: string; body: string },
+) {
+  assert(d.status !== 'draft', 'Confirma el documento antes de preparar su envío.', 400);
+  await archivePdf(c, d, 'reconstructed');
+  const m = (
+    await c.query(
+      'INSERT INTO outgoing_messages(document_id,recipient,subject,body,created_by) VALUES($1,$2,$3,$4,$5) RETURNING id',
+      [d.id, b.recipient, b.subject, b.body, userId],
+    )
+  ).rows[0];
+  await audit(c, userId, d.id, 'Correo preparado', { messageId: m.id });
+  return m as { id: string };
+}
+export async function queueMessage(
+  c: PoolClient,
+  userId: string,
+  m: any,
+  acknowledgeUncertain = false,
+) {
+  const s = (await c.query('SELECT * FROM communication_settings WHERE id=1 FOR SHARE'))
+    .rows[0];
+  assert(
+    s?.data.enabled && s.verified_version === s.version,
+    'Configura, habilita y verifica el servidor de correo antes de enviar.',
+    400,
+  );
+  assert(
+    m.status !== 'uncertain' || m.sender === s.data.from,
+    'Para cambiar el remitente de un envío incierto, prepara un nuevo mensaje.',
+    400,
+  );
+  await c.query(
+    "UPDATE outgoing_messages SET status='queued',sender=$2,sender_name=$3,smtp_version=$4,version=version+1,error=null,queued_by=$5 WHERE id=$1",
+    [
+      m.id,
+      s.data.from,
+      m.status === 'uncertain' ? m.sender_name : s.data.fromName,
+      s.version,
+      userId,
+    ],
+  );
+  await audit(c, userId, m.document_id, 'Envío de correo autorizado', {
+    messageId: m.id,
+    recipient: m.recipient,
+    uncertainRetry: acknowledgeUncertain,
+  });
 }
 export async function mailRoutes(api: FastifyInstance) {
   api.get('/mail/settings', async (req) => {
@@ -185,17 +237,7 @@ export async function mailRoutes(api: FastifyInstance) {
     const b = messageSchema.parse(req.body);
     return runCommand(req, async (c) => {
       await lockDocument(c, paramId(req));
-      const d = await getDocument(c, paramId(req));
-      assert(d.status !== 'draft', 'Confirma el documento antes de preparar su envío.', 400);
-      await archivePdf(c, d, 'reconstructed');
-      const m = (
-        await c.query(
-          'INSERT INTO outgoing_messages(document_id,recipient,subject,body,created_by) VALUES($1,$2,$3,$4,$5) RETURNING id',
-          [d.id, b.recipient, b.subject, b.body, req.user!.id],
-        )
-      ).rows[0];
-      await audit(c, req.user!.id, d.id, 'Correo preparado', { messageId: m.id });
-      return m;
+      return prepareDocumentMessage(c, req.user!.id, await getDocument(c, paramId(req)), b);
     });
   });
   api.put('/messages/:id', async (req) => {
@@ -260,33 +302,7 @@ export async function mailRoutes(api: FastifyInstance) {
         m.status !== 'uncertain' || b.acknowledgeUncertain,
         'Comprueba primero con el destinatario o el proveedor si se entregó antes de reenviar.',
       );
-      const s = (await c.query('SELECT * FROM communication_settings WHERE id=1 FOR SHARE'))
-        .rows[0];
-      assert(
-        s?.data.enabled && s.verified_version === s.version,
-        'Configura, habilita y verifica el servidor de correo antes de enviar.',
-        400,
-      );
-      assert(
-        m.status !== 'uncertain' || m.sender === s.data.from,
-        'Para cambiar el remitente de un envío incierto, prepara un nuevo mensaje.',
-        400,
-      );
-      await c.query(
-        "UPDATE outgoing_messages SET status='queued',sender=$2,sender_name=$3,smtp_version=$4,version=version+1,error=null,queued_by=$5 WHERE id=$1",
-        [
-          m.id,
-          s.data.from,
-          m.status === 'uncertain' ? m.sender_name : s.data.fromName,
-          s.version,
-          req.user!.id,
-        ],
-      );
-      await audit(c, req.user!.id, m.document_id, 'Envío de correo autorizado', {
-        messageId: m.id,
-        recipient: m.recipient,
-        uncertainRetry: b.acknowledgeUncertain,
-      });
+      await queueMessage(c, req.user!.id, m, b.acknowledgeUncertain);
       return { ok: true };
     });
   });

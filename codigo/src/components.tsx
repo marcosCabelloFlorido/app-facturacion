@@ -12,23 +12,12 @@ import {
   type ReactElement,
   type RefObject,
 } from 'react';
-import {
-  AlertCircle,
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  FileText,
-  Layers,
-  LoaderCircle,
-  X,
-} from 'lucide-react';
+import { AlertCircle, ArrowLeft, ArrowRight, Check, FileText, LoaderCircle, X } from 'lucide-react';
 import { api } from './api';
 import { Select } from './Select';
 import { ActionsMenu, type PageActions, type PageAction } from './ActionsMenu';
 import { getDocumentStatus, type StatusDocument } from './document-status';
 import { useModalDialog } from './useModalDialog';
-import { FeatureDesignContext } from './feature-design-context';
-import { featureIcon } from './feature-icons';
 
 export function useRemote<T>(path: string, revision = 0) {
   const [data, setData] = useState<T | null>(null);
@@ -149,7 +138,9 @@ export function Modal({
       <div className="modal-head">
         {headerLeading && <div className="modal-header-leading">{headerLeading}</div>}
         <div className="modal-title">
-          <h2 id={titleId} title={title}>{title}</h2>
+          <h2 id={titleId} title={title}>
+            {title}
+          </h2>
           {description && <p id={descriptionId}>{description}</p>}
         </div>
         {headerActions && <div className="modal-header-actions">{headerActions}</div>}
@@ -249,7 +240,6 @@ export function PageHeading({
   tools: localTools,
   menuTriggerRef,
   variant = 'module',
-  hiddenFeatureShortcuts = [],
 }: {
   eyebrow?: string;
   title: string;
@@ -267,29 +257,13 @@ export function PageHeading({
   tools?: ReactNode;
   menuTriggerRef?: RefObject<HTMLButtonElement | null>;
   variant?: 'module' | 'greeting';
-  hiddenFeatureShortcuts?: string[];
 }) {
   const { tools } = useContext(ModuleHeaderContext);
-  const featureDesign = useContext(FeatureDesignContext);
   const headingMetadata = metadata && <p className="module-heading-metadata">{metadata}</p>;
   const headingStatus = status && <div className="module-status">{status}</div>;
   const menuActions: PageActions = [
     primaryAction && { group: 'Crear', ...primaryAction },
     ...(menu ?? []).filter((item) => !primaryAction || !item || item.label !== primaryAction.label),
-    ...(featureDesign?.shortcuts
-      .filter((item) => !hiddenFeatureShortcuts.includes(item.id))
-      .map((item) => ({
-        label: item.title,
-        group: 'Más funciones',
-        icon: featureIcon(item),
-        onAction: () => featureDesign.open(item.id),
-      })) ?? []),
-    featureDesign && {
-      label: 'Más funciones',
-      group: 'Más funciones',
-      icon: Layers,
-      onAction: () => featureDesign.open(),
-    },
   ];
   return (
     <header

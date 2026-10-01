@@ -962,7 +962,6 @@ export function DocumentEditor({
                 : 'Nueva factura'
         }
         tools={sheetEditor ? null : undefined}
-        hiddenFeatureShortcuts={invoice ? ['recurring'] : []}
         menu={[
           sheetEditor && {
             label:

@@ -19,6 +19,8 @@ const businessMigrations = [
   [16, '016_document_communications.sql'],
   [17, '017_template_archiving.sql'],
   [18, '018_message_removals.sql'],
+  [24, '024_recurring.sql'],
+  [25, '025_feature_records.sql'],
 ] as const;
 
 export async function migrateWorkspace(client: PoolClient, schema: string) {
@@ -70,6 +72,8 @@ export async function migrate() {
       [21, '021_profile_second_surname.sql'],
       [22, '022_mcp_tokens.sql'],
       [23, '023_oauth.sql'],
+      [24, '024_recurring.sql'],
+      [25, '025_feature_records.sql'],
     ] as const) {
       if ((await client.query('SELECT 1 FROM migrations WHERE version=$1', [version])).rowCount)
         continue;
