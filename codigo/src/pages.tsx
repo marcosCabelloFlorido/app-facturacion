@@ -23,6 +23,7 @@ import {
   History,
   Settings2,
   Plus,
+  Repeat2,
   Search,
   Send,
   Wallet,
@@ -453,6 +454,18 @@ function DocumentSummary(props: Props & { section: string }) {
       {/* FUENTE: 03-module-header.md y 18-add-button.md, TeamModule.tsx:1679–1689. */}
       <PageHeading
         title={quote ? 'Presupuestos' : purchase ? 'Compras y gastos' : 'Facturas de venta'}
+        menu={
+          !quote && !purchase
+            ? [
+                {
+                  label: 'Facturas recurrentes',
+                  group: 'Automatizar',
+                  icon: Repeat2,
+                  href: '#recurring',
+                },
+              ]
+            : undefined
+        }
         subtitleLink={{
           href: '#' + props.section + '?view=list',
           label: quote
@@ -835,6 +848,12 @@ function DocumentListPage({
                       ? downloadUrl('/documents/export.csv?' + salesQueryParams(listQuery))
                       : undefined,
                   disabled: loading || !!error || !data,
+                },
+                section === 'sales' && {
+                  label: 'Facturas recurrentes',
+                  group: 'Automatizar',
+                  icon: Repeat2,
+                  href: '#recurring',
                 },
               ]
             : [

@@ -57,6 +57,7 @@ import { templateRoutes } from './templates.ts';
 import { activeTemplate, templateLogo } from './template-assets.ts';
 import { mailRoutes } from './mail.ts';
 import { portalRoutes, publicPortalRoutes } from './portal.ts';
+import { recurringRoutes } from './recurring-routes.ts';
 import { mcpTokenRoutes } from './mcp-tokens.ts';
 import { mcpRoutes } from './mcp.ts';
 import { requireMcpToken } from './mcp-auth.ts';
@@ -266,6 +267,7 @@ export async function buildApp(logging = true) {
       documentPreviewRoutes(api);
       await mailRoutes(api);
       await portalRoutes(api);
+      await recurringRoutes(api);
       profileRoutes(api);
       mcpTokenRoutes(api);
       api.get('/me', async (req) => ({

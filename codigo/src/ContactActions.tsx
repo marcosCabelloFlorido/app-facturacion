@@ -1,6 +1,4 @@
-import { useContext, useState, type ReactNode } from 'react';
-import { FeatureDesignContext } from './feature-design-context';
-import { FeatureDesigns } from './FeatureDesigns';
+import { useState, type ReactNode } from 'react';
 import { Download, FilePlus, Info, Wallet } from 'lucide-react';
 import type { PageActions } from './ActionsMenu';
 import { api, downloadUrl, euros, navigate, shortDate, today } from './api';
@@ -29,79 +27,63 @@ export function ContactActions({
   onSaved: () => void;
 }) {
   const [action, setAction] = useState<Direction | 'statement' | null>(null);
-  const [functionsOpen, setFunctionsOpen] = useState(false);
-  const featureContext = useContext(FeatureDesignContext);
   const create = (kind: 'invoice' | 'quote' | 'purchase') =>
     navigate(
       `new/${kind}?contact=${contact.id}&from=${encodeURIComponent(location.hash.slice(1))}`,
     );
   return (
     <>
-      <FeatureDesignContext.Provider
-        value={{
-          area: 'contacts',
-          shortcuts: featureContext?.shortcuts ?? [],
-          open: (id) => {
-            if (id) featureContext?.open(id);
-            else setFunctionsOpen(true);
+      {children([
+        ...extraActions,
+        {
+          label: 'Descargar extracto',
+          group: 'Contacto',
+          icon: Download,
+          onAction: () => setAction('statement'),
+        },
+        !!onDetails && {
+          label: 'Ver datos',
+          group: 'Contacto',
+          icon: Info,
+          onAction: onDetails,
+        },
+        !readonly &&
+          contact.active &&
+          contact.type !== 'supplier' && {
+            label: 'Crear factura',
+            group: 'Crear documentos',
+            icon: FilePlus,
+            onAction: () => create('invoice'),
           },
-        }}
-      >
-        {children([
-          ...extraActions,
-          !!onDetails && { label: 'Ver datos', group: 'Contacto', icon: Info, onAction: onDetails },
-          !readonly &&
-            contact.active &&
-            contact.type !== 'supplier' && {
-              label: 'Crear factura',
-              group: 'Crear documentos',
-              icon: FilePlus,
-              onAction: () => create('invoice'),
-            },
-          !readonly &&
-            contact.active &&
-            contact.type !== 'supplier' && {
-              label: 'Crear presupuesto',
-              group: 'Crear documentos',
-              icon: FilePlus,
-              onAction: () => create('quote'),
-            },
-          !readonly &&
-            contact.active &&
-            contact.type !== 'customer' && {
-              label: 'Registrar compra',
-              group: 'Crear documentos',
-              icon: FilePlus,
-              onAction: () => create('purchase'),
-            },
-          !readonly && {
-            label: 'Registrar cobro',
-            group: 'Cobros y pagos',
-            icon: Wallet,
-            onAction: () => setAction('receipt'),
+        !readonly &&
+          contact.active &&
+          contact.type !== 'supplier' && {
+            label: 'Crear presupuesto',
+            group: 'Crear documentos',
+            icon: FilePlus,
+            onAction: () => create('quote'),
           },
-          !readonly && {
-            label: 'Registrar pago',
-            group: 'Cobros y pagos',
-            icon: Wallet,
-            onAction: () => setAction('payment'),
+        !readonly &&
+          contact.active &&
+          contact.type !== 'customer' && {
+            label: 'Registrar compra',
+            group: 'Crear documentos',
+            icon: FilePlus,
+            onAction: () => create('purchase'),
           },
-        ])}
-      </FeatureDesignContext.Provider>
-      {functionsOpen && (
-        <FeatureDesigns
-          area="contacts"
-          onClose={() => setFunctionsOpen(false)}
-          directoryActions={[
-            {
-              id: 'contact-statement',
-              title: 'Descargar extracto',
-              icon: Download,
-              onAction: () => setAction('statement'),
-            },
-          ]}
-        />
-      )}
+        !readonly && {
+          label: 'Registrar cobro',
+          group: 'Cobros y pagos',
+          icon: Wallet,
+          onAction: () => setAction('receipt'),
+        },
+        !readonly && {
+          label: 'Registrar pago',
+          group: 'Cobros y pagos',
+          icon: Wallet,
+          onAction: () => setAction('payment'),
+        },
+      ])}
       {action === 'statement' && (
         <ContactStatementDownload contact={contact} onClose={() => setAction(null)} />
       )}
@@ -292,7 +274,11 @@ function ContactStatementDownload({ contact, onClose }: { contact: Contact; onCl
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          const parsed = contactStatementQuerySchema.safeParse({ from, to, format });
+          const parsed = contactStatementQuerySchema.safeParse({
+            from,
+            to,
+            format,
+          });
           if (!parsed.success) {
             setError(parsed.error.issues[0].message);
             return;

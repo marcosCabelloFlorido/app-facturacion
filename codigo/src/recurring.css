@@ -1,0 +1,40 @@
+/* Facturas recurrentes: blanco y negro, bordes redondeados, sin tokens nuevos. */
+.recurring-page .panel { margin-bottom: 16px; border-radius: 14px; }
+.recurring-page h2 { font-size: 1rem; margin: 0 0 12px; }
+.recurring-switch { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.recurring-switch p { margin: 4px 0 0; color: #6b6b6b; }
+.recurring-empty { display: flex; align-items: center; gap: 12px; color: #6b6b6b; }
+.recurring-table { width: 100%; border-collapse: collapse; }
+.recurring-table th, .recurring-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #e6e6e6; vertical-align: top; }
+.recurring-table tbody tr[tabindex] { cursor: pointer; }
+.recurring-table tbody tr[tabindex]:hover, .recurring-table tbody tr[tabindex]:focus-visible { background: #f6f6f6; outline: none; }
+.recurring-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.recurring-table a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.recurring-lines input { width: 100%; box-sizing: border-box; }
+.recurring-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; border: 1px solid #111; font-size: .8rem; background: #fff; color: #111; }
+.recurring-pill-active, .recurring-pill-issued { background: #111; color: #fff; }
+.recurring-pill-paused, .recurring-pill-skipped, .recurring-pill-finished { border-color: #aaa; color: #6b6b6b; }
+.recurring-pill-failed { border-style: dashed; border-width: 2px; font-weight: 600; }
+.recurring-muted { color: #6b6b6b; }
+.recurring-error { color: #111; font-weight: 600; }
+.recurring-failure { margin-bottom: 12px; }
+.recurring-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; }
+.recurring-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+.recurring-facts { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+.recurring-facts dt { color: #6b6b6b; }
+.recurring-facts dd { margin: 0; }
+.recurring-upcoming { margin: 0; padding-left: 20px; }
+.recurring-form { display: grid; gap: 14px; }
+.recurring-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; }
+.recurring-wide { grid-column: 1 / -1; }
+.recurring-check { display: flex; gap: 8px; align-items: center; }
+.recurring-results { list-style: none; margin: 4px 0 0; padding: 4px; border: 1px solid #ddd; border-radius: 10px; }
+.recurring-results button { width: 100%; text-align: left; padding: 8px; border: 0; background: none; border-radius: 8px; cursor: pointer; }
+.recurring-results button:hover, .recurring-results button:focus-visible { background: #f0f0f0; }
+.recurring-origin { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; color: #6b6b6b; font-size: .9rem; }
+.recurring-origin a { color: inherit; font-weight: 600; }
+@media (max-width: 900px) { .recurring-grid { grid-template-columns: 1fr; } }
+/* El desplegable de productos no debe quedar recortado por el contenedor de la tabla. */
+.recurring-lines-wrap { overflow: visible; }
+.recurring-lines th:first-child { width: 42%; }
+.recurring-lines .product-concept, .recurring-lines td:first-child > div { min-width: 240px; }

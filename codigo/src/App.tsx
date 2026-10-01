@@ -1,3 +1,4 @@
+import { areaForRoute } from './area-for-route';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import {
@@ -21,9 +22,6 @@ import {
 } from 'lucide-react';
 import type { Company, User } from '../shared/domain';
 import { Sidebar } from './Sidebar';
-import { FeatureDesignContext } from './feature-design-context';
-import { FeatureDesigns } from './FeatureDesigns';
-import { areaForRoute, featureDesigns } from './feature-designs';
 import { Contacts } from './Contacts';
 import { api, navigate, canNavigate, setActiveWorkspace } from './api';
 import { ErrorBox, Loading, ModuleHeaderContext, type NoticeAction } from './components';
@@ -41,6 +39,7 @@ import { Dashboard, DashboardDetail } from './Dashboard';
 import { isDashboardMetric } from '../shared/dashboard';
 import { CommandSearch, CommandSearchTrigger, openCommandSearch } from './CommandSearch';
 import { DocumentEditor, DocumentDetail } from './documents';
+import { RecurringPage } from './Recurring';
 import './page-shell.css';
 import './accounting.css';
 import './due-dates.css';
@@ -73,12 +72,13 @@ export function App({ embedded = false }: { embedded?: boolean }) {
   const [mobile, setMobile] = useState(false);
   const [narrow, setNarrow] = useState(() => matchMedia('(max-width:760px)').matches);
   const [sidebarHidden, setSidebarHidden] = useState(true);
-  const [toast, setToast] = useState<{ message: string; action?: NoticeAction } | null>(null);
+  const [toast, setToast] = useState<{
+    message: string;
+    action?: NoticeAction;
+  } | null>(null);
   const [documentSection, setDocumentSection] = useState('');
   const documentSectionRef = useRef('');
   documentSectionRef.current = documentSection;
-  const [designDraft, setDesignDraft] = useState<{ area: string; id?: string } | null>(null);
-  useEffect(() => setDesignDraft(null), [route, me?.workspaceId]);
   const [switching, setSwitching] = useState(false);
   const bootstrap = useCallback(async () => {
     setLoading(true);
@@ -242,9 +242,16 @@ export function App({ embedded = false }: { embedded?: boolean }) {
         ? documentSection
         : page === 'imports'
           ? 'settings'
-          : page;
+          : page === 'recurring'
+            ? 'sales'
+            : page;
   const notify = (message: string, action?: NoticeAction) => setToast({ message, action });
-  const common = { notify, readonly, userId: me.user.id, workspaceId: me.workspaceId };
+  const common = {
+    notify,
+    readonly,
+    userId: me.user.id,
+    workspaceId: me.workspaceId,
+  };
   let content;
   switch (page) {
     case 'overview':
@@ -279,9 +286,18 @@ export function App({ embedded = false }: { embedded?: boolean }) {
     case 'document':
       content = (
         <>
-          <Documents key={documentSection || 'sales'} section={documentSection || 'sales'} {...common} />
+          <Documents
+            key={documentSection || 'sales'}
+            section={documentSection || 'sales'}
+            {...common}
+          />
           <DocumentDetail key={id} id={id} company={me.company} {...common} />
         </>
+      );
+      break;
+    case 'recurring':
+      content = (
+        <RecurringPage key={route} route={route} admin={me.user.role === 'admin'} {...common} />
       );
       break;
     case 'payments':
@@ -307,7 +323,10 @@ export function App({ embedded = false }: { embedded?: boolean }) {
           onSelectWorkspace={async (workspaceId) => {
             if (!canNavigate()) return;
             const profile = await api<Me>('/me', { workspaceId });
-            await api('/workspaces/' + workspaceId + '/select', { method: 'POST', body: {} });
+            await api('/workspaces/' + workspaceId + '/select', {
+              method: 'POST',
+              body: {},
+            });
             // Unmount old forms before changing the tab's request context.
             cancelNavigationMotion();
             flushSync(() => setSwitching(true));
@@ -328,46 +347,8 @@ export function App({ embedded = false }: { embedded?: boolean }) {
     default:
       content = <Dashboard {...common} name={me.user.name} />;
   }
-  const designArea = areaForRoute(route, documentSection);
-  const shortcutIds: Record<string, string[]> = {
-    sales: ['recurring'],
-    quotes: ['quote-revisions'],
-    purchases: ['ocr'],
-    payments: ['reconciliation'],
-    contacts: [],
-    catalog: ['price-lists'],
-    accounting: ['financial-year'],
-    templates: ['template-layout'],
-    imports: ['historical-import'],
-    settings: ['fine-permissions'],
-  };
-  if (page === 'document' && designArea === 'sales') shortcutIds.sales = ['duplicate'];
-  if (
-    page === 'settings' &&
-    ['company', 'billing', 'series', 'buyer-policies', 'users', 'security'].includes(id)
-  ) {
-    shortcutIds.settings = [
-      {
-        company: 'configuration-history',
-        billing: 'tax-profile',
-        series: 'journals',
-        'buyer-policies': 'buyer-formats',
-        users: 'fine-permissions',
-        security: 'account-recovery',
-      }[id]!,
-    ];
-  }
-  const shortcuts = (shortcutIds[designArea] || []).map((id) =>
-    featureDesigns.find((f) => f.id === id)!,
-  );
   return (
-    <FeatureDesignContext.Provider
-      value={{
-        area: designArea,
-        shortcuts,
-        open: (id) => setDesignDraft({ area: designArea, id }),
-      }}
-    >
+    <>
       <div
         className={`app-shell${embedded ? ' is-embedded' : sidebarHidden && !narrow ? ' navigation-collapsed' : ''}`}
       >
@@ -423,13 +404,6 @@ export function App({ embedded = false }: { embedded?: boolean }) {
           </ModuleHeaderContext.Provider>
         </div>
         <CommandSearch readonly={readonly} admin={me.user.role === 'admin'} hideTrigger />
-        {designDraft && (
-          <FeatureDesigns
-            area={designDraft.area}
-            initialId={designDraft.id}
-            onClose={() => setDesignDraft(null)}
-          />
-        )}
         {toast && (
           <div className="toast" role="status">
             <Check size={17} />
@@ -445,6 +419,6 @@ export function App({ embedded = false }: { embedded?: boolean }) {
           </div>
         )}
       </div>
-    </FeatureDesignContext.Provider>
+    </>
   );
 }

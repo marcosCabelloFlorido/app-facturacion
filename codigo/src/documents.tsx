@@ -21,6 +21,7 @@ import {
   FileText,
   Mail,
   Paperclip,
+  Repeat2,
   Send,
   Trash2,
   Undo2,
@@ -28,6 +29,7 @@ import {
   X,
 } from 'lucide-react';
 import { api, downloadUrl, navigate, today } from './api';
+import { RecurringOrigin } from './Recurring';
 import {
   Badge,
   ErrorBox,
@@ -374,6 +376,7 @@ export function DocumentDetail({
         onClose={() => requestClose(back)}
         className={`document-detail-modal${closing ? ' is-closing' : ''}`}
       >
+        {doc.kind === 'invoice' && <RecurringOrigin documentId={id} />}
         <div className="document-detail-toolbar">
           <div className="document-detail-toolbar-top">
             <div className="document-detail-toolbar-group">
@@ -553,6 +556,13 @@ export function DocumentDetail({
                     icon: FileText,
                     disabled: busy,
                     onAction: () => navigate('edit/' + id),
+                  },
+                !readonly &&
+                  doc.kind === 'invoice' && {
+                    label: 'Hacer recurrente',
+                    group: 'Crear documentos',
+                    icon: Repeat2,
+                    href: '#recurring/new?from=' + id,
                   },
                 !readonly &&
                   ['invoice', 'purchase'].includes(doc.kind) &&

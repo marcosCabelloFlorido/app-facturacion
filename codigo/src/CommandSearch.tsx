@@ -1,11 +1,9 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Search } from 'lucide-react';
 import { SearchPanel, useSearchPanel } from './SearchPanel';
 import { navigate } from './api';
-import { FeatureDesignContext } from './feature-design-context';
-import { designAreas, featuresForSurface } from './feature-designs';
 
-type Command = { label: string; route: string; keywords: string; designId?: string };
+type Command = { label: string; route: string; keywords: string };
 export function navigationCommands(readonly: boolean, admin: boolean): Command[] {
   return [
     {
@@ -124,33 +122,7 @@ export function CommandSearch({
   const [query, setQuery] = useState('');
   const input = useRef<HTMLInputElement>(null);
   const results = useRef<HTMLDivElement>(null);
-  const designs = useContext(FeatureDesignContext);
-  const featureArea = designAreas.find((area) => area.value === designs?.area)?.label || 'módulo';
-  const scopedFeatures = designs ? featuresForSurface(designs.area) : [];
-  const commands = findCommands(
-    [
-      ...navigationCommands(readonly, admin),
-      ...(designs
-        ? [
-            {
-              label: `Más funciones de ${featureArea.toLowerCase()}`,
-              route: 'designs',
-              designId: '*',
-              keywords: 'funciones opciones herramientas',
-            },
-          ]
-        : []),
-      ...(designs && query.trim()
-        ? scopedFeatures.map((feature) => ({
-            label: feature.title,
-            route: 'designs/' + feature.id,
-            designId: feature.id,
-            keywords: feature.fields.map((f) => f.label).join(' '),
-          }))
-        : []),
-    ],
-    query,
-  );
+  const commands = findCommands(navigationCommands(readonly, admin), query);
   useEffect(() => {
     if (!open) return;
     const frame = requestAnimationFrame(() => input.current?.focus());
@@ -186,11 +158,7 @@ export function CommandSearch({
   }, [open, openSearch, closeSearch]);
   const choose = (command: Command) => {
     if (closing) return;
-    closeSearch(() =>
-      command.designId && designs
-        ? designs.open(command.designId === '*' ? undefined : command.designId)
-        : navigate(command.route),
-    );
+    closeSearch(() => navigate(command.route));
   };
   return (
     <>
