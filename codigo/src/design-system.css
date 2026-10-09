@@ -44,7 +44,7 @@
   --text: #0a0a0a;
   --border-strong: rgba(0, 0, 0, 0.28);
   --module-width: 1280px;
-  --module-background: #000;
+  --module-background: #0b1f3a;
   --on-dark: #fff;
   --on-dark-title: #eaeaea;
   --on-dark-muted: #a3a3a3;
@@ -784,12 +784,12 @@ summary:focus-visible {
   border-color: var(--border-strong);
 }
 .button.primary {
-  background: var(--text);
+  background: #0b1f3a;
   color: var(--bg);
-  border-color: var(--text);
+  border-color: #0b1f3a;
 }
 .button.primary:hover {
-  background: color-mix(in srgb, var(--text) 85%, var(--bg));
+  background: #14305a;
 }
 .page-heading .button.light,
 .page-heading .button.contact-create {
