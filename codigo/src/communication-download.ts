@@ -3,7 +3,7 @@ export async function previewPdf(path: string, body: unknown, signal?: AbortSign
   const response = await fetch(downloadUrl(path), {
     method: 'POST',
     signal,
-    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'kronjop' },
+    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'facturacion' },
     body: JSON.stringify(body),
   });
   if (!response.ok) {

@@ -146,7 +146,7 @@ export async function buildApp(logging = true) {
     const isMcp = request.url.startsWith('/api/mcp');
     const isOAuth = request.url.startsWith('/oauth/') || request.url.startsWith('/.well-known/');
     if (!isMcp && !isOAuth && !['GET', 'HEAD', 'OPTIONS'].includes(request.method)) {
-      assert(request.headers['x-requested-with'] === 'kronjop', 'Petición no autorizada.', 403);
+      assert(request.headers['x-requested-with'] === 'facturacion', 'Petición no autorizada.', 403);
       const origin = request.headers.origin;
       if (origin)
         assert(new URL(origin).host === request.headers.host, 'Origen no autorizado.', 403);

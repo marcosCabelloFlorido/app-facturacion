@@ -1,4 +1,4 @@
-/* Adaptación del kit Kronjop: paleta, sidebar, tipografía y superficies.
+/* Adaptación del kit de diseño: paleta, sidebar, tipografía y superficies.
    Se añaden navegación móvil y controles legibles para el uso financiero. */
 :root {
   color: #0a0a0a;
@@ -1831,8 +1831,8 @@ tfoot td {
   display: none;
 }
 
-/* Usabilidad: adaptación solicitada del kit Kronjop.
-   FUENTE: kit-design-v2/tokens/colors.ts (kronjop-app/src/index.css:9–32),
+/* Usabilidad: adaptación solicitada del kit de diseño.
+   FUENTE: kit-design-v2/tokens/colors.ts (kit-app/src/index.css:9–32),
    components/05-button.md (button.tsx:7–31), components/07-table.md.
    Se conservan Inter, superficies monocromas y controles del kit; se amplía
    la lectura y se agrupa el editor en pasos por petición del usuario. */

@@ -29,7 +29,7 @@ export function PublicPortal() {
     const r = await fetch('/api/portal/' + path, {
       method: 'POST',
       credentials: 'omit',
-      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'kronjop' },
+      headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'facturacion' },
       body: JSON.stringify({ ...access, ...extra }),
     });
     if (!r.ok) {

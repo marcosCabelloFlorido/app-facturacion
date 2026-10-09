@@ -71,7 +71,7 @@ export async function mailOptions(m: any) {
     to: m.recipient,
     subject: m.subject,
     text: m.body,
-    messageId: `<${m.id}@${m.sender.split('@')[1] || 'kronjop.local'}>`,
+    messageId: `<${m.id}@${m.sender.split('@')[1] || 'facturacion.local'}>`,
     date: new Date(m.created_at),
     attachments: [{ filename: 'documento.pdf', content: f.data, contentType: 'application/pdf' }],
     disableFileAccess: true,

@@ -775,7 +775,7 @@ function DocumentListPage({
         });
         try {
           localStorage.removeItem(
-            `kronjop.working:${userId}:${workspaceId || 'legacy'}:${work.resourceKey}`,
+            `facturacion.working:${userId}:${workspaceId || 'legacy'}:${work.resourceKey}`,
           );
         } catch {}
       } else {

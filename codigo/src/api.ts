@@ -12,15 +12,15 @@ let apiActor = '';
 let activeWorkspace: string | null = null;
 export const getActiveWorkspace = () => activeWorkspace;
 try {
-  activeWorkspace = sessionStorage.getItem('kronjop.workspace');
+  activeWorkspace = sessionStorage.getItem('facturacion.workspace');
 } catch {
   /* Device preference is optional. */
 }
 export function setActiveWorkspace(id: string | null) {
   activeWorkspace = id;
   try {
-    if (id) sessionStorage.setItem('kronjop.workspace', id);
-    else sessionStorage.removeItem('kronjop.workspace');
+    if (id) sessionStorage.setItem('facturacion.workspace', id);
+    else sessionStorage.removeItem('facturacion.workspace');
   } catch {
     /* The selection still works for this tab. */
   }
@@ -61,7 +61,7 @@ export async function api<T = unknown>(
         .map((v) => v.toString(16).padStart(2, '0'))
         .join('')
     : '';
-  const storageKey = `kronjop.command:${actor}:${digest}`;
+  const storageKey = `facturacion.command:${actor}:${digest}`;
   let persisted: string | null = null;
   if (isCommand && actor)
     try {
@@ -83,7 +83,7 @@ export async function api<T = unknown>(
     headers: {
       ...(workspaceId ? { 'X-Workspace-Id': workspaceId } : {}),
       ...(options.body !== undefined ? { 'Content-Type': 'application/json' } : {}),
-      ...(method !== 'GET' ? { 'X-Requested-With': 'kronjop', 'Idempotency-Key': key } : {}),
+      ...(method !== 'GET' ? { 'X-Requested-With': 'facturacion', 'Idempotency-Key': key } : {}),
     },
     body: options.body === undefined ? undefined : JSON.stringify(options.body),
   };

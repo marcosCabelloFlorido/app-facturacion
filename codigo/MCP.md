@@ -39,7 +39,7 @@ Solo una cuenta administradora puede crear o revocar tokens, desde la propia API
 ```
 POST /api/mcp/tokens
 Cookie: session=...
-X-Requested-With: kronjop
+X-Requested-With: facturacion
 Content-Type: application/json
 
 { "name": "Claude Desktop" }

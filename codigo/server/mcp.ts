@@ -67,7 +67,7 @@ function buildParty(contact: { data?: any } & Record<string, any>) {
 // Servidor MCP de negocio: herramientas que un asistente de IA puede usar para consultar y operar
 // sobre la facturación del espacio de trabajo autenticado por token (ver mcp-auth.ts).
 function buildMcpServer(userId: string) {
-  const server = new McpServer({ name: 'kronjop-facturacion', version: '1.0.0' });
+  const server = new McpServer({ name: 'facturacion', version: '1.0.0' });
 
   server.registerTool(
     'search_contacts',

@@ -29,7 +29,7 @@ const text = (value: unknown) => ({
   content: [{ type: 'text' as const, text: typeof value === 'string' ? value : JSON.stringify(value, null, 2) }],
 });
 
-const server = new McpServer({ name: 'kronjop-facturacion-dev', version: '1.0.0' });
+const server = new McpServer({ name: 'facturacion-dev', version: '1.0.0' });
 
 server.registerTool(
   'search_code',

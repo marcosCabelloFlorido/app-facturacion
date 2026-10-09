@@ -35,7 +35,7 @@
   --table-column-gap: 28px;
   --table-edge-inset: 24px;
   --table-cell-inset: calc(var(--table-column-gap) / 2);
-  /* FUENTE: kit-design-v2/tokens/colors.css — kronjop-app/src/index.css:9–32.
+  /* FUENTE: kit-design-v2/tokens/colors.css — kit-app/src/index.css:9–32.
      Cuerpo de 13px y metadatos legibles en todas las pantallas. */
   --bg: #fff;
   --bg-subtle: #fafafa;
@@ -1926,7 +1926,7 @@ input[type='file']::file-selector-button {
 
 /* Cuatro mejoras aprobadas · 15/09/2026.
    FUENTE: 03-module-header.md, 05-button.md y 08-toolbar.md;
-   Kronjop × Ley IA: controles, metadatos y legibilidad. */
+   kit de diseño: controles, metadatos y legibilidad. */
 .header-primary {
   width: auto;
   min-width: var(--control-height-compact);

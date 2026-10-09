@@ -46,7 +46,7 @@ export function useDocumentWorkspace({
     return key;
   });
   const path = '/working-drafts/' + encodeURIComponent(resource);
-  const localKey = `kronjop.working:${userId}:${workspaceId || 'legacy'}:${resource}`;
+  const localKey = `facturacion.working:${userId}:${workspaceId || 'legacy'}:${resource}`;
   const initial: DocumentInput = {
     kind,
     date: today(),

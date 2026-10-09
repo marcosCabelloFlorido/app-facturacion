@@ -15,7 +15,7 @@ Desde 2026-09-28 esta copia se ejecuta **en local, sin Docker**, con la base de 
 
 ## Qué es este repo
 
-Copia portable empaquetada de "kronjop-facturacion" (app de facturación): imágenes Docker + volcado de base de datos + scripts de instalación, pensada para ejecutarse sin recompilar. No es un repo fuente normal donde se hace `npm run build` y se despliega: el despliegue aquí es levantar contenedores Docker desde imágenes ya construidas (`imagenes/docker.tar`, referenciadas en `manifest.json` y `compose.yaml`). El código fuente está presente como referencia/edición, pero cambiar `codigo/` NO reconstruye automáticamente los contenedores en marcha.
+Copia portable empaquetada de "facturacion" (app de facturación): imágenes Docker + volcado de base de datos + scripts de instalación, pensada para ejecutarse sin recompilar. No es un repo fuente normal donde se hace `npm run build` y se despliega: el despliegue aquí es levantar contenedores Docker desde imágenes ya construidas (`imagenes/docker.tar`, referenciadas en `manifest.json` y `compose.yaml`). El código fuente está presente como referencia/edición, pero cambiar `codigo/` NO reconstruye automáticamente los contenedores en marcha.
 
 Dos árboles de código contienen la misma app en distintos puntos:
 - `codigo/` — fuente completa (frontend + backend + shared), incluye `node_modules` (pnpm). Este es el que se edita.

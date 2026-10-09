@@ -3,7 +3,7 @@ import type { DocumentQuery } from '../shared/sales-tools';
 import { euros, shortDate } from './api';
 
 // FUENTE: 08-toolbar.md (AbsencesModule.tsx:2910–2911), 05-button.md (variante link)
-// y Kronjop × Ley IA, familias «search» y «icon-actions». Contexto sin cajas adicionales.
+// y kit de diseño, familias «search» y «icon-actions». Contexto sin cajas adicionales.
 export function DocumentListContext({
   query,
   count,
